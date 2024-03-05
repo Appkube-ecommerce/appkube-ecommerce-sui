@@ -1,13 +1,14 @@
 "use client";
 import "../globals.css";
 import {
-    HomeOutlined,
+    HomeFilled,
     ShoppingCartOutlined,
-  TableOutlined,
+  TagFilled,
   UserOutlined,
-  HighlightOutlined,
+  BellOutlined,
+  BarChartOutlined ,
 } from "@ant-design/icons";
-import { Layout, Menu } from "antd";
+import { Layout, Menu ,Button} from "antd";
 import React, { useState } from "react";
 import Link from "next/link";
 // import { Provider } from "react-redux";
@@ -49,22 +50,22 @@ export default function RootLayout({ children }) {
   }
 
   const items = [
-    getItem( <Link href={"/admin/home"}>home</Link>, "1", <HomeOutlined/>),
-    getItem(<Link href={"/admin"}>admin</Link>, "2", <ShoppingCartOutlined />),
-    getItem(
-      <Link href={"/admin/customers"}>customers</Link>,
-      "3",
-      <TableOutlined />
-    ),
+    getItem( <Link href={"/admin/home"}>home</Link>, "1", <HomeFilled/>),
+    getItem(<Link href={"/admin"}>Orders</Link>, "2", <ShoppingCartOutlined />),
     getItem(
       <Link href={"/admin/products"}>products</Link>,
+      "3",
+      <TagFilled />
+      ),
+      getItem(
+      <Link href={"/admin/customers"}>customers</Link>,
       "4",
       <UserOutlined />
     ),
     getItem(
         <Link href={"/admin/analytics"}>analytics</Link>,
       "5",
-      <HighlightOutlined />
+      <BarChartOutlined />
     ),
   ];
 
@@ -88,29 +89,34 @@ export default function RootLayout({ children }) {
               justifyContent: "space-between",
               alignItems: "center",
               alignContent: "center",
+              backgroundColor:"#1a1a1a",
             }}
           >
             <div>
               <h2 className="text-white uppercase">Synectiks</h2>
             </div>
 
-            <div className="flex">
-              <div className="flex justify-center items-center bg-white border rounded-md">
+            <div className="flex ">
+              <div className="flex bg-white border rounded-md">
                 <Search
                   placeholder="input search text"
                   onSearch={onSearch}
                   style={{
-                    width: 200,
+                    width: 600,
                     borderRadius: 9,
                   }}
                 />
               </div>
-              <div className="flex w-full gap-4 justify-evenly px-4">
+              {/* <div className="flex flex-row w-full gap-4 justify-evenly px-4"> */}
                 {/* <Image src={Vector2} /> */}
                 {/* <Image className="text-white" src={Bell} /> */}
                 {/* <Image src={Account} /> */}
               </div>
+          
+            <div><BellOutlined className="text-white text-lg"/>
+            <Button className="text-white">My Store</Button>
             </div>
+            {/* <div></div> */}
           </Header>
 
           <Layout style={{ minHeight: "100vh" }}>
@@ -126,6 +132,7 @@ export default function RootLayout({ children }) {
                 left: 0,
                 top: 0,
                 bottom: 0,
+                
               }}
             >
               <div />
