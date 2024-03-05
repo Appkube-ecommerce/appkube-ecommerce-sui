@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import { Inter } from "next/font/google";
 import Header from "@/components/buyer/home/Header";
 import Footer from "@/components/buyer/home/Footer";
@@ -13,14 +13,18 @@ const inter = Inter({ subsets: ["latin"] });
 
 export default function RootLayout({ children }) {
   const pathname = usePathname();
-  const exclude = ["/buyer/login", "/buyer/register", "/buyer/login/account"];
+  const exclude = [
+    "/buyer/login",
+    "/buyer/register",
+    "/buyer/login/account",
+    "/buyer/orders",
+  ];
 
   return (
     <div className="container-fluid flex flex-col justify-center items-center  w-[100%] min-h-[100vh] gap-[5vh]">
       {exclude.includes(pathname) ? null : <Header />}
-
       {children}
-      <Footer />
+      {exclude.includes(pathname) ? null : <Footer />}
     </div>
   );
 }
