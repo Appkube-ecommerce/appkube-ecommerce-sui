@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 'use client'
 //import React from 'react';
 import { DownOutlined, UserOutlined } from '@ant-design/icons';
