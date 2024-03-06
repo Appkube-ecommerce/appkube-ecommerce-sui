@@ -51,7 +51,7 @@ export default function RootLayout({ children }) {
 
   const items = [
     getItem( <Link href={"/admin/home"}>home</Link>, "1", <HomeFilled/>),
-    getItem(<Link href={"/admin"}>Orders</Link>, "2", <ShoppingCartOutlined />),
+    getItem(<Link href={"/admin/orders"}>Orders</Link>, "2", <ShoppingCartOutlined />),
     getItem(
       <Link href={"/admin/products"}>products</Link>,
       "3",
