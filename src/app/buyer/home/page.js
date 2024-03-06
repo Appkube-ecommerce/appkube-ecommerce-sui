@@ -5,7 +5,7 @@ import React from 'react'
 
 const page = () => {
   return (
-    <div className='container-fluid flex flex-col justify-center items-center  w-[100%] min-h-[100vh] gap-[5vh]'>
+    <div className='container-fluid flex flex-col w-[100%] min-h-[100vh] gap-[5vh]'>
     
     <MyBasket/>
 
