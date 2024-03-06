@@ -9,11 +9,7 @@ export default function Home() {
       <Header />
       <MyBasket />
       <Footer />
-      
-<<<<<<< HEAD
-=======
-
->>>>>>> 625d693eff04d2cc978fc86177156f6234703762
+  
     </div>
   );
 }
