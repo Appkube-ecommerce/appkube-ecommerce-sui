@@ -1,9 +1,9 @@
 import React from 'react'
-
-const Orders = () => {
+import Orders from '@/components/admin/orders/orders'
+const App = () => {
   return (
-    <div>Orders</div>
+    <div><Orders/></div>
   )
 }
 
-export default Orders
+export default App

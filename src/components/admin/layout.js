@@ -52,15 +52,11 @@ export default function RootLayout({ children }) {
   const items = [
     getItem( <Link href={"/admin/home"}>home</Link>, "1", <HomeFilled/>),
     getItem(<Link href={"/admin/orders"}>Orders</Link>, "2", <ShoppingCartOutlined />),
-    {
-      key: "3",
-      icon: <TagFilled />,
-      label: <Link href={"/admin/products"}>Products</Link>,
-      children: [
-        // getItem(<Link href={"/admin/products"}>Products</Link>, "3.1", <TagFilled />),
-        getItem(<Link href={"/admin/products/inventory"}>Inventory</Link>, "3.1", <BarChartOutlined />)
-      ]
-    },
+    getItem(
+      <Link href={"/admin/products"}>products</Link>,
+      "3",
+      <TagFilled />
+      ),
       getItem(
       <Link href={"/admin/customers"}>customers</Link>,
       "4",

@@ -1,9 +1,9 @@
 import React from 'react'
-
-const Customers = () => {
+import Customers from '@/components/admin/customers/customers'
+const App = () => {
   return (
-    <div>Customers</div>
+    <div><Customers/></div>
   )
 }
 
-export default Customers
+export default App
