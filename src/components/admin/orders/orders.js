@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 'use client'
 //import React from 'react';
 import { DownOutlined, UserOutlined } from '@ant-design/icons';
@@ -203,3 +204,14 @@ const Orders = () => {
 };
 
 export default Orders;
+=======
+import React from 'react'
+
+const Orders = () => {
+  return (
+    <div>Orders</div>
+  )
+}
+
+export default Orders
+>>>>>>> 625d693eff04d2cc978fc86177156f6234703762
