@@ -7,7 +7,7 @@ import Link from "next/link";
 const page = () => {
   return (
     <main className=" h-[100%] flex justify-center items-center bg-gradient-to-r from-indigo-900 via-indigo-700 to-cyan-400 md:w-[100vw]  md:h-screen md:-mb-10">
-      <div className=" sm:p-14 xs:w-[100vw]  md:h-[70vh] md:w-[414px]  xs:h-[100%] sm:w-[100vw] rounded-lg p-[30px] sm:shadow-lg bg-white  md:mt-6 sm:h-[90%] xs:rounded-none md:m-5 md:border-none md:rounded-xl">
+      <div className=" sm:p-5 xs:w-[100vw]  md:h-[70vh] md:w-[414px]  xs:h-[100%] sm:w-[100vw] rounded-lg p-[30px] sm:shadow-lg bg-white  md:mt-6 sm:h-[90%] xs:rounded-none md:m-5 md:border-none md:rounded-xl">
         <div>
           <Link href="/buyer/home">
             <img
@@ -17,10 +17,10 @@ const page = () => {
           </Link>
         </div>
         <div>
-          <h1 className="text-xl font-bold mt-[1.8rem] xs:text-base sm:text-[1rem]">
+          <h1 className="text-xl font-bold mt-[0.5rem] xs:text-base sm:text-[1rem]">
             Log in
           </h1>
-          <h3 className="text-[#616161] mb-3 xs:text-xs sm:text-sm">
+          <h3 className="text-[#616161] mb-2 xs:text-sm sm:text-sm">
             Continue to Shopify
           </h3>
         </div>
@@ -32,18 +32,30 @@ const page = () => {
           <input
             type="email"
             id="connect"
-            placeholder="user email"
+            placeholder="user email "
             className="border border-solid border-gray-500 rounded p-2 mb-3 xs:p-1 "
           />
         </div>
-        <Link href="/buyer/login/account">
+        <div className="flex flex-col">
+          {" "}
+          <label for="connect" className="text-[14px]xs:text-xs">
+            Password{" "}
+          </label>
+          <input
+            type="password"
+            id="connect"
+            placeholder="user password"
+            className="border border-solid border-gray-500 rounded p-2 mb-2 xs:p-1 "
+          />
+        </div>
+        <Link href="/">
           <button className="border border-solid bg-[#303030] border-gray-500 w-[100%] rounded p-2 text-white font-semibold xs:p-1">
-            Continue with email
+            Log in
           </button>
-        </Link>
+       </Link>
         <div>
           {" "}
-          <h1 className="text-center mt-3">or</h1>
+          <h1 className="text-center mt-2">or</h1>
         </div>
         <div>
           <div className="flex justify-around mt-2 gap-2 ">
@@ -68,7 +80,7 @@ const page = () => {
             </p>
             {/* <img src='/facebook.png ' className='w-[100px]'></img> */}
           </div>
-          <h1 className="mt-7 text-semibold xs:text-xs sm:text-sm">
+          <h1 className="mt-2 text-semibold xs:text-xs sm:text-sm">
             New to shopify?
             <Link href="/buyer/register">
               <span className="text-[#005db3] font-semibold cursor-pointer hover:font-semibold sm:text-sm ">
@@ -76,14 +88,14 @@ const page = () => {
               </span>
             </Link>
           </h1>
-          <div className="mt-4">
-            <span className="m-2 text-[#616161] text-sm border-b-2 border-transparent hover:border-gray-400 cursor-pointer">
-              help{" "}
+          <div>
+            <span className=" text-[#616161] text-sm border-b-2 border-transparent hover:border-gray-400 cursor-pointer">
+              Help
             </span>
-            <span className="m-2 text-[#616161] text-sm border-b-2 border-transparent hover:border-gray-400 cursor-pointer">
-              privacy
+            <span className="ml-2 text-[#616161] text-sm border-b-2 border-transparent hover:border-gray-400 cursor-pointer">
+              Privacy
             </span>
-            <span className="m-2 text-[#616161] text-sm border-b-2 border-transparent hover:border-gray-400 cursor-pointer">
+            <span className="ml-2 text-[#616161] text-sm border-b-2 border-transparent hover:border-gray-400 cursor-pointer">
               Terms
             </span>
           </div>

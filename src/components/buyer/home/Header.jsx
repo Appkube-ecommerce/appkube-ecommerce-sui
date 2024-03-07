@@ -61,7 +61,7 @@ const Header = () => {
           <MdAccountCircle className=" bg-black text-white md:hidden sm:inline" />
         </div>
         <div className="relative ">
-          <Link href="/buyer/OrderReview">
+          <Link href="/buyer/orders">
             <button className="btn bg-red-200 rounded-md p-2 hover:bg-red-300 transition-colors">
               <div className="rounded-full bg-red-600 p-1">
                 <BsFillBasketFill className="text-white" />
