@@ -4,6 +4,10 @@ import { SearchOutlined } from "@ant-design/icons";
 import { Button, Input, Space, Table, Tag, Modal } from "antd";
 import Highlighter from "react-highlight-words";
 import ImportButton from "./importButton";
+import { useRouter } from "next/navigation";
+import Link from "next/link"
+// import Addproduct from "./addproduct";
+
 const data = [
   {
     key: "1",
@@ -57,6 +61,11 @@ const data = [
 ];
 
 const Products = () => {
+  const router = useRouter();
+  const AddProducts = ()=>{
+
+    router.push('/admin/products/addproduct')
+  }
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
   const [loading, setLoading] = useState(false);
@@ -240,16 +249,17 @@ const Products = () => {
             Export
           </button>
           <ImportButton />
+          {/* <Link href="/admin/products/addproduct"> */}
           <button
             key="link"
-            href="/orders"
+          
             className="bg-black text-white rounded-md px-8 py-2"
             loading={loading}
-            onClick={handleOk}
+            onClick={AddProducts}
           >
             Add Product
           </button>
-          
+          {/* </Link> */}
         </div>
         <Modal
           open={open}
