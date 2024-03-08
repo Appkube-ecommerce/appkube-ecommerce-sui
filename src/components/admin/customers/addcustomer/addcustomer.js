@@ -1,55 +1,382 @@
-"use client"
+// 
+
+
+
+
+"use client";
 import React from 'react';
-import { Button, Checkbox, Form, Input,message,Upload } from 'antd';
+import {
+  Button,
+  Form,
+  Input,
+  InputNumber,
+  Space,
+  Select,
+  Row,
+  Col,
+  Checkbox,
+} from 'antd';
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
-import UploadMediafun from './uploadMedia'; 
+import UploadMediafun from './uploadMedia';
 const { TextArea } = Input;
 
-const Addproduct = () => (
-  <>
-  <header>
-    <h1 className="font-bold text-2xl">Add Customer</h1>
+const formItemLayout = {
+  labelCol: {
+    xs: {
+      span: 24,
+    },
+    sm: {
+      span: 9,
+    },
+  },
+  wrapperCol: {
+    xs: {
+      span: 24,
+    },
+    sm: {
+      span: 15,
+    },
+  },
+};
+
+const AddCustomer = () => (
+  <div>
+    <header className="p-8">
+      <h1 className="font-bold text-xl">New Customer</h1>
     </header>
-  <Form
-   requiredMark={false}
-  className="border-2 font-semibold bg-white shadow-md px-8 py-5 mt-6 rounded-xl"
-  layout="vertical"
-    name="basic"
-    labelCol={{
-      span: 8,
-    }}
-    // wrapperCol={{
-    //   span: 16,
-    // }}
-    style={{
-      maxWidth: 600,
-    }}
-    initialValues={{
-      remember: true,
-    }}
-    // onFinish={onFinish}
-    // onFinishFailed={onFinishFailed}
-    // autoComplete="off"
-  >
-    <Form.Item
-      label="Title"
-      name="title"
-      rules={[
-        {
-          required: true,
-          message: 'Please input Title of the product!',
-        },
-      ]}
-    >
-      <Input placeholder="Short sleeve t-shirt" className="border border-black"/>
-    </Form.Item>
-     <Form.Item label="Description">
-          <TextArea rows={5} className="border border-black" placeholder="Mention the description of your Porduct here!"/>
-        </Form.Item>
-  </Form>
-  <div className="border-2 shadow w-[37.5rem] h-[12rem] bg-white px-8 pt-3 rounded-xl">
-  <UploadMediafun/>
+    <hr />
+    <div className="p-16 flex">
+      <Col span={8}>
+        <h3 className="font-semibold">  Customer Overview</h3>
+      </Col>
+
+      <Col span={16}>
+        <div className="bg-white rounded-md p-12">
+          <Row gutter={12}>
+            <Col span={12}>
+            
+              <Form.Item
+                label="First Name"
+                name="pfNumber"
+                rules={[
+                  { message: "Enter Your PF Number" },
+                  {
+                    message: "Please enter at least 5 digits for PF number.",
+                  },
+                ]}
+              >
+                <Input
+                  placeholder="First Name"
+                  name="pfNumber"
+                  type="text"
+                />
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item
+                label="Last Name"
+                name="uanNumber"
+                rules={[
+                  { message: "Enter Your UAN Number" },
+                  {
+                    message: "Please enter at least 5 digits for UAN number.",
+                  },
+                ]}
+              >
+                <Input
+                  name="uanNumber"
+                  placeholder="Last Name "
+                  type="text"
+                />
+              </Form.Item>
+            </Col>
+          </Row>
+
+          {/* More Form.Item components go here */}
+
+          <Form.Item
+            label="Select language"
+            name="Select"
+            rules={[
+              {
+                required: true,
+                message: 'Please input!',
+              },
+            ]}
+          >
+            <Select>
+              <Select.Option value="english">English(default)</Select.Option>
+            </Select>
+          </Form.Item>
+
+          {/* More Form.Item components go here */}
+
+          <Form.Item
+            label="Email"
+            name="email"
+            rules={[
+              {
+                required: true,
+                message: 'Please input your email!',
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+
+          {/* More Form.Item components go here */}
+
+          <Form.Item
+            label="InputNumber"
+            name="InputNumber"
+            rules={[
+              {
+                required: true,
+                message: 'Please input!',
+              },
+            ]}
+          >
+            <InputNumber style={{ width: '100%' }} />
+          </Form.Item>
+
+          {/* More Form.Item components go here */}
+
+          <Checkbox>
+            Customer agreed to receive marketing emails.
+          </Checkbox>
+          <Checkbox>
+            Customer agreed to receive SMS marketing text messages.
+          </Checkbox>
+          <p>
+            You should ask your customers for permission before you subscribe
+            them to your marketing emails or SMS.
+          </p>
+        </div>
+      </Col>
+    </div>
+    <hr></hr>
+    <div className="p-16 flex">
+      <Col span={8}>
+        <h3 className="font-semibold">Address</h3>
+        <p>The primary address of this customer</p>
+      </Col>
+
+      <Col span={16}>
+        <div className="bg-white rounded-md p-12">
+          <Row gutter={12}>
+            <Col span={12}>
+            
+              <Form.Item
+                label="First Name"
+                name="pfNumber"
+                rules={[
+                  { message: "Enter Your PF Number" },
+                  {
+                    message: "Please enter at least 5 digits for PF number.",
+                  },
+                ]}
+              >
+                <Input
+                  placeholder="First Name"
+                  name="pfNumber"
+                  type="text"
+                />
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item
+                label="Last Name"
+                name="uanNumber"
+                rules={[
+                  { message: "Enter Your UAN Number" },
+                  {
+                    message: "Please enter at least 5 digits for UAN number.",
+                  },
+                ]}
+              >
+                <Input
+                  name="uanNumber"
+                  placeholder="Last Name "
+                  type="text"
+                />
+              </Form.Item>
+            </Col>
+          </Row>
+
+          {/* More Form.Item components go here */}
+
+          <Form.Item
+            label="Select language"
+            name="Select"
+            rules={[
+              {
+                required: true,
+                message: 'Please input!',
+              },
+            ]}
+          >
+            <Select>
+              <Select.Option value="english">English(default)</Select.Option>
+            </Select>
+          </Form.Item>
+
+          {/* More Form.Item components go here */}
+
+          <Form.Item
+            label="Email"
+            name="email"
+            rules={[
+              {
+                required: true,
+                message: 'Please input your email!',
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+
+          {/* More Form.Item components go here */}
+
+          <Form.Item
+            label="InputNumber"
+            name="InputNumber"
+            rules={[
+              {
+                required: true,
+                message: 'Please input!',
+              },
+            ]}
+          >
+            <InputNumber style={{ width: '100%' }} />
+          </Form.Item>
+
+          {/* More Form.Item components go here */}
+
+          <Checkbox>
+            Customer agreed to receive marketing emails.
+          </Checkbox>
+          <Checkbox>
+            Customer agreed to receive SMS marketing text messages.
+          </Checkbox>
+          <p>
+            You should ask your customers for permission before you subscribe
+            them to your marketing emails or SMS.
+          </p>
+        </div>
+      </Col>
+    </div>
+    <hr></hr>
+    <div className="p-16 flex">
+      <Col span={8}>
+        <h3 className="font-semibold"></h3>
+      </Col>
+
+      <Col span={16}>
+        <div className="bg-white rounded-md p-12">
+          <Row gutter={12}>
+            <Col span={12}>
+            
+              <Form.Item
+                label="First Name"
+                name="pfNumber"
+                rules={[
+                  { message: "Enter Your PF Number" },
+                  {
+                    message: "Please enter at least 5 digits for PF number.",
+                  },
+                ]}
+              >
+                <Input
+                  placeholder="First Name"
+                  name="pfNumber"
+                  type="text"
+                />
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item
+                label="Last Name"
+                name="uanNumber"
+                rules={[
+                  { message: "Enter Your UAN Number" },
+                  {
+                    message: "Please enter at least 5 digits for UAN number.",
+                  },
+                ]}
+              >
+                <Input
+                  name="uanNumber"
+                  placeholder="Last Name "
+                  type="text"
+                />
+              </Form.Item>
+            </Col>
+          </Row>
+
+          {/* More Form.Item components go here */}
+
+          <Form.Item
+            label="Select language"
+            name="Select"
+            rules={[
+              {
+                required: true,
+                message: 'Please input!',
+              },
+            ]}
+          >
+            <Select>
+              <Select.Option value="english">English(default)</Select.Option>
+            </Select>
+          </Form.Item>
+
+          {/* More Form.Item components go here */}
+
+          <Form.Item
+            label="Email"
+            name="email"
+            rules={[
+              {
+                required: true,
+                message: 'Please input your email!',
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+
+          {/* More Form.Item components go here */}
+
+          <Form.Item
+            label="InputNumber"
+            name="InputNumber"
+            rules={[
+              {
+                required: true,
+                message: 'Please input!',
+              },
+            ]}
+          >
+            <InputNumber style={{ width: '100%' }} />
+          </Form.Item>
+
+          {/* More Form.Item components go here */}
+
+          <Checkbox>
+            Customer agreed to receive marketing emails.
+          </Checkbox>
+          <Checkbox>
+            Customer agreed to receive SMS marketing text messages.
+          </Checkbox>
+          <p>
+            You should ask your customers for permission before you subscribe
+            them to your marketing emails or SMS.
+          </p>
+        </div>
+      </Col>
+    </div>
+    <hr></hr>
   </div>
-  </>
 );
-export default Addproduct;
+
+export default AddCustomer;

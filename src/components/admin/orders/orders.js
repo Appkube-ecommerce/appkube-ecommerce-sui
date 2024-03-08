@@ -307,3 +307,7 @@ return (
 };
 
 export default Orders;
+<<<<<<< HEAD
+=======
+
+>>>>>>> fd2e32952f9534345ac21746cbb1e700b99f8907
