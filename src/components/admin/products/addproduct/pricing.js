@@ -4,10 +4,12 @@ import { Button, Input, Space,Col,Checkbox, Row,Table, Form ,Tag, Modal } from "
 const Pricing = () => {
   return (
     <>
+          <div className="border-2 shadow-md w-full h-[18rem] bg-white px-8 pt-3 mt-5 rounded-xl">
       <div>
         <h1 className="text-md font-semibold mt-1">Pricing</h1>
       </div>
       <Form
+      className=""
       requiredMark={false}
         layout="vertical"
         labelCol={{
@@ -93,6 +95,7 @@ const Pricing = () => {
     </Col>
     </Row>
       </Form>
+      </div>
     </>
   );
 };

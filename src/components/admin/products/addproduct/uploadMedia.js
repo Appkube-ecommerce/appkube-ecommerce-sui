@@ -1,7 +1,7 @@
-"use client"
-import React, { useState } from 'react';
-import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
-import { message, Upload } from 'antd';
+"use client";
+import React, { useState } from "react";
+import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
+import { message, Upload, Button } from "antd";
 const getBase64 = (img, callback) => {
   const reader = new FileReader();
   reader.addEventListener('load', () => callback(reader.result));
@@ -35,21 +35,30 @@ const UploadMediafun = () => {
     }
   };
   const uploadButton = (
-    <button className="border mt-3 h-[7rem] w-[33.3rem] border-dashed border-black rounded-lg"
-      type="button">
-      <div>
-      {loading ? <LoadingOutlined /> : <PlusOutlined/>  }&nbsp;
-        Upload new
+    <button
+      style={{
+        border: 0,
+        background: 'none',
+      }}
+      type="button"
+    >
+      {loading ? <LoadingOutlined /> : <PlusOutlined />}
+      <div
+        style={{
+          marginTop: 8,
+        }}
+      >
+        Upload
       </div>
-    Accepts images, videos, or 3D models
     </button>
   );
   return (
-    <>
-    <h1 className="text-md font-semibold mt-1">Media</h1>
+    <div className="border-2 shadow-md h-[12rem] w-full  bg-white px-8 pt-3 mt-5 rounded-xl">
+      <h1 className="text-md font-semibold mt-1">Media</h1>
+      <div className="pl-[40%]">
       <Upload
         name="avatar"
-        // listType="picture-card"
+        listType="picture-card"
         className="avatar-uploader"
         showUploadList={false}
         action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
@@ -68,7 +77,8 @@ const UploadMediafun = () => {
           uploadButton
         )}
       </Upload>
-    </>
+    </div>
+      <p className="pl-[30%]">Accepts images of type PNG/JPEG</p></div>
   );
 };
 export default UploadMediafun;

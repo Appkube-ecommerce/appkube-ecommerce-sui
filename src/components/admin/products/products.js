@@ -58,6 +58,114 @@ const data = [
     salesChannels: "5",
     vendors: "My Store3",
   },
+  {
+    key: "4",
+    product: "John yellow",
+    tags: (
+      <Tag bordered={false} color="processing">
+        processing
+      </Tag>
+    ),
+    inventory: "10",
+    salesChannels: "5",
+    vendors: "My Store3",
+  },
+  {
+    key: "4",
+    product: "John yellow",
+    tags: (
+      <Tag bordered={false} color="processing">
+        processing
+      </Tag>
+    ),
+    inventory: "10",
+    salesChannels: "5",
+    vendors: "My Store3",
+  },
+  {
+    key: "4",
+    product: "John yellow",
+    tags: (
+      <Tag bordered={false} color="processing">
+        processing
+      </Tag>
+    ),
+    inventory: "10",
+    salesChannels: "5",
+    vendors: "My Store3",
+  },
+  {
+    key: "4",
+    product: "John yellow",
+    tags: (
+      <Tag bordered={false} color="processing">
+        processing
+      </Tag>
+    ),
+    inventory: "10",
+    salesChannels: "5",
+    vendors: "My Store3",
+  },
+  {
+    key: "4",
+    product: "John yellow",
+    tags: (
+      <Tag bordered={false} color="processing">
+        processing
+      </Tag>
+    ),
+    inventory: "10",
+    salesChannels: "5",
+    vendors: "My Store3",
+  },
+  {
+    key: "4",
+    product: "John yellow",
+    tags: (
+      <Tag bordered={false} color="processing">
+        processing
+      </Tag>
+    ),
+    inventory: "10",
+    salesChannels: "5",
+    vendors: "My Store3",
+  },
+  {
+    key: "4",
+    product: "John yellow",
+    tags: (
+      <Tag bordered={false} color="processing">
+        processing
+      </Tag>
+    ),
+    inventory: "10",
+    salesChannels: "5",
+    vendors: "My Store3",
+  },
+  {
+    key: "4",
+    product: "John yellow",
+    tags: (
+      <Tag bordered={false} color="processing">
+        processing
+      </Tag>
+    ),
+    inventory: "10",
+    salesChannels: "5",
+    vendors: "My Store3",
+  },
+  {
+    key: "4",
+    product: "John yellow",
+    tags: (
+      <Tag bordered={false} color="processing">
+        processing
+      </Tag>
+    ),
+    inventory: "10",
+    salesChannels: "5",
+    vendors: "My Store3",
+  },
 ];
 
 const Products = () => {
@@ -235,7 +343,7 @@ const Products = () => {
 
   return (
     <>
-      <header className="flex justify-between mt-4">
+      <header className="flex justify-between mt-4 ">
         <h1 className="font-bold text-2xl">Products</h1>
         <div className="flex gap-3">
           <button
@@ -296,7 +404,7 @@ const Products = () => {
         columns={columns}
         dataSource={data}
         pagination={false}
-        scroll={{ x: 1000, y: 900 }}
+        scroll={{ x: 800, y: 4000 }}
       />
     </>
   );
