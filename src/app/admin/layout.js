@@ -1,31 +1,20 @@
 "use client";
-import "../globals.css";
+import React, { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
+import Link from "next/link";
+import { Layout, Menu, Button, Input } from "antd";
 import {
-    HomeFilled,
-    ShoppingCartOutlined,
+  HomeFilled,
+  ShoppingCartOutlined,
   TagFilled,
   UserOutlined,
   BellOutlined,
-  BarChartOutlined ,
+  BarChartOutlined,
 } from "@ant-design/icons";
-import { Layout, Menu ,Button} from "antd";
-import React, { useState } from "react";
-import Link from "next/link";
-// import { Provider } from "react-redux";
-// import { store } from "@/redux/store/store";
-
-
-import { Input, Space } from "antd";
-const { Search } = Input;
-
-// import Image from "next/image";
-// import Account from "../../../public/assets/homeicons/Setting.svg";
-// import Vector2 from "../../../public/assets/homeicons/Vector2.svg";
-// import Bell from "../../../public/assets/homeicons/Bell.svg";
-
-// import Onboardemp from "@/components/employees/addemp/onboardemp/page";
 
 const { Header, Content, Footer, Sider } = Layout;
+const { Search } = Input;
+
 function getItem(label, key, icon, children) {
   return {
     key,
@@ -35,144 +24,104 @@ function getItem(label, key, icon, children) {
   };
 }
 
-
 export default function RootLayout({ children }) {
+  const pathname = usePathname();
+  const [display, setDisplay] = useState(true);
   const [collapsed, setCollapsed] = useState(false);
+
+  useEffect(() => {
+    if (pathname === "/admin/orders/summary") {
+      setDisplay(false);
+    } else (setDisplay(true))
+  }, [pathname]);
+
   const onSearch = (value) => console.log(value);
 
-  function getItem(label, key, icon, children) {
-    return {
-      key,
-      icon,
-      children,
-      label,
-    };
-  }
-
   const items = [
-    getItem( <Link href={"/admin/home"}>home</Link>, "1", <HomeFilled/>),
+    getItem(<Link href={"/admin/home"}>home</Link>, "1", <HomeFilled />),
     getItem(<Link href={"/admin/orders"}>Orders</Link>, "2", <ShoppingCartOutlined />),
     {
       key: "3",
       icon: <TagFilled />,
       label: <Link href={"/admin/products"}>Products</Link>,
       children: [
-        // getItem(<Link href={"/admin/products"}>Products</Link>, "3.1", <TagFilled />),
-        getItem(<Link href={"/admin/products/inventory"}>Inventory</Link>, "3.1", <BarChartOutlined />)
-      ]
+        getItem(<Link href={"/admin/products/inventory"}>Inventory</Link>, "3.1", <BarChartOutlined />),
+      ],
     },
-      getItem(
-      <Link href={"/admin/customers"}>customers</Link>,
-      "4",
-      <UserOutlined />
-    ),
-    getItem(
-        <Link href={"/admin/analytics"}>analytics</Link>,
-      "5",
-      <BarChartOutlined />
-    ),
+    getItem(<Link href={"/admin/customers"}>customers</Link>, "4", <UserOutlined />),
+    getItem(<Link href={"/admin/analytics"}>analytics</Link>, "5", <BarChartOutlined />),
   ];
 
-  const siderStyle = {
-    textAlign: "left",
-    color: "#fff",
-    backgroundColor: "#fff",
-  };
-
   return (
-    <html lang="en">
-      <body>
-        {/* <Provider store={store}> */}
-          <Header
+    <Layout style={{ minHeight: "100vh" }}>
+      {display && (
+        <Header
+          style={{
+            position: "sticky",
+            top: 0,
+            zIndex: 1,
+            width: "100%",
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            alignContent: "center",
+            backgroundColor: "#1a1a1a",
+          }}
+        >
+          <div>
+            <h2 className="text-white uppercase">Synectiks</h2>
+          </div>
+          <div className="flex ">
+            <div className="flex bg-white border rounded-md">
+              <Search
+                placeholder="input search text"
+                onSearch={onSearch}
+                style={{
+                  width: 600,
+                  borderRadius: 9,
+                }}
+              />
+            </div>
+          </div>
+          <div>
+            <BellOutlined className="text-white text-lg" />
+            <Button className="text-white">My Store</Button>
+          </div>
+        </Header>
+      )}
+
+      <Layout>
+        {display && (
+          <Sider
+            collapsible
+            collapsed={collapsed}
+            onCollapse={(value) => setCollapsed(value)}
             style={{
-              position: "sticky",
+              overflow: "auto",
+              height: "100vh",
+              position: "fixed",
+              marginTop: "10vh",
+              left: 0,
               top: 0,
-              zIndex: 1,
-              width: "100%",
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              alignContent: "center",
-              backgroundColor:"#1a1a1a",
+              bottom: 0,
             }}
           >
-            <div>
-              <h2 className="text-white uppercase">Synectiks</h2>
-            </div>
-
-            <div className="flex ">
-              <div className="flex bg-white border rounded-md">
-                <Search
-                  placeholder="input search text"
-                  onSearch={onSearch}
-                  style={{
-                    width: 600,
-                    borderRadius: 9,
-                  }}
-                />
-              </div>
-              {/* <div className="flex flex-row w-full gap-4 justify-evenly px-4"> */}
-                {/* <Image src={Vector2} /> */}
-                {/* <Image className="text-white" src={Bell} /> */}
-                {/* <Image src={Account} /> */}
-              </div>
-          
-            <div><BellOutlined className="text-white text-lg"/>
-            <Button className="text-white">My Store</Button>
-            </div>
-            {/* <div></div> */}
-          </Header>
-
-          <Layout style={{ minHeight: "100vh" }}>
-            <Sider
-              collapsible
-              collapsed={collapsed}
-              onCollapse={(value) => setCollapsed(value)}
-              style={{
-                overflow: "auto",
-                height: "100vh",
-                position: "fixed",
-                marginTop: "10vh",
-                left: 0,
-                top: 0,
-                bottom: 0,
-                
-              }}
-            >
-              <div />
-              <Menu
-                theme="light"
-                defaultSelectedKeys={["1"]}
-                mode="inline"
-                style={{ height: "100%" }}
-                items={items}
-              >
-              </Menu>
-            </Sider>
-            <Layout className="site-layout flex flex-col">
-              <Content
-                style={{
-                  paddingLeft: 10,
-                }}
-              >
-                <div
-                  className={`${collapsed ? "ml-[80px]" : "ml-[200px]"}`}
-
-                >
-                  {children}
-
-                  <Footer
-                    style={{
-                      // textAlign: 'center',
-                      marginLeft: 200,
-                    }}
-                  ></Footer>
-                </div>
-              </Content>
-            </Layout>
-          </Layout>
-        {/* </Provider> */}
-      </body>
-    </html>
+            <Menu
+              theme="light"
+              defaultSelectedKeys={["1"]}
+              mode="inline"
+              style={{ height: "100%" }}
+              items={items}
+            />
+          </Sider>
+        )}
+        <Layout className="site-layout flex flex-col">
+          <Content style={{ paddingLeft: 10 }}>
+            <div className={`${collapsed ? "ml-[80px]" : "ml-[200px]"}`}>{children}</div>
+            <Footer style={{ marginLeft: 200 }}></Footer>
+          </Content>
+        </Layout>
+      </Layout>
+    </Layout>
   );
 }
