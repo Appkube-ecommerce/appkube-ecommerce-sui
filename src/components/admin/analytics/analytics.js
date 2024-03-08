@@ -1,9 +1,229 @@
-import React from 'react'
+"use client"
+import React from 'react';
+import { DatePicker, Space } from 'antd';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import Link from "next/link"
 
-const Analytics = () => {
+const { RangePicker } = DatePicker;
+
+const App = () => {
+  const data = [
+    { date: '2022-01-01', value: 10, type: 'A' },
+    { date: '2022-01-02', value: 15, type: 'A' },
+    { date: '2022-01-03', value: 8, type: 'A' },
+    // Add more data points as needed
+  ];
+  
+
+ 
+
   return (
-    <div>Analytics important</div>
-  )
-}
+    <div>
+      <h1 className="text-xl font-semibold m-6">Analytics</h1>
+      <div className="flex gap-3">
+        <Space direction="vertical" size={12}>
+          <RangePicker renderExtraFooter={() => 'extra footer'} />
+        </Space>
+        <p>compared from march 11 to april 12</p>
+      </div>
+      <div className="grid grid-cols-3">
+      <div className="bg-white rounded-md border border-1 h-[500px] mt-2 w-[95%]">
+        <div className="grid grid-rows-4 gap-3 m-8">
+        <div className="flex justify-between">
+        <h2 className="border-dashed border-b border-gray-400">Total Sales</h2>
+        <Link href="/" className="text-blue-500">View report</Link>
+        </div>
+        <div className="flex justify-between">
+        <h1 className="font-bold text-2xl">₹816745,98</h1>
+        <span className="font-bold text-2xl">-</span>
+        </div>
+        <div className="flex justify-between">
+        <h3>Draft Orders</h3>
+        <span>7854,787  <span>-</span></span>
+       
+        </div>
+        <div>
+        <span className="border-dashed border-b border-gray-400">Sales Over Time</span>
+        </div>
+        </div>
 
-export default Analytics
+        
+        <ResponsiveContainer height={200} width="100%" className="ml-0" align="center">
+      <LineChart data={data}>
+        <CartesianGrid strokeDasharray="3 3" />
+        <XAxis dataKey="date" />
+        <YAxis  axisLine={false}/>
+        <Tooltip />
+        <Legend />
+        <Line type="monotone" dataKey="value" name="Value" stroke="#8884d8" curve="basis" />
+      </LineChart>
+    </ResponsiveContainer>
+      </div>
+      
+      <div className="bg-white rounded-md border border-1 h-[500px] mt-2 w-[95%]">
+        <div className="grid grid-rows-4 gap-3 m-8">
+        <div className="flex justify-between">
+        <h2 className="border-dashed border-b border-gray-400">Total Sales</h2>
+        <Link href="/" className="text-blue-500">View report</Link>
+        </div>
+        <div className="flex justify-between">
+        <h1 className="font-bold text-2xl">₹816745,98</h1>
+        <span className="font-bold text-2xl">-</span>
+        </div>
+        <div className="flex justify-between">
+        <h3>Draft Orders</h3>
+        <span>7854,787  <span>-</span></span>
+       
+        </div>
+        <div>
+        <span className="border-dashed border-b border-gray-400">Sales Over Time</span>
+        </div>
+        </div>
+
+        
+        <ResponsiveContainer height={200} width="100%" className="ml-0">
+      <LineChart data={data}>
+        <CartesianGrid strokeDasharray="3 3" />
+        <XAxis dataKey="date" />
+        <YAxis  axisLine={false}/>
+        <Tooltip />
+        <Legend />
+        <Line type="monotone" dataKey="value" name="Value" stroke="#8884d8" curve="basis" />
+      </LineChart>
+    </ResponsiveContainer>
+      </div>
+      <div className="bg-white rounded-md border border-1 h-[500px] mt-2 w-[95%]">
+        <div className="grid grid-rows-4 gap-3 m-8">
+        <div className="flex justify-between">
+        <h2 className="border-dashed border-b border-gray-400">Total Sales</h2>
+        <Link href="/" className="text-blue-500">View report</Link>
+        </div>
+        <div className="flex justify-between">
+        <h1 className="font-bold text-2xl">₹816745,98</h1>
+        <span className="font-bold text-2xl">-</span>
+        </div>
+        <div className="flex justify-between">
+        <h3>Draft Orders</h3>
+        <span>7854,787  <span>-</span></span>
+       
+        </div>
+        <div>
+        <span className="border-dashed border-b border-gray-400">Sales Over Time</span>
+        </div>
+        </div>
+
+        
+        <ResponsiveContainer height={200} width="100%" className="ml-0">
+      <LineChart data={data}>
+        <CartesianGrid strokeDasharray="3 3" />
+        <XAxis dataKey="date" />
+        <YAxis  axisLine={false}/>
+        <Tooltip />
+        <Legend />
+        <Line type="monotone" dataKey="value" name="Value" stroke="#8884d8" curve="basis" />
+      </LineChart>
+    </ResponsiveContainer>
+      </div>
+      <div className="bg-white rounded-md border border-1 h-[500px] mt-2 w-[95%]">
+        <div className="grid grid-rows-4 gap-3 m-8">
+        <div className="flex justify-between">
+        <h2 className="border-dashed border-b border-gray-400">Total Sales</h2>
+        <Link href="/" className="text-blue-500">View report</Link>
+        </div>
+        <div className="flex justify-between">
+        <h1 className="font-bold text-2xl">₹816745,98</h1>
+        <span className="font-bold text-2xl">-</span>
+        </div>
+        <div className="flex justify-between">
+        <h3>Draft Orders</h3>
+        <span>7854,787  <span>-</span></span>
+       
+        </div>
+        <div>
+        <span className="border-dashed border-b border-gray-400">Sales Over Time</span>
+        </div>
+        </div>
+
+        
+        <ResponsiveContainer height={200} width="100%" className="ml-0">
+      <LineChart data={data}>
+        <CartesianGrid strokeDasharray="3 3" />
+        <XAxis dataKey="date" />
+        <YAxis  axisLine={false}/>
+        <Tooltip />
+        <Legend />
+        <Line type="monotone" dataKey="value" name="Value" stroke="#8884d8" curve="basis" />
+      </LineChart>
+    </ResponsiveContainer>
+      </div>
+      <div className="bg-white rounded-md border border-1 h-[500px] mt-2 w-[95%]">
+        <div className="grid grid-rows-4 gap-3 m-8">
+        <div className="flex justify-between">
+        <h2 className="border-dashed border-b border-gray-400">Total Sales</h2>
+        <Link href="/" className="text-blue-500">View report</Link>
+        </div>
+        <div className="flex justify-between">
+        <h1 className="font-bold text-2xl">₹816745,98</h1>
+        <span className="font-bold text-2xl">-</span>
+        </div>
+        <div className="flex justify-between">
+        <h3>Draft Orders</h3>
+        <span>7854,787  <span>-</span></span>
+       
+        </div>
+        <div>
+        <span className="border-dashed border-b border-gray-400">Sales Over Time</span>
+        </div>
+        </div>
+
+        
+        <ResponsiveContainer height={200} width="100%" className="ml-0">
+      <LineChart data={data}>
+        <CartesianGrid strokeDasharray="3 3" />
+        <XAxis dataKey="date" />
+        <YAxis  axisLine={false}/>
+        <Tooltip />
+        <Legend />
+        <Line type="monotone" dataKey="value" name="Value" stroke="#8884d8" curve="basis" />
+      </LineChart>
+    </ResponsiveContainer>
+      </div>
+      <div className="bg-white rounded-md border border-1 h-[500px] mt-2 w-[95%]">
+        <div className="grid grid-rows-4 gap-3 m-8">
+        <div className="flex justify-between">
+        <h2 className="border-dashed border-b border-gray-400">Total Sales</h2>
+        <Link href="/" className="text-blue-500">View report</Link>
+        </div>
+        <div className="flex justify-between">
+        <h1 className="font-bold text-2xl">₹816745,98</h1>
+        <span className="font-bold text-2xl">-</span>
+        </div>
+        <div className="flex justify-between">
+        <h3>Draft Orders</h3>
+        <span>7854,787  <span>-</span></span>
+       
+        </div>
+        <div>
+        <span className="border-dashed border-b border-gray-400">Sales Over Time</span>
+        </div>
+        </div>
+
+        
+        <ResponsiveContainer height={200} width="100%" className="ml-0">
+      <LineChart data={data}>
+        <CartesianGrid strokeDasharray="3 3" />
+        <XAxis dataKey="date" />
+        <YAxis  axisLine={false}/>
+        <Tooltip />
+        <Legend />
+        <Line type="monotone" dataKey="value" name="Value" stroke="#8884d8" curve="basis" />
+      </LineChart>
+    </ResponsiveContainer>
+      </div>
+      </div>
+      
+    </div>
+  );
+};
+
+export default App;
