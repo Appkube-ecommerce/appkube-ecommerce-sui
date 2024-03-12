@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Product from '../product'; // Replace with the correct path
-import { fetchCategories } from '../../../Api/fetchingProducts'; // Adjust the path based on your API file
+import { fetchCategories } from '@/Api/fetchingProducts';// Adjust the path based on your API file
 
 
 const ProductList = () => {
