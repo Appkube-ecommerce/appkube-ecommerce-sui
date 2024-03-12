@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { DownOutlined } from '@ant-design/icons';
 import { Button, Dropdown, Space} from 'antd';
 import Product from '../product'; // Replace with the correct path
-import { fetchCategories } from '../../../Api/fetchingProducts'; // Adjust the path based on your API file
+import { fetchCategories } from '@/Api/fetchingProducts';// Adjust the path based on your API file
 
 
 const ProductList = () => {

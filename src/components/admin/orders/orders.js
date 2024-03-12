@@ -1,42 +1,10 @@
-'use client'
-import { DownOutlined, UserOutlined, InboxOutlined, SearchOutlined, MenuOutlined, ArrowUpOutlined, ArrowDownOutlined, TableOutlined } from '@ant-design/icons';
-import { Button, Dropdown, message, Space, Tooltip, Menu } from 'antd';
-import { Tabs } from 'antd';
-import Link from "next/link"
-import { Table, Pagination } from 'antd';
+'use client';
+import { InboxOutlined } from '@ant-design/icons';
 import React, { useState } from 'react';
-import CustomModal from './modal';
-
-
-const onChange = (key) => {
-  console.log(key);
-};
-const handleButtonClick = (e) => {
-  console.log('click left button', e);
-};
-const handleMenuClick = (e) => {
-  console.log('click', e);
-};
-
-
-const items = [
-  {
-    label: '1st menu item',
-    key: '1',
-    icon: <UserOutlined />,
-  },
-  {
-    label: '2nd menu item',
-    key: '2',
-    icon: <UserOutlined />,
-  },
-  {
-    label: '3rd menu item',
-    key: '3',
-    icon: <UserOutlined />,
-  },
-  
-];
+import { Table } from 'antd';
+import Link from 'next/link';
+//import { useRouter } from 'next/router';
+import { Button, Modal, Radio } from 'antd';
 
 const columns = [
   {
@@ -45,205 +13,160 @@ const columns = [
     className: 'text-xs', 
     render: (text, record) => (
       <Link href={`/admin/orders/summary`}>
-        <span >{text}</span>
+        <span>{text}</span>
       </Link>
     ),
-    
   },
   {
     title: 'Date',
     dataIndex: 'date',
-    className: 'text-xs',
   },
   {
     title: 'Customer',
     dataIndex: 'customer',
-    className: 'text-xs',
   },
   {
     title: 'Channel',
     dataIndex: 'channel',
-    className: 'text-xs',
   },
   {
     title: 'Total',
     dataIndex: 'total',
-    className: 'text-xs',
   },
   {
-    title: 'Payment Status',
+    title: 'Payment status',
     dataIndex: 'paymentstatus',
-    className: 'text-xs',
   },
   {
-    title: 'Fulfillment Status',
+    title: 'Fulfillment status',
     dataIndex: 'fulfillmentstatus',
-    className: 'text-xs',
-  }, {
+  },
+  {
     title: 'Items',
     dataIndex: 'items',
-    className: 'text-xs',
   },
   {
-    title: 'Delivery Status',
+    title: 'Delivery status',
     dataIndex: 'deliverystatus',
-    className: 'text-xs',
   },
   {
-    title: 'Delivery Method',
+    title: 'Delivery method',
     dataIndex: 'deliverymethod',
-    className: 'text-xs',
   },
   {
     title: 'Tags',
     dataIndex: 'tags',
-    className: 'text-xs',
   },
 ];
 
-const CustomPagination = ({ total, onChange, current }) => {
-  return (
-    <Pagination
-      
-      onChange={onChange}
-      current={current}
-      itemRender={(current, type, originalElement) => {
-        if (type === 'prev' || type === 'next') {
-          return <span>{originalElement}</span>;
-        }
-        return null;
-      }}
-    />
-  );
+const data = [
+  {
+    key: '1',
+    order: '#1',
+    date: '2022-01-01',
+    customer: 'John Doe',
+    channel: 'Online',
+    total: '$100.00',
+    paymentstatus: 'Paid',
+    fulfillmentstatus: 'Shipped',
+    items: '5',
+    deliverystatus: 'Delivered',
+    deliverymethod: 'Express',
+    tags: 'High Priority',
+  },
+];
+
+
+const rowSelection = {
+  onChange: (selectedRowKeys, selectedRows) => {
+    console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+  },
+  getCheckboxProps: (record) => ({
+    disabled: record.name === 'Disabled User',
+    name: record.name,
+  }),
 };
 
-const { TabPane } = Tabs;
 const Orders = () => {
-  const handleMenuClick = (e) => {
-    console.log('click', e);
-  };
- 
 
+  const [selectionType, setSelectionType] = useState('checkbox');
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [exportOption, setExportOption] = useState('option1');
+
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleExportOptionChange = (e) => {
+    setExportOption(e.target.value);
+  };
 
   const handleOrderClick = (orderId) => {
-    router.push(`/ordersummary/${orderId}`);
-  };
-  
-
-  const menu = (
-    <Menu onClick={handleMenuClick}>
-      {items.map((item) => (
-        <Menu.Item key={item.key} icon={item.icon}>
-          {item.label}
-        </Menu.Item>
-      ))}
-    </Menu>
-  );
-
-  const tabNames = [
-    'All',
-    'Unfulfilled',
-    'Unpaid',
-    'Open',
-    'Closed',
-    'Local Delivery',
-    '+',
-    ];
-
-const [selectedRowKeys, setSelectedRowKeys] = useState([]);
-
-  const onSelectChange = (newSelectedRowKeys) => {
-    console.log('selectedRowKeys changed: ', newSelectedRowKeys);
-    setSelectedRowKeys(newSelectedRowKeys);
+    router.push(`/admin/orders/summary${orderId}`);
   };
 
-  const rowSelection = {
-    selectedRowKeys,
-    onChange: onSelectChange,
-    selections: [
-      Table.SELECTION_ALL,
-      Table.SELECTION_INVERT,
-      Table.SELECTION_NONE,
-      {
-        key: 'odd',
-        text: 'Select Odd Row',
-        onSelect: (changeableRowKeys) => {
-          let newSelectedRowKeys = [];
-          newSelectedRowKeys = changeableRowKeys.filter((_, index) => {
-            if (index % 2 !== 0) {
-              return false;
-            }
-            return true;
-          });
-          setSelectedRowKeys(newSelectedRowKeys);
-        },
-      },
-      {
-        key: 'even',
-        text: 'Select Even Row',
-        onSelect: (changeableRowKeys) => {
-          let newSelectedRowKeys = [];
-          newSelectedRowKeys = changeableRowKeys.filter((_, index) => {
-            if (index % 2 !== 0) {
-              return true;
-            }
-            return false;
-          });
-          setSelectedRowKeys(newSelectedRowKeys);
-        },
-      },
-    ],
-  };
-
-  const onChangeTabs = (key) => {
-    console.log(key);
-  };
-
-  const onChangePagination = (page) => {
-    console.log('Page changed: ', page);
-  };
-
-
-  const tabIcons = [
-    <span><SearchOutlined /><MenuOutlined /></span>,
-    <span><TableOutlined /></span>,
-    <span><ArrowUpOutlined /><ArrowDownOutlined /></span>,
-  ];
-
-  const extendedTabNames = [...tabNames.slice(0, tabNames.indexOf('+') + 1), ...tabIcons];
-
-  const sampleData = [
-    {
-      key: '1',
-      order: '#1',
-      date: '2022-01-01',
-      customer: 'John Doe',
-      channel: 'Online',
-      total: '$100.00',
-      paymentstatus: 'Paid',
-      fulfillmentstatus: 'Shipped',
-      items: '5',
-      deliverystatus: 'Delivered',
-      deliverymethod: 'Express',
-      tags: 'High Priority',
-    },
-
-  ];
-return (
+  return (
     <>
       <div className='mr-2 px-4'>
         <div className='flex justify-between mt-4 items-center'>
-          <div><p className="font-bold text-lg ">Orders</p></div>
-          {/* <div className="flex gap-2"> */}
-          <div className="flex gap-2">
-            <CustomModal />
+          <div>
+            <p className="font-bold text-lg ">Orders</p>
           </div>
-            {/* <button className="rounded-lg font-medium w-16 text-xs h-6 bg-gray-200">Export<modal/></button> */}
-            {/* <Dropdown overlay={menu}>
-              <Button className='rounded-lg bg-gray-200 font-medium text-xs h-6'>More actions<DownOutlined /></Button>
-            </Dropdown>
-            <button className='rounded-lg font-medium w-24 bg-gray-800 text-white text-xs h-6'>Create order</button> */}
-          {/* </div> */}
+          <div className="flex gap-2">
+          <>
+      <button
+        onClick={showModal}
+        className="rounded-lg font-medium w-16 text-xs h-6 bg-gray-300 text-slate-800 hover:bg-slate-300"
+      >
+        Export
+      </button>
+      <Modal
+        visible={isModalOpen}
+        onCancel={handleCancel}
+        style={{ padding: 0 }}
+        footer={[
+          <div key="buttons" style={{ display: 'flex' }} className='justify-center items-end gap-1 mt-6 ml-28'>
+            <button className="shadow-lg h-7 rounded-lg border border-gray-200 w-18 px-2" onClick={handleCancel}>
+              Cancel
+            </button>
+            <button className="shadow-lg rounded-lg border border-gray-200 w-48 h-7 px-2">
+              Export transaction histories
+            </button>
+            <button className="bg-gray-800 text-white rounded-lg h-7 w-30 px-2">
+              Export orders
+            </button>
+          </div>
+        ]}
+      >
+        <div className='h-10 w-full font-semibold text-slate-800 border-b'>
+          <h2 className='text-base font-semibold'>Export Orders</h2>
+        </div>
+        <div className='py-4'>
+          <div>
+            <p className='font-medium text-slate-800'>Export</p>
+            <div onChange={handleExportOptionChange} value={exportOption} className='mt-2'>
+              <Radio value='option1'>Current page</Radio><br/>
+              <Radio value='option2'>All orders</Radio><br/>
+              <Radio value="C" disabled>Selected: 0 products</Radio><br/>
+              <Radio value="D" disabled>50+ orders matching your search</Radio><br/>
+              <Radio value='option3'>Orders by date</Radio>
+            </div>
+          </div>
+          <div className='mt-4'>
+            <p className='font-medium text-slate-800'>Export as</p>
+            <div onChange={handleExportOptionChange} value={exportOption} className='mt-2'>
+              <Radio value='option1'>CSV for excel, Numbers, or other spreadsheet programs</Radio><br/>
+              <Radio value='option2'>Plain CSV file</Radio>
+            </div>
+          </div>
+        </div>
+      </Modal>
+    </>
+          </div>
         </div>
 
         <div className='bg-white rounded-xl h-16 border border-gray-200 flex items-center mb-4 mt-4 '>
@@ -268,43 +191,37 @@ return (
             <button className='rounded-lg hover:bg-gray-100 h-12 w-44 text-slate-800 text-xs font-semibold'>Delivered orders over time</button>
           </div>
         </div>
+      </div>
 
-        <div className='h-96 bg-white rounded-xl p-4'>
-          <Tabs
-            onChange={onChangeTabs}
-            type="card"
-            tabBarStyle={{ color: '#333', height: '24px' }}
-            tabIcons={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}
-          >
-            {extendedTabNames.map((tab, index) => (
-              <TabPane
-              tab={
-                <div>
-                  <span style={{ fontSize: '12px', fontWeight: '600'}}>{tab}</span>
-                </div>
-              }
-              key={String(index + 1)}
-            >
-              {tab === 'All' && (
-                <>
-                  <Table rowSelection={rowSelection} columns={columns} dataSource={sampleData} />
-                 
-                </>
-              )}
-            </TabPane>  
-            ))}
-               
-          </Tabs>
-       <div style={{ textAlign: 'center', marginTop: '20px' }}>
-                  <CustomPagination onChange={onChangePagination} current={1} />
-                  </div>
-        </div>
-        
-        <div className='justify-center text-center mt-4 text-xs'>Learn more about <a className='underline text-blue-600 hover:underline'>orders</a></div>
+<div className='bg-white p-2 rounded-lg'>
+      <div className='gap-2'>
+        <button className="rounded-lg w-10 h-6 text-xs  hover:bg-gray-100">All</button>
+        <button className="rounded-lg w-20 h-6 text-xs  hover:bg-gray-100">Unfulfilled</button>
+        <button className="rounded-lg h-6 text-xs w-14  hover:bg-gray-100">Unpaid</button>
+        <button className="rounded-lg h-6 text-xs w-12  hover:bg-gray-100">Open</button>
+        <button className="rounded-lg w-14 h-6 text-xs  hover:bg-gray-100">Closed</button>
+        <button className="rounded-lg w-24 h-6 text-xs  hover:bg-gray-100">Local Delivery</button>
+        <button className="rounded-lg w-6 h-6 text-xs  hover:bg-gray-100">+</button>
+      </div>
+
+      <Table
+          rowSelection={{
+            type: selectionType,
+            ...rowSelection,
+          }}
+          columns={[
+            ...columns,
+          ]}
+          dataSource={data}
+        />
       </div>
     </>
+    
   );
 };
 
 export default Orders;
+<<<<<<< HEAD
 
+=======
+>>>>>>> 766ee1105da6ade1829e854d293ae36786070dda
