@@ -30,11 +30,10 @@ export default function RootLayout({ children }) {
   const [collapsed, setCollapsed] = useState(false);
 
   useEffect(() => {
-<<<<<<< HEAD
     if (pathname === "/admin/orders/summary") {
       setDisplay(false);
     }
-=======
+
     // if (pathname === "/admin/products/addproduct") {
     //   setDisplay(false);
     // }
@@ -42,7 +41,7 @@ export default function RootLayout({ children }) {
     //   setDisplay(true);
     // }
 
->>>>>>> 766ee1105da6ade1829e854d293ae36786070dda
+
   }, [pathname]);
 
   const onSearch = (value) => console.log(value);
