@@ -1,5 +1,5 @@
 'use client'
-import ProductList from '@/components/admin/productsList'
+import ProductList from '@/components/admin/productsList/Pro'
 import React from 'react'
 
 const page = () => {
