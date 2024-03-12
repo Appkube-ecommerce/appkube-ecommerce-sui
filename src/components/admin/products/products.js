@@ -7,6 +7,7 @@ import ImportButton from "./importButton";
 import { useRouter } from "next/navigation";
 import Link from "next/link"
 import { Radio } from 'antd';
+import ProductList from "../productsList/Pro";
 // import Addproduct from "./addproduct";
 
 const data = [
@@ -358,7 +359,9 @@ const Products = () => {
     <>
       <header className="flex justify-between mt-4 ">
         <h1 className="font-bold text-2xl">Products</h1>
+      
         <div className="flex gap-3">
+         
        
           <button
             style={{
@@ -462,6 +465,8 @@ const Products = () => {
         pagination={false}
         scroll={{ x: 800, y: 4000 }}
       />
+      {/* calling print button in product page */}
+        <ProductList/>
     </>
   );
 };
