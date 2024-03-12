@@ -108,7 +108,6 @@ const ProductList = () => {
         <h3 className="product-name">${product.name}</h3>
         <p className="product-price">Price:₹${product.price}</p>
         <p className="product-unit">Unit:${product.unit}</p>
-       
 
       </div>
     </div>
@@ -166,15 +165,17 @@ const ProductList = () => {
   
     return (
       <div className="product-list-container">
-      
+
         <div className="product-list grid grid-cols-5">
+
           
           {/* {products.map((product, index) => (
             <Product key={product.id} product={product} index={index} />
           ))} */}
         </div> 
-  
+
         {/* /* Print button with categories */}
+
         
      
      
