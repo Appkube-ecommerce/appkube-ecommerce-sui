@@ -48,3 +48,11 @@ const client = generateClient();
           console.log(error)
       }
     }
+//   fetchCategories()
+
+//   const [Data, setData] = useState([])
+//   console.log(Data);
+
+//   const uniqueCategories = [...new Set(Data.map((item) => item.category))];
+
+//   console.log(uniqueCategories);

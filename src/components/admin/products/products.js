@@ -7,8 +7,9 @@ import ImportButton from "./importButton";
 import { useRouter } from "next/navigation";
 import Link from "next/link"
 import { Radio } from 'antd';
+import ProductList from "../productsList/Pro";
 // import Addproduct from "./addproduct";
-import { fetchCategories } from "@/api/fetchProducts";
+import { fetchCategories } from "@/Api/fetchingProducts";
 
 const Products = () => {
   const [products, setProducts] = useState([]);
@@ -211,12 +212,13 @@ const Products = () => {
     },
   };
 
+
   return (
     <>
       <header className="flex justify-between mt-4 ">
         <h1 className="font-bold text-2xl">Products</h1>
+      
         <div className="flex gap-3">
-       
           <button
             style={{
               backgroundColor: "#E3E3E3",
@@ -315,7 +317,7 @@ const Products = () => {
         pagination={false}
         scroll={{ x: 800, y: 4000 }}
       />
-    
+      <ProductList/>
     </>
   );
 };
