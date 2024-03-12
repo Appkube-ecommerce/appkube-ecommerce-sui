@@ -6,9 +6,34 @@ import Highlighter from "react-highlight-words";
 import ImportButton from "./importButton";
 import { useRouter } from "next/navigation";
 import Link from "next/link"
+import { Radio } from 'antd';
 // import Addproduct from "./addproduct";
 
-const data = [
+
+
+const Customer = () => {
+  const [radio1, setradio1] = useState(1);
+  const onChangeRadio1 = (e) => {
+    console.log('radio checked', e.target.value);
+    setradio1(e.target.value);
+  };
+  const [radio2, setradio2] = useState(1);
+  const onChangeRadio2 = (e) => {
+    console.log('radio checked', e.target.value);
+    setradio2(e.target.value);
+  };
+  const [data,setData]=useState([ {
+    key: "12",
+    customer: "John pink",
+    tags: (
+      <Tag bordered={false} color="success">
+        subscribe
+      </Tag>
+    ),
+    Location: "india",
+    orders: "2 orders",
+    Amountspent: "43.00",
+  },
   {
     key: "1",
     customer: "John pink",
@@ -140,10 +165,9 @@ const data = [
     Location: "india",
     orders: "2 orders",
     Amountspent: "43.00",
-  },
-];
+  },]);
+ 
 
-const Customer = () => {
   const router = useRouter();
   const AddCustomers = ()=>{
 
@@ -167,6 +191,7 @@ const Customer = () => {
   const handleCancel = () => {
     setOpen(false);
   };
+
 
   const handleSearch = (selectedKeys, confirm, dataIndex) => {
     confirm();
@@ -275,6 +300,8 @@ const Customer = () => {
   });
 
   const columns = [
+ 
+   
     {
       // ...getColumnSearchProps("customer"),
       title: "Customer name",
@@ -309,6 +336,20 @@ const Customer = () => {
       // ...getColumnSearchProps("Amountspent"),
     },
   ];
+  const [filteredData, setFilteredData] = useState(data);
+  
+
+  const search = (e) => {
+    const value = e.target.value.toLowerCase(); // Convert search input to lowercase for case-insensitive search
+    const filteredData = data.filter((record) =>
+      Object.values(record).some(
+        (val) => typeof val === 'string' && val.toLowerCase().includes(value)
+      )
+    );
+    setSearchText(value);
+    setSearchedColumn(""); // Reset searched column when using global search
+    setFilteredData(filteredData); // Update filteredData instead of data
+  };
 
   const rowSelection = {
     onChange: (selectedRowKeys, selectedRows) => {
@@ -346,39 +387,93 @@ const Customer = () => {
           {/* </Link> */}
         </div>
         <Modal
-          open={open}
-          title="Title"
-          onOk={handleOk}
-          onCancel={handleCancel}
-          footer={[
-            <Button key="back" className="shadow-lg" onClick={handleCancel}>
-              Cancel
-            </Button>,
-            <Button
-              key="Cancel"
-              className="bg-black text-white"
-              loading={loading}
-              onClick={handleOk}
-            >
-              Export Products
-            </Button>,
-          ]}
-        >
-          <p>Some contents...</p>
-          <p>Some contents...</p>
-          <p>Some contents...</p>
-          <p>Some contents...</p>
-          <p>Some contents...</p>
-        </Modal>
+  open={open}
+  title="Export products"
+  onOk={handleOk}
+  onCancel={handleCancel}
+  footer={[
+    <Button key="back" className="shadow-lg" onClick={handleCancel}>
+      Cancel
+    </Button>,
+    <Button
+      key="Cancel"
+      className="bg-black text-white"
+      loading={loading}
+      onClick={handleOk}
+    >
+      Export customers
+    </Button>,
+  ]}
+>
+  <hr></hr>
+  <div className="mt-5">
+  
+    
+      <div className="m-5">
+        <div className="mb-5">
+          <Space direction="vertical">
+          <h5>Export</h5>
+ 
+      <Radio.Group onChange={onChangeRadio1} value={radio1} defaultValue="A">
+      <Space direction="vertical">
+      <Radio value="A">Current Page</Radio>
+        <Radio value="B">All customers</Radio>
+        <Radio value="C" disabled>Selected:0 customers</Radio>
+      <Radio value="D" disabled>50+ customers matching your search </Radio>
+ </Space>
+
+    </Radio.Group>
+    </Space>
+        </div>
+        <div className="mb-5"> 
+        <Space direction="vertical">
+          <h5>Export as</h5>
+    <Radio.Group onChange={onChangeRadio2} value={radio2} defaultValue="E">
+      <Space direction="vertical">
+      <Radio value="E">CSV for Excel,Numbers,or other spreadsheet programs</Radio>
+      <Radio value="F">Plain CSV file</Radio>
+     
+ </Space>
+
+    </Radio.Group>
+    </Space>
+   
+
+        </div>
+      </div>
+      <hr></hr>
+  <p className="m-2">Learn more about <Link href="/" className="text-blue-400 underline">exporting customers to CSV file</Link></p>
+ 
+  
+  </div>
+
+  
+ 
+  <hr></hr>
+  
+  
+</Modal>
       </header>
+      
+      <div className="mt-4">
+        <Input
+          ref={searchInput}
+          placeholder="Search Customer"
+          value={searchText}
+          onChange={search}
+          style={{ width: "100%" }}
+         
+        />
+      </div>
+    
       <Table
-        className="mt-5"
+      
         rowSelection={{
           type: "checkbox",
           ...rowSelection,
         }}
         columns={columns}
-        dataSource={data}
+        dataSource={filteredData}
         pagination={false}
         scroll={{ x: 1000, y: 900 }}
       />
