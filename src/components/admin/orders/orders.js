@@ -221,7 +221,3 @@ const Orders = () => {
 };
 
 export default Orders;
-<<<<<<< HEAD
-
-=======
->>>>>>> 766ee1105da6ade1829e854d293ae36786070dda

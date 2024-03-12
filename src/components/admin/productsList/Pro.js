@@ -46,12 +46,12 @@ const ProductList = () => {
                 .product-list {
                   display: grid;
                   grid-template-columns: repeat(5, 1fr); /* Adjust the number of columns as needed */
-                  gap: 16px; /* Adjust the gap between columns */
+                  gap: 8px; /* Adjust the gap between columns */
                   flex-wrap: wrap;
                   justify-content: flex-start;
                   margin: 0;
                   padding: 0;
-                  margin-left: 20px;
+                  margin-left: 10px;
                 }
                 
       
@@ -108,7 +108,7 @@ const ProductList = () => {
         <h3 className="product-name">${product.name}</h3>
         <p className="product-price">Price:₹${product.price}</p>
         <p className="product-unit">Unit:${product.unit}</p>
-        <p className="product-unit">Category:${product.category}</p>
+
       </div>
     </div>
           `);
@@ -165,15 +165,17 @@ const ProductList = () => {
   
     return (
       <div className="product-list-container">
-      
-        {/* <div className="product-list grid grid-cols-4">
+
+        <div className="product-list grid grid-cols-5">
+
           
-          {products.map((product, index) => (
+          {/* {products.map((product, index) => (
             <Product key={product.id} product={product} index={index} />
-          ))}
-        </div> */}
-  
-        {/* Print button with categories */}
+          ))} */}
+        </div> 
+
+        {/* /* Print button with categories */}
+
         
      
      
