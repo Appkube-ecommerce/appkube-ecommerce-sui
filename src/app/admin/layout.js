@@ -36,6 +36,7 @@ export default function RootLayout({ children }) {
     // else{
     //   setDisplay(true);
     // }
+
   }, [pathname]);
 
   const onSearch = (value) => console.log(value);

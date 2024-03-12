@@ -18,6 +18,7 @@ export default function RootLayout({ children }) {
     "/buyer/register",
     "/buyer/login/account",
     "/buyer/orders",
+    "/admin/orders/summary"
   ];
 
   return (

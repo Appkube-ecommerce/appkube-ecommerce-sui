@@ -6,6 +6,7 @@ import Highlighter from "react-highlight-words";
 import ImportButton from "./importButton";
 import { useRouter } from "next/navigation";
 import Link from "next/link"
+import { Radio } from 'antd';
 // import Addproduct from "./addproduct";
 
 const data = [
@@ -170,6 +171,17 @@ const data = [
 
 const Products = () => {
   const router = useRouter();
+  const [radio1, setradio1] = useState(1);
+  const onChangeRadio1 = (e) => {
+    console.log('radio checked', e.target.value);
+    setradio1(e.target.value);
+  };
+  const [radio2, setradio2] = useState(1);
+  const onChangeRadio2 = (e) => {
+    console.log('radio checked', e.target.value);
+    setradio2(e.target.value);
+  };
+
   const AddProducts = ()=>{
 
     router.push('/admin/products/addproduct')
@@ -341,11 +353,13 @@ const Products = () => {
     },
   };
 
+
   return (
     <>
       <header className="flex justify-between mt-4 ">
         <h1 className="font-bold text-2xl">Products</h1>
         <div className="flex gap-3">
+       
           <button
             style={{
               backgroundColor: "#E3E3E3",
@@ -370,30 +384,72 @@ const Products = () => {
           {/* </Link> */}
         </div>
         <Modal
-          open={open}
-          title="Title"
-          onOk={handleOk}
-          onCancel={handleCancel}
-          footer={[
-            <Button key="back" className="shadow-lg" onClick={handleCancel}>
-              Cancel
-            </Button>,
-            <Button
-              key="Cancel"
-              className="bg-black text-white"
-              loading={loading}
-              onClick={handleOk}
-            >
-              Export Products
-            </Button>,
-          ]}
-        >
-          <p>Some contents...</p>
-          <p>Some contents...</p>
-          <p>Some contents...</p>
-          <p>Some contents...</p>
-          <p>Some contents...</p>
-        </Modal>
+  open={open}
+  title="Export products"
+  onOk={handleOk}
+  onCancel={handleCancel}
+  footer={[
+    <Button key="back" className="shadow-lg" onClick={handleCancel}>
+      Cancel
+    </Button>,
+    <Button
+      key="Cancel"
+      className="bg-black text-white"
+      loading={loading}
+      onClick={handleOk}
+    >
+      Export Products
+    </Button>,
+  ]}
+>
+  <hr></hr>
+  <div className="mt-5 mb-5">
+  <p>This CSV file can update all product information. To update just 
+    inventory quantities use the <Link href="/" className="text-blue-500 underline" >
+      CSV file for inventory.</Link></p>
+    
+      <div className="m-5">
+        <div className="mb-5">
+          <Space direction="vertical">
+          <h5>Export</h5>
+ 
+      <Radio.Group onChange={onChangeRadio1} value={radio1} defaultValue="A">
+      <Space direction="vertical">
+      <Radio value="A">Current Page</Radio>
+        <Radio value="B">All products</Radio>
+        <Radio value="C" disabled>Selected:0 products</Radio>
+      <Radio value="D" disabled>1 product matching your search </Radio>
+ </Space>
+
+    </Radio.Group>
+    </Space>
+        </div>
+        <div className="mb-5"> 
+        <Space direction="vertical">
+          <h5>Export as</h5>
+    <Radio.Group onChange={onChangeRadio2} value={radio2} defaultValue="E">
+      <Space direction="vertical">
+      <Radio value="E">CSV for Excel,Numbers,or other spreadsheet programs</Radio>
+      <Radio value="F">Plain CSV file</Radio>
+     
+ </Space>
+
+    </Radio.Group>
+    </Space>
+
+        </div>
+      </div>
+  <p>Learn more about <Link href="/" className="text-blue-400 underline">exporting products to CSV file</Link> or the   <Link href="/" className="text-blue-400 underline">bulk editor.</Link></p>
+ 
+  
+  </div>
+
+  
+ 
+  <hr></hr>
+  
+  
+</Modal>
       </header>
       <Table
         className="mt-5"
