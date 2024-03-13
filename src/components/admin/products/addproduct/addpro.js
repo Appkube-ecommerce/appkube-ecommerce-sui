@@ -37,5 +37,5 @@ const Addproduct = () => {
       </main>
     </div>
   );
-};
+}
 export default Addproduct;

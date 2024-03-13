@@ -57,7 +57,7 @@ const UploadMediafun = () => {
       <h1 className="text-md font-semibold mt-1">Media</h1>
       <div className="pl-[40%]">
       <Upload
-        name="avatar"
+        name="image"
         listType="picture-card"
         className="avatar-uploader"
         showUploadList={false}
