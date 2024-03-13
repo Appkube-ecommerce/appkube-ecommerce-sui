@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { SearchOutlined } from "@ant-design/icons";
 import { Button, Input, Space, Table, Tag, Modal } from "antd";
 import Highlighter from "react-highlight-words";
@@ -7,11 +7,27 @@ import ImportButton from "./importButton";
 import { useRouter } from "next/navigation";
 import Link from "next/link"
 import { Radio } from 'antd';
+import { fetchcustomer } from "@/Api/fetchingcustomers";
 // import Addproduct from "./addproduct";
 
 
-
 const Customer = () => {
+  const [products, setProducts] = useState([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const result = await fetchcustomer(); // Assuming fetchCategories returns a list of products
+
+        console.log(result)
+        setProducts(result.data.listCustomers.items);
+      } catch (error) {
+        console.error("Error fetching customers:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   const [radio1, setradio1] = useState(1);
   const onChangeRadio1 = (e) => {
     console.log('radio checked', e.target.value);
@@ -22,155 +38,155 @@ const Customer = () => {
     console.log('radio checked', e.target.value);
     setradio2(e.target.value);
   };
-  const [data,setData]=useState([ {
-    key: "12",
-    customer: "John pink",
-    tags: (
-      <Tag bordered={false} color="success">
-        subscribe
-      </Tag>
-    ),
-    Location: "india",
-    orders: "2 orders",
-    Amountspent: "43.00",
-  },
-  {
-    key: "1",
-    customer: "John pink",
-    tags: (
-      <Tag bordered={false} color="success">
-        subscribe
-      </Tag>
-    ),
-    Location: "india",
-    orders: "2 orders",
-    Amountspent: "43.00",
-  },
-  {
-    key: "2",
-    customer: "John pink",
-    tags: (
-      <Tag bordered={false} color="success">
-        subscribe
-      </Tag>
-    ),
-    Location: "india",
-    orders: "2 orders",
-    Amountspent: "43.00",
-  },
-  {
-    key: "3",
-    customer: "John pink",
-    tags: (
-      <Tag bordered={false} color="success">
-        subscribe
-      </Tag>
-    ),
-    Location: "india",
-    orders: "2 orders",
-    Amountspent: "43.00",
-  },
-  {
-    key: "4",
-    customer: "John pink",
-    tags: (
-      <Tag bordered={false} color="success">
-        subscribe
-      </Tag>
-    ),
-    Location: "india",
-    orders: "2 orders",
-    Amountspent: "43.00",
-  },
-  {
-    key: "5",
-    customer: "John pink",
-    tags: (
-      <Tag bordered={false} style={{ color: 'gray', backgroundColor: '#f5f5f5', }}>
-      Not subscribe
-     </Tag>
-    ),
-    Location: "india",
-    orders: "2 orders",
-    Amountspent: "43.00",
-  },
-  {
-    key: "6",
-    customer: "John pink",
-    tags: (
-      <Tag bordered={false} style={{ color: 'gray', backgroundColor: '#f5f5f5', }}>
-      Not subscribe
-     </Tag>
-    ),
-    Location: "india",
-    orders: "2 orders",
-    Amountspent: "43.00",
-  },
-  {
-    key: "7",
-    customer: "John pink",
-    tags: (
-      <Tag bordered={false} style={{ color: 'gray', backgroundColor: '#f5f5f5', }}>
-      Not subscribe
-     </Tag>
-    ),
-    Location: "india",
-    orders: "2 orders",
-    Amountspent: "43.00",
-  },
-  {
-    key: "8",
-    customer: "John pink",
-    tags: (
-      <Tag bordered={false} style={{ color: 'gray', backgroundColor: '#f5f5f5', }}>
-      Not subscribe
-     </Tag>
-    ),
-    Location: "india",
-    orders: "2 orders",
-    Amountspent: "43.00",
-  },
-  {
-    key: "9",
-    customer: "John pink",
-    tags: (
-      <Tag bordered={false} style={{ color: 'gray', backgroundColor: '#f5f5f5', }}>
-       Not subscribe
-      </Tag>
-    ),
-    Location: "india",
-    orders: "2 orders",
-    Amountspent: "43.00",
-  },
-  {
-    key: "10",
-    customer: "John pink",
-    tags: (
-      <Tag bordered={false} style={{ color: 'gray', backgroundColor: '#f5f5f5', }}>
-      Not subscribe
-     </Tag>
-    ),
-    Location: "india",
-    orders: "2 orders",
-    Amountspent: "43.00",
-  },
-  {
-    key: "11",
-    customer: "John pink",
-    tags: (
-      <Tag bordered={false} style={{ color: 'gray', backgroundColor: '#f5f5f5', }}>
-       Not subscribe
-      </Tag>
-    ),
-    Location: "india",
-    orders: "2 orders",
-    Amountspent: "43.00",
-  },]);
+  // const [data,setData]=useState([ {
+  //   key: "12",
+  //   customer: "John pink",
+  //   tags: (
+  //     <Tag bordered={false} color="success">
+  //       subscribe
+  //     </Tag>
+  //   ),
+  //   Location: "india",
+  //   orders: "2 orders",
+  //   Amountspent: "43.00",
+  // },
+  // {
+  //   key: "1",
+  //   customer: "John pink",
+  //   tags: (
+  //     <Tag bordered={false} color="success">
+  //       subscribe
+  //     </Tag>
+  //   ),
+  //   Location: "india",
+  //   orders: "2 orders",
+  //   Amountspent: "43.00",
+  // },
+  // {
+  //   key: "2",
+  //   customer: "John pink",
+  //   tags: (
+  //     <Tag bordered={false} color="success">
+  //       subscribe
+  //     </Tag>
+  //   ),
+  //   Location: "india",
+  //   orders: "2 orders",
+  //   Amountspent: "43.00",
+  // },
+  // {
+  //   key: "3",
+  //   customer: "John pink",
+  //   tags: (
+  //     <Tag bordered={false} color="success">
+  //       subscribe
+  //     </Tag>
+  //   ),
+  //   Location: "india",
+  //   orders: "2 orders",
+  //   Amountspent: "43.00",
+  // },
+  // {
+  //   key: "4",
+  //   customer: "John pink",
+  //   tags: (
+  //     <Tag bordered={false} color="success">
+  //       subscribe
+  //     </Tag>
+  //   ),
+  //   Location: "india",
+  //   orders: "2 orders",
+  //   Amountspent: "43.00",
+  // },
+  // {
+  //   key: "5",
+  //   customer: "John pink",
+  //   tags: (
+  //     <Tag bordered={false} style={{ color: 'gray', backgroundColor: '#f5f5f5', }}>
+  //     Not subscribe
+  //    </Tag>
+  //   ),
+  //   Location: "india",
+  //   orders: "2 orders",
+  //   Amountspent: "43.00",
+  // },
+  // {
+  //   key: "6",
+  //   customer: "John pink",
+  //   tags: (
+  //     <Tag bordered={false} style={{ color: 'gray', backgroundColor: '#f5f5f5', }}>
+  //     Not subscribe
+  //    </Tag>
+  //   ),
+  //   Location: "india",
+  //   orders: "2 orders",
+  //   Amountspent: "43.00",
+  // },
+  // {
+  //   key: "7",
+  //   customer: "John pink",
+  //   tags: (
+  //     <Tag bordered={false} style={{ color: 'gray', backgroundColor: '#f5f5f5', }}>
+  //     Not subscribe
+  //    </Tag>
+  //   ),
+  //   Location: "india",
+  //   orders: "2 orders",
+  //   Amountspent: "43.00",
+  // },
+  // {
+  //   key: "8",
+  //   customer: "John pink",
+  //   tags: (
+  //     <Tag bordered={false} style={{ color: 'gray', backgroundColor: '#f5f5f5', }}>
+  //     Not subscribe
+  //    </Tag>
+  //   ),
+  //   Location: "india",
+  //   orders: "2 orders",
+  //   Amountspent: "43.00",
+  // },
+  // {
+  //   key: "9",
+  //   customer: "John pink",
+  //   tags: (
+  //     <Tag bordered={false} style={{ color: 'gray', backgroundColor: '#f5f5f5', }}>
+  //      Not subscribe
+  //     </Tag>
+  //   ),
+  //   Location: "india",
+  //   orders: "2 orders",
+  //   Amountspent: "43.00",
+  // },
+  // {
+  //   key: "10",
+  //   customer: "John pink",
+  //   tags: (
+  //     <Tag bordered={false} style={{ color: 'gray', backgroundColor: '#f5f5f5', }}>
+  //     Not subscribe
+  //    </Tag>
+  //   ),
+  //   Location: "india",
+  //   orders: "2 orders",
+  //   Amountspent: "43.00",
+  // },
+  // {
+  //   key: "11",
+  //   customer: "John pink",
+  //   tags: (
+  //     <Tag bordered={false} style={{ color: 'gray', backgroundColor: '#f5f5f5', }}>
+  //      Not subscribe
+  //     </Tag>
+  //   ),
+  //   Location: "india",
+  //   orders: "2 orders",
+  //   Amountspent: "43.00",
+  // },]);
  
 
   const router = useRouter();
   const AddCustomers = ()=>{
-
+   
     router.push('/admin/customers/addcustomer')
   }
   const [searchText, setSearchText] = useState("");
@@ -299,57 +315,47 @@ const Customer = () => {
       ),
   });
 
-  const columns = [
- 
-   
-    {
-      // ...getColumnSearchProps("customer"),
-      title: "Customer name",
-      dataIndex: "customer",
-      key: "customer",
-      width: "30%",
-    },
-    {
-      title: "Email Subscription",
-      dataIndex: "tags",
-      key: "tags",
-      width: "20%",
-      
-    },
+const columns = [
+  {
+    ...getColumnSearchProps("name"),
+    title: "Customer name",
+    dataIndex: "name",
+    key: "name",
+    width: 50, // Adjust the width as needed
+    render: (name) => `${name}`,
+  },
+  {
+    title: "ID",
+    dataIndex: "id",
+    key: "id",
+    width: 50, // Adjust the width as needed
+    render: (id) => `₹${id}`,
+  },
+
   
-    {
-      title: "Location",
-      dataIndex: "Location",
-      key: "Location",
-      // ...getColumnSearchProps("Location"),
-    },
-    {
-      title: "Orders",
-      dataIndex: "orders",
-      key: "Orders",
-      // ...getColumnSearchProps("Orders"),
-    },
-    {
-      title: "Amount spent",
-      dataIndex: "Amountspent",
-      key: "Amountspent",
-      // ...getColumnSearchProps("Amountspent"),
-    },
+    // {
+    //   title: "Location",
+    //   dataIndex: "Location",
+    //   key: "Location",
+    //   // ...getColumnSearchProps("Location"),
+    // },
+    // {
+    //   title: "Orders",
+    //   dataIndex: "orders",
+    //   key: "Orders",
+    //   // ...getColumnSearchProps("Orders"),
+    // },
+    // {
+    //   title: "Amount spent",
+    //   dataIndex: "Amountspent",
+    //   key: "Amountspent",
+    //   // ...getColumnSearchProps("Amountspent"),
+    // },
   ];
-  const [filteredData, setFilteredData] = useState(data);
+ 
   
 
-  const search = (e) => {
-    const value = e.target.value.toLowerCase(); // Convert search input to lowercase for case-insensitive search
-    const filteredData = data.filter((record) =>
-      Object.values(record).some(
-        (val) => typeof val === 'string' && val.toLowerCase().includes(value)
-      )
-    );
-    setSearchText(value);
-    setSearchedColumn(""); // Reset searched column when using global search
-    setFilteredData(filteredData); // Update filteredData instead of data
-  };
+ 
 
   const rowSelection = {
     onChange: (selectedRowKeys, selectedRows) => {
@@ -455,27 +461,18 @@ const Customer = () => {
 </Modal>
       </header>
       
-      <div className="mt-4">
-        <Input
-          ref={searchInput}
-          placeholder="Search Customer"
-          value={searchText}
-          onChange={search}
-          style={{ width: "100%" }}
-         
-        />
-      </div>
+     
     
       <Table
       
-        rowSelection={{
-          type: "checkbox",
-          ...rowSelection,
-        }}
+        // rowSelection={{
+        //   ...rowSelection,
+        // }}
         columns={columns}
-        dataSource={filteredData}
+        dataSource={products}
         pagination={false}
         scroll={{ x: 1000, y: 900 }}
+         className="mt-5"
       />
     </>
   );

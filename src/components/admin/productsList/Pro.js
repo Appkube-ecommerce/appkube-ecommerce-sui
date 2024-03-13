@@ -1,12 +1,16 @@
 // ProductList.js
 
 import React, { useState, useEffect } from 'react';
+import { DownOutlined } from '@ant-design/icons';
+import { Button, Dropdown, Space} from 'antd';
 import Product from '../product'; // Replace with the correct path
 import { fetchCategories } from '@/Api/fetchingProducts';// Adjust the path based on your API file
 
 
 const ProductList = () => {
     const [products, setProducts] = useState([]);
+  
+   
    
   
     useEffect(() => {
@@ -24,7 +28,10 @@ const ProductList = () => {
       fetchData();
     }, []);
   
-    const handlePrint = () => {
+    const handlePrint = (category) => {
+      const filteredProducts = category
+        ? products.filter((product) => product.category === category)
+        : products;
         const printWindow = window.open('', '_blank');
         printWindow.document.write(`
           <html>
@@ -39,12 +46,12 @@ const ProductList = () => {
                 .product-list {
                   display: grid;
                   grid-template-columns: repeat(5, 1fr); /* Adjust the number of columns as needed */
-                  gap: 16px; /* Adjust the gap between columns */
+                  gap: 8px; /* Adjust the gap between columns */
                   flex-wrap: wrap;
                   justify-content: flex-start;
                   margin: 0;
                   padding: 0;
-                  margin-left: 20px;
+                  margin-left: 10px;
                 }
                 
       
@@ -86,7 +93,7 @@ const ProductList = () => {
               <div class="product-list">
         `);
       
-        products.forEach((product, index) => {
+        filteredProducts.forEach((product, index) =>  {
           printWindow.document.write(`
             <div className="product-card">
       <Image
@@ -99,8 +106,9 @@ const ProductList = () => {
       />
       <div className="product-details ml-5">
         <h3 className="product-name">${product.name}</h3>
-        <p className="product-price">₹${product.price}</p>
-        <p className="product-unit">${product.unit}</p>
+        <p className="product-price">Price:₹${product.price}</p>
+        <p className="product-unit">Unit:${product.unit}</p>
+
       </div>
     </div>
           `);
@@ -120,6 +128,35 @@ const ProductList = () => {
         });
       };
       console.log(Product)
+      
+      const items = [
+        {
+          label: 'Print All Products',
+          key: '1',
+          onClick: () => handlePrint(),
+        },
+        {
+          label: 'Print Fruits Products',
+          key: '2',
+          onClick: () => handlePrint('FRUITS'),
+        },
+        {
+          label: 'Print Leafy Vegetables',
+          key: '3',
+          onClick: () => handlePrint('LEAFY_VEGETABLES'),
+        },
+        {
+          label: 'Print Vegetables Products',
+          key: '4',
+          onClick: () => handlePrint('VEGETABLES'),
+        },
+      ];
+    
+      const menuProps = {
+        items,
+        
+      };
+      
 
 
     
@@ -127,23 +164,36 @@ const ProductList = () => {
       
   
     return (
-      <div className="product-list-container ">
-          <button
-            key="link"
+      <div className="product-list-container">
+
+        <div className="product-list grid grid-cols-5">
+
           
-            className="bg-black text-white rounded-md px-8 py-2 m-5"
-            onClick={handlePrint}
-          >Print Products</button>
-        {/* <div className="product-list grid grid-cols-4">
-          
-          {products.map((product, index) => (
+          {/* {products.map((product, index) => (
             <Product key={product.id} product={product} index={index} />
-          ))}
-        </div> */}
-  
-        {/* Print button */}
+          ))} */}
+        </div> 
+
+        {/* /* Print button with categories */}
+
         
-      </div>
+     
+     
+        <Space wrap>
+     
+          
+      
+          <Dropdown menu={menuProps}>
+            <Button  className='mt-4 flex float-end'>
+              <Space>
+                Print
+                <DownOutlined />
+              </Space>
+            </Button>
+          </Dropdown>
+          
+        </Space>
+        </div>
     );
   };
   

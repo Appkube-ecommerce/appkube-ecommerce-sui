@@ -2,15 +2,38 @@
 import React from "react";
 import { ArrowLeftOutlined } from "@ant-design/icons";
 import { useRouter } from "next/navigation";
-import { Form, Input, InputNumber, Select, Row, Col, Checkbox } from "antd";
+import { Form, Input,Button} from "antd";
 
-const { Option } = Select;
+// const { Option } = Select;
 
 const AddCustomer = () => {
+  const dispatch = useDispatch();
+  const [loading, setLoading] = useState(false);
+  
+  // const router = useRouter();
   const backToCustomers = () => {
     router.push("/admin/customers");
   };
   const router = useRouter();
+  const onFinish = async (values) => {
+    setLoading(true);
+    try {
+      await dispatch(createCustomer(values));
+      notification.success({
+        message: 'Customer created successfully!',
+      });
+    } catch (error) {
+      notification.error({
+        message: 'Failed to create customer',
+        description: error.message,
+      });
+    } finally {
+      setLoading(false);
+    }
+  const onFinishFailed = (errorInfo) => {
+    console.log('Failed:', errorInfo);
+  };
+}
   return( 
   <div>
     <header className="p-8 flex gap-3">
@@ -22,7 +45,32 @@ const AddCustomer = () => {
     </header>
     <hr />
     <div className="p-16 md:flex ">
-      <Col span={8}>
+    <Form onFinish={onFinish}>
+      <Form.Item
+        label="Name"
+        name="name"
+        rules={[{ required: true, message: 'Please input customer name!' }]}
+      >
+        <Input />
+      </Form.Item>
+
+      <Form.Item
+        label="Phone"
+        name="phone"
+        rules={[{ required: true, message: 'Please input customer phone number!' }]}
+      >
+        <Input />
+      </Form.Item>
+
+      <Form.Item>
+        <Button type="primary" htmlType="submit" loading={loading}>
+          Create Customer
+        </Button>
+      </Form.Item>
+    </Form>
+
+     {/* <div>  */}
+      {/* <Col span={8}>
         <h3 className="font-semibold">Customer Overview</h3>
       </Col>
       <Col span={16}>
@@ -276,10 +324,10 @@ const AddCustomer = () => {
             </Form.Item>
           </Form>
         </div>
-      </Col>
+      </Col> */}
+    {/* </div> */}
     </div>
-  </div>
-);
-            };
-
+    </div>
+  )
+  }
 export default AddCustomer;

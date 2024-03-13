@@ -42,6 +42,7 @@ export default function RootLayout({ children }) {
     //   setDisplay(true);
     // }
 
+
   }, [pathname]);
 
   const onSearch = (value) => console.log(value);
