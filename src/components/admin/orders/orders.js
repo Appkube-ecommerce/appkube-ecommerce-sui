@@ -4,8 +4,8 @@ import React, { useState,useEffect } from 'react';
 import { Table } from 'antd';
 import { FetchOrders } from '@/Api/fetchingOrders';
 import Link from 'next/link';
-//import { useRouter } from 'next/router';
 import { Button, Modal, Radio } from 'antd';
+import { useDispatch } from 'react-redux';
 
 const columns = [
   {
@@ -19,7 +19,7 @@ const columns = [
     ),
   },
   {
-    title: 'Created At',
+    title: 'Date',
     className: 'text-xs', 
     dataIndex: 'createdAt',
     key: "createdAt",
@@ -41,8 +41,6 @@ const columns = [
   },
 ];
 
-
-
 const rowSelection = {
   onChange: (selectedRowKeys, selectedRows) => {
     console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
@@ -54,26 +52,27 @@ const rowSelection = {
 };
 
 const Orders = () => {
-
   const [selectionType, setSelectionType] = useState('checkbox');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [exportOption, setExportOption] = useState('option1');
   const [orders, setOrders] = useState([]);
-  
+
+  const dispatch = useDispatch();
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         const result = await FetchOrders();
-  
-        console.log(result)
-        setOrders(result.data.listOrders.items);
+
+        console.log(result);
+        dispatch(setOrders(result.data.listOrders.items));
       } catch (error) {
-        console.error("Error fetching products:", error);
+        console.error('Error fetching orders:', error);
       }
     };
-  
+
     fetchData();
-  }, []);
+  }, [dispatch]);
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -88,9 +87,8 @@ const Orders = () => {
   };
 
   const handleOrderClick = (record) => {
-    setSelectedEmployee(record);
+    dispatch(saveSelectedOrderData(record));
   };
-
   return (
     <>
       <div className='mr-2 px-4'>
@@ -107,7 +105,7 @@ const Orders = () => {
         Export
       </button>
       <Modal
-        visible={isModalOpen}
+        open={isModalOpen}
         onCancel={handleCancel}
         style={{ padding: 0 }}
         footer={[

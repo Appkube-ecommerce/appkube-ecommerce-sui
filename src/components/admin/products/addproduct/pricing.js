@@ -15,8 +15,36 @@ const Pricing = () => {
         labelCol={{
           span: 20,
         }} >
-        <Row gutter={30}>
-        <Col span={8}>
+        {/* <Row gutter={30}> */}
+        <Col>
+        <Form.Item
+      label="Category"
+      name="category"
+      rules={[
+        {
+          required: true,
+          message: 'Please input Title of the product!',
+        },
+      ]}
+    >
+      <Input placeholder="₹0.00" className="border border-black"/>
+    </Form.Item>
+    </Col>
+    <Col>
+        <Form.Item
+      label="Unit"
+      name="unit"
+      rules={[
+        {
+          required: true,
+          message: 'Please input Title of the product!',
+        },
+      ]}
+    >
+      <Input placeholder="₹0.00" className="border border-black"/>
+    </Form.Item>
+    </Col>
+    <Col>
         <Form.Item
       label="Price"
       name="price"
@@ -30,27 +58,13 @@ const Pricing = () => {
       <Input placeholder="₹0.00" className="border border-black"/>
     </Form.Item>
     </Col>
-    <Col span={8}>
-        <Form.Item
-      label="Compare-at price"
-      name="compare-at price"
-      rules={[
-        {
-          required: true,
-          message: 'Please input Title of the product!',
-        },
-      ]}
-    >
-      <Input placeholder="₹0.00" className="border border-black"/>
-    </Form.Item>
-    </Col>
-    </Row>
-    <Form.Item
+    {/* </Row> */}
+    {/* <Form.Item
       name="remember"
     >
       <Checkbox>Charge tax on this product</Checkbox>
-    </Form.Item>
-    <Row gutter={30}>
+    </Form.Item> */}
+    {/* <Row gutter={30}>
             <Col span={8}>
         <Form.Item
       label="Cost per item"
@@ -93,7 +107,7 @@ const Pricing = () => {
       <Input placeholder="--" className="border border-black"/>
     </Form.Item>
     </Col>
-    </Row>
+    </Row> */}
       </Form>
       </div>
     </>
@@ -101,3 +115,10 @@ const Pricing = () => {
 };
 
 export default Pricing;
+// id,
+// image,
+// name,
+// description,
+// unit,
+// category,
+// price
