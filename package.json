@@ -12,6 +12,7 @@
     "@ant-design/charts": "^2.0.3",
     "@ant-design/nextjs-registry": "^1.0.0",
     "@ant-design/plots": "^2.1.13",
+    "@antv/g-lite": "^1.2.22",
     "@antv/g-plugin-canvas-renderer": "^1.7.14",
     "@reduxjs/toolkit": "^2.2.1",
     "antd": "^5.15.1",
@@ -22,11 +23,9 @@
 
 
     "aws-amplify": "^6.0.19",
-    "next": "^14.1.0",
-   
     "axios": "^1.6.7",
-   
-
+    "d3-color": "^3.1.0",
+    "next": "^14.1.0",
 
     "react": "^18",
     "react-dom": "^18",
