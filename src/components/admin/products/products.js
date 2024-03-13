@@ -214,7 +214,7 @@ const Products = () => {
 
 
   return (
-    <>
+    <Provider store={store}>
       <header className="flex justify-between mt-4 ">
         <h1 className="font-bold text-2xl">Products</h1>
       
@@ -318,7 +318,7 @@ const Products = () => {
         scroll={{ x: 800, y: 4000 }}
       />
       <ProductList/>
-    </>
+      </Provider>
   );
 };
 
