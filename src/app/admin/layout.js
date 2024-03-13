@@ -30,6 +30,7 @@ export default function RootLayout({ children }) {
   const [collapsed, setCollapsed] = useState(false);
 
   useEffect(() => {
+
     if (pathname === "/admin/orders/summary") {
       setDisplay(false);
     }
