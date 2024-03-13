@@ -1,10 +1,29 @@
+'use client'
 import Image from "next/image";
 import { FcGoogle } from "react-icons/fc";
 import { FaApple } from "react-icons/fa6";
 import { FaFacebookF } from "react-icons/fa";
 import Link from "next/link";
-
+import { useState } from "react";
+import { useRouter } from "next/navigation"
+ 
 const page = () => {
+  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
+const router = useRouter();
+
+const handleLogin = () => {
+  if (password === "1234" && email==="fatima@gmail.com") {
+    router.push("../../admin");
+
+    // Password is correct, you can navigate or perform other actions here.
+    alert("Login successful!");
+  } else {
+    // Password is incorrect, display an error message.
+    alert("wrong  password or username");
+    
+  }
+};
   return (
     <main className=" h-[100%] flex justify-center items-center bg-gradient-to-r from-indigo-900 via-indigo-700 to-cyan-400 md:w-[100vw]  md:h-screen md:-mb-10">
       <div className=" sm:p-5 xs:w-[100vw]  md:h-[70vh] md:w-[414px]  xs:h-[100%] sm:w-[100vw] rounded-lg p-[30px] sm:shadow-lg bg-white  md:mt-6 sm:h-[90%] xs:rounded-none md:m-5 md:border-none md:rounded-xl">
@@ -30,6 +49,8 @@ const page = () => {
             Email{" "}
           </label>
           <input
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
             type="email"
             id="connect"
             placeholder="user email "
@@ -43,16 +64,19 @@ const page = () => {
           </label>
           <input
             type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             id="connect"
             placeholder="user password"
             className="border border-solid border-gray-500 rounded p-2 mb-2 xs:p-1 "
           />
         </div>
-        <Link href="/">
-          <button className="border border-solid bg-[#303030] border-gray-500 w-[100%] rounded p-2 text-white font-semibold xs:p-1">
+       
+        
+          <button   onClick={handleLogin} className="border border-solid bg-[#303030] border-gray-500 w-[100%] rounded p-2 text-white font-semibold xs:p-1">
             Log in
           </button>
-       </Link>
+       
         <div>
           {" "}
           <h1 className="text-center mt-2">or</h1>
