@@ -1,7 +1,8 @@
 'use client';
 import { InboxOutlined } from '@ant-design/icons';
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { Table } from 'antd';
+import { FetchOrders } from '@/Api/fetchingOrders';
 import Link from 'next/link';
 //import { useRouter } from 'next/router';
 import { Button, Modal, Radio } from 'antd';
@@ -9,7 +10,7 @@ import { Button, Modal, Radio } from 'antd';
 const columns = [
   {
     title: 'Order',
-    dataIndex: 'order',
+    dataIndex: 'id',
     className: 'text-xs', 
     render: (text, record) => (
       <Link href={`/admin/orders/summary`}>
@@ -18,63 +19,28 @@ const columns = [
     ),
   },
   {
-    title: 'Date',
-    dataIndex: 'date',
+    title: 'Created At',
+    className: 'text-xs', 
+    dataIndex: 'createdAt',
+    key: "createdAt",
+    render: (createdAt) => `${createdAt}`,
   },
   {
-    title: 'Customer',
-    dataIndex: 'customer',
+    title: 'Customer Orders Id',
+    className: 'text-xs', 
+    dataIndex: 'customerOrdersId',
+    key: "customerOrdersId",
+    render: (customerOrdersId) => `${customerOrdersId}`,
   },
   {
-    title: 'Channel',
-    dataIndex: 'channel',
-  },
-  {
-    title: 'Total',
-    dataIndex: 'total',
-  },
-  {
-    title: 'Payment status',
-    dataIndex: 'paymentstatus',
-  },
-  {
-    title: 'Fulfillment status',
-    dataIndex: 'fulfillmentstatus',
-  },
-  {
-    title: 'Items',
-    dataIndex: 'items',
-  },
-  {
-    title: 'Delivery status',
-    dataIndex: 'deliverystatus',
-  },
-  {
-    title: 'Delivery method',
-    dataIndex: 'deliverymethod',
-  },
-  {
-    title: 'Tags',
-    dataIndex: 'tags',
+    title: 'Total Price',
+    className: 'text-xs', 
+    dataIndex: 'totalPrice',
+    key: "totalPrice",
+    render: (totalPrice) => `${totalPrice}`,
   },
 ];
 
-const data = [
-  {
-    key: '1',
-    order: '#1',
-    date: '2022-01-01',
-    customer: 'John Doe',
-    channel: 'Online',
-    total: '$100.00',
-    paymentstatus: 'Paid',
-    fulfillmentstatus: 'Shipped',
-    items: '5',
-    deliverystatus: 'Delivered',
-    deliverymethod: 'Express',
-    tags: 'High Priority',
-  },
-];
 
 
 const rowSelection = {
@@ -92,6 +58,22 @@ const Orders = () => {
   const [selectionType, setSelectionType] = useState('checkbox');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [exportOption, setExportOption] = useState('option1');
+  const [orders, setOrders] = useState([]);
+  
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const result = await FetchOrders();
+  
+        console.log(result)
+        setOrders(result.data.listOrders.items);
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      }
+    };
+  
+    fetchData();
+  }, []);
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -105,8 +87,8 @@ const Orders = () => {
     setExportOption(e.target.value);
   };
 
-  const handleOrderClick = (orderId) => {
-    router.push(`/admin/orders/summary${orderId}`);
+  const handleOrderClick = (record) => {
+    setSelectedEmployee(record);
   };
 
   return (
@@ -212,7 +194,7 @@ const Orders = () => {
           columns={[
             ...columns,
           ]}
-          dataSource={data}
+          dataSource={orders}
         />
       </div>
     </>
