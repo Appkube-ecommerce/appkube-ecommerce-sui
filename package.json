@@ -15,6 +15,7 @@
     "@antv/g-plugin-canvas-renderer": "^1.7.14",
     "antd": "^5.15.1",
 
+
     "aws-amplify": "^6.0.19",
     "next": "^14.1.0",
    
