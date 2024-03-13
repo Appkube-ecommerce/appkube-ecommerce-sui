@@ -3,7 +3,7 @@ import { generateClient } from 'aws-amplify/api';
 
 const client = generateClient();
 
-export const createProduct = async (id, image, name, description, unit, category, price) => {
+export const CreateProduct = async (id, image, name, description, unit, category, price) => {
     try {
         // Ensure proper configuration and initialization of Amplify
         await Amplify.configure({
