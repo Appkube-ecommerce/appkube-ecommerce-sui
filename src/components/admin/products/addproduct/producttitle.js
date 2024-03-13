@@ -1,6 +1,7 @@
+"use client"
 import React, { useState } from "react";
-import { setcreateProduct } from "@/components/redux/slices/addProductSlice";
 import { useDispatch } from 'react-redux';
+import { setCreateProduct } from "@/components/redux/slices/addProductSlice";
 import { Form, Input, Button } from "antd";
 
 const { TextArea } = Input;
@@ -19,7 +20,7 @@ const ProductTitle = () => {
   };
 
   const handleFormSubmit = () => {
-    dispatch(setcreateProduct(formData));
+    dispatch(setCreateProduct(formData));
   };
 
   return (

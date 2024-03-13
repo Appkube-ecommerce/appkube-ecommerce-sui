@@ -1,15 +1,18 @@
+// productSlice.js
+
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  createProduct: [],
+  createProduct: [], // Change this to an object if you want to store multiple form data
 };
 
 const productSlice = createSlice({
-  name: "product", // Change slice name if needed
+  name: "product",
   initialState,
   reducers: {
     setCreateProduct: (state, action) => {
-      state.createProduct = action.payload; // Assign payload directly
+      state.createProduct = action.payload;
+      // state.createProduct = [...state.createProduct, action.payload];
     },
   },
 });
