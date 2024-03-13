@@ -303,7 +303,7 @@ const Customer = () => {
  
    
     {
-      // ...getColumnSearchProps("customer"),
+      ...getColumnSearchProps("customer"),
       title: "Customer name",
       dataIndex: "customer",
       key: "customer",
@@ -455,16 +455,7 @@ const Customer = () => {
 </Modal>
       </header>
       
-      <div className="mt-4">
-        <Input
-          ref={searchInput}
-          placeholder="Search Customer"
-          value={searchText}
-          onChange={search}
-          style={{ width: "100%" }}
-         
-        />
-      </div>
+     
     
       <Table
       

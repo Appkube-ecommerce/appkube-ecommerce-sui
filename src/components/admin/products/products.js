@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef, useState } from "react";
+import React, { useRef, useState,useEffect } from "react";
 import { SearchOutlined } from "@ant-design/icons";
 import { Button, Input, Space, Table, Tag, Modal } from "antd";
 import Highlighter from "react-highlight-words";
@@ -9,168 +9,25 @@ import Link from "next/link"
 import { Radio } from 'antd';
 import ProductList from "../productsList/Pro";
 // import Addproduct from "./addproduct";
-
-const data = [
-  {
-    key: "1",
-    product: "John Brown",
-    // status: 'active',
-    tags: (
-      <Tag bordered={false} color="error">
-        Inactive
-      </Tag>
-    ),
-    inventory: "10",
-    salesChannels: "2",
-    vendors: "My Store1",
-  },
-  {
-    key: "2",
-    product: "John red",
-    tags: (
-      <Tag bordered={false} color="processing">
-        Processing
-      </Tag>
-    ),
-    inventory: "10",
-    salesChannels: "8",
-    vendors: "My Store2",
-  },
-  {
-    key: "3",
-    product: "John pink",
-    tags: (
-      <Tag bordered={false} color="success">
-        Active
-      </Tag>
-    ),
-    inventory: "10",
-    salesChannels: "5",
-    vendors: "My Store3",
-  },
-  {
-    key: "4",
-    product: "John yellow",
-    tags: (
-      <Tag bordered={false} color="processing">
-        processing
-      </Tag>
-    ),
-    inventory: "10",
-    salesChannels: "5",
-    vendors: "My Store3",
-  },
-  {
-    key: "4",
-    product: "John yellow",
-    tags: (
-      <Tag bordered={false} color="processing">
-        processing
-      </Tag>
-    ),
-    inventory: "10",
-    salesChannels: "5",
-    vendors: "My Store3",
-  },
-  {
-    key: "4",
-    product: "John yellow",
-    tags: (
-      <Tag bordered={false} color="processing">
-        processing
-      </Tag>
-    ),
-    inventory: "10",
-    salesChannels: "5",
-    vendors: "My Store3",
-  },
-  {
-    key: "4",
-    product: "John yellow",
-    tags: (
-      <Tag bordered={false} color="processing">
-        processing
-      </Tag>
-    ),
-    inventory: "10",
-    salesChannels: "5",
-    vendors: "My Store3",
-  },
-  {
-    key: "4",
-    product: "John yellow",
-    tags: (
-      <Tag bordered={false} color="processing">
-        processing
-      </Tag>
-    ),
-    inventory: "10",
-    salesChannels: "5",
-    vendors: "My Store3",
-  },
-  {
-    key: "4",
-    product: "John yellow",
-    tags: (
-      <Tag bordered={false} color="processing">
-        processing
-      </Tag>
-    ),
-    inventory: "10",
-    salesChannels: "5",
-    vendors: "My Store3",
-  },
-  {
-    key: "4",
-    product: "John yellow",
-    tags: (
-      <Tag bordered={false} color="processing">
-        processing
-      </Tag>
-    ),
-    inventory: "10",
-    salesChannels: "5",
-    vendors: "My Store3",
-  },
-  {
-    key: "4",
-    product: "John yellow",
-    tags: (
-      <Tag bordered={false} color="processing">
-        processing
-      </Tag>
-    ),
-    inventory: "10",
-    salesChannels: "5",
-    vendors: "My Store3",
-  },
-  {
-    key: "4",
-    product: "John yellow",
-    tags: (
-      <Tag bordered={false} color="processing">
-        processing
-      </Tag>
-    ),
-    inventory: "10",
-    salesChannels: "5",
-    vendors: "My Store3",
-  },
-  {
-    key: "4",
-    product: "John yellow",
-    tags: (
-      <Tag bordered={false} color="processing">
-        processing
-      </Tag>
-    ),
-    inventory: "10",
-    salesChannels: "5",
-    vendors: "My Store3",
-  },
-];
+import { fetchCategories } from "@/Api/fetchingProducts";
 
 const Products = () => {
+  const [products, setProducts] = useState([]);
+  
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const result = await fetchCategories();
+  
+        console.log(result)
+        setProducts(result.data.listProducts.items);
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      }
+    };
+  
+    fetchData();
+  }, []);
   const router = useRouter();
   const [radio1, setradio1] = useState(1);
   const onChangeRadio1 = (e) => {
@@ -314,39 +171,40 @@ const Products = () => {
 
   const columns = [
     {
+      title: "Image",
+      dataIndex: "image",
+      key: "image",
+      width: "10%",
+      render: (image) => <img src={image} alt="Product" style={{ width: 50 }} />,
+    },
+    {
       title: "Product",
-      dataIndex: "product",
-      key: "product",
-      width: "30%",
-      ...getColumnSearchProps("product"),
-    },
-    {
-      title: "Status",
-      dataIndex: "tags",
-      key: "tags",
+      dataIndex: "name",
+      key: "name",
       width: "20%",
-      ...getColumnSearchProps("tags"),
+      ...getColumnSearchProps("name"),
     },
     {
-      title: "Inventory",
-      dataIndex: "inventory",
-      key: "inventory",
-      ...getColumnSearchProps("inventory"),
+      title: "Category",
+      dataIndex: "category",
+      key: "category",
+      width: "20%",
+      render: (category) => `${category}`,
     },
     {
-      title: "Sales Channels",
-      dataIndex: "salesChannels",
-      key: "salesChannels",
-      ...getColumnSearchProps("salesChannels"),
+      title: "Price",
+      dataIndex: "price",
+      key: "price",
+      width: "20%",
+      render: (price) => `₹${price}`,
     },
     {
-      title: "Vendors",
-      dataIndex: "vendors",
-      key: "vendors",
-      ...getColumnSearchProps("vendors"),
-    },
-  ];
-
+      title: "Unit",
+      dataIndex: "unit",
+      key: "unit",
+      width: "10%",
+      render: (unit) => `${unit}`,
+    },];
   const rowSelection = {
     onChange: (selectedRowKeys, selectedRows) => {
       console.log("selectedRowKeys:", selectedRowKeys);
@@ -361,8 +219,6 @@ const Products = () => {
         <h1 className="font-bold text-2xl">Products</h1>
       
         <div className="flex gap-3">
-         
-       
           <button
             style={{
               backgroundColor: "#E3E3E3",
@@ -443,12 +299,8 @@ const Products = () => {
         </div>
       </div>
   <p>Learn more about <Link href="/" className="text-blue-400 underline">exporting products to CSV file</Link> or the   <Link href="/" className="text-blue-400 underline">bulk editor.</Link></p>
- 
-  
-  </div>
 
-  
- 
+  </div>
   <hr></hr>
   
   
@@ -461,12 +313,11 @@ const Products = () => {
           ...rowSelection,
         }}
         columns={columns}
-        dataSource={data}
+        dataSource={products}
         pagination={false}
         scroll={{ x: 800, y: 4000 }}
       />
-      {/* calling print button in product page */}
-        <ProductList/>
+      <ProductList/>
     </>
   );
 };
