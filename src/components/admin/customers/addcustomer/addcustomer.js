@@ -2,15 +2,32 @@
 import React from "react";
 import { ArrowLeftOutlined } from "@ant-design/icons";
 import { useRouter } from "next/navigation";
-import { Form, Input, InputNumber, Select, Row, Col, Checkbox } from "antd";
+import { Form, Input,Button} from "antd";
 
-const { Option } = Select;
+// const { Option } = Select;
 
 const AddCustomer = () => {
+  const dispatch = useDispatch();
+  const [name, setName] = useState('');
+  const [phone, setPhone] = useState('');
+  
+  const loading = useSelector((state) => state.customer.loading);
+  const error = useSelector((state) => state.customer.error);
+
+  
+  // const router = useRouter();
   const backToCustomers = () => {
     router.push("/admin/customers");
   };
   const router = useRouter();
+  const onFinish = (values) => {
+    e.preventDefault();
+    dispatch(createProduct({ name, phone }));
+    console.log('Success:', values);
+  };
+  const onFinishFailed = (errorInfo) => {
+    console.log('Failed:', errorInfo);
+  };
   return( 
   <div>
     <header className="p-8 flex gap-3">
@@ -22,7 +39,67 @@ const AddCustomer = () => {
     </header>
     <hr />
     <div className="p-16 md:flex ">
-      <Col span={8}>
+    <Form
+    name="basic"
+    labelCol={{
+      span: 8,
+    }}
+    wrapperCol={{
+      span: 16,
+    }}
+    style={{
+      maxWidth: 600,
+    }}
+    initialValues={{
+      remember: true,
+    }}
+    onFinish={onFinish}
+    onFinishFailed={onFinishFailed}
+    autoComplete="off"
+    requiredMark={false}
+    layout="vertical"
+    className="w-full m-auto"
+  >
+    <Form.Item
+      label="Username"
+      name="username"
+      rules={[
+        {
+          required: true,
+          message: 'Please input your username!',
+        },
+      ]}
+    >
+      <Input />
+    </Form.Item>
+
+    <Form.Item
+      label="Mobile Number"
+      name="number"
+      rules={[
+        {
+          required: true,
+          message: 'Please input your number',
+        },
+      ]}
+    >
+      <Input/>
+    </Form.Item>
+
+    <Form.Item
+      wrapperCol={{
+        offset: 8,
+        span: 16,
+      }}
+    >
+      <Button type="primary" htmlType="submit">
+        Submit
+      </Button>
+    </Form.Item>
+  </Form>
+
+     {/* <div>  */}
+      {/* <Col span={8}>
         <h3 className="font-semibold">Customer Overview</h3>
       </Col>
       <Col span={16}>
@@ -276,9 +353,10 @@ const AddCustomer = () => {
             </Form.Item>
           </Form>
         </div>
-      </Col>
+      </Col> */}
+    {/* </div> */}
     </div>
-  </div>
+    </div>
 );
             };
 
