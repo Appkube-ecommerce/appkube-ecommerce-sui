@@ -54,11 +54,14 @@ const AddCustomer = () => {
     </header>
     <hr />
     <div className="p-16 md:flex ">
-    <Form onFinish={onFinish}>
+    <Form onFinish={onFinish}
+    requiredMark={false}
+    className="w-[70%] m-auto">
       <Form.Item
         label="Name"
         name="name"
         rules={[{ required: true, message: 'Please input customer name!' }]}
+        r
       >
         <Input />
       </Form.Item>
