@@ -1,11 +1,11 @@
-// Assuming you have slices/orderSlice.js
+
 import { createSlice } from '@reduxjs/toolkit';
 
 const orderSlice = createSlice({
   name: 'orders',
   initialState: {
     selectedOrder: null,
-    ordersList: [], // This will store the orders fetched from the API
+    ordersList: [], 
   },
   reducers: {
     setSelectedOrder: (state, action) => {

@@ -1,10 +1,13 @@
 import React from 'react'
 import Addproduct from '@/components/admin/customers/addcustomer/addcustomer'
+import {store} from '../../../../components/redux/store'
+import {Provider}  from 'react-redux'
 const Page = () => {
   return (
-    <div>
+    <Provider store={store}>
+
         <Addproduct />
-    </div>
+    </Provider>
   )
 }
 

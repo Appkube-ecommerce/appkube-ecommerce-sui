@@ -3,7 +3,7 @@ import { generateClient } from 'aws-amplify/api';
 
 const client = generateClient();
 
-export const CreateProduct = async (id, image, name, description, unit, category, price) => {
+export const createCustomer = async (name,phone) => {
     try {
         // Ensure proper configuration and initialization of Amplify
         await Amplify.configure({
@@ -19,20 +19,17 @@ export const CreateProduct = async (id, image, name, description, unit, category
 
         const result = await client.graphql({
             query: `
-                mutation CreateProduct($id: ID!, $image: String!, $name: String!, $description: String!, $unit: String!, $category: String!, $price: Float!) {
-                    createProduct(input: {category: $category, image: $image, name: $name, price: $price, unit: $unit, description: $description, id: $id}) {
-                        id
-                    }
+               
+                    mutation MyMutation {
+                        createCustomer(input: {name: $name,phone:$phone}){
+                      }
+
                 }
             `,
             variables: {
-                id,
-                image,
+                
                 name,
-                description,
-                unit,
-                category,
-                price
+                phone,
             }
         });
 
