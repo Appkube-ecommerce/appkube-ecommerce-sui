@@ -1,11 +1,10 @@
-// customerSlice.js
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { createProduct } from '@/Api/createProducts';    // Import your createProduct function
+import { createCustomers } from '../../../Api/Addingcustomer';    
 
 export const createCustomer = createAsyncThunk(
-  'customer/create',
+  'customer/addcustomer',
   async ({ name, phone }) => {
-    const response = await createCustomer(name, phone);
+    const response = await createCustomers(name, phone);
     return response.data; // Assuming your API returns data after creating the customer
   }
 );
@@ -13,10 +12,16 @@ export const createCustomer = createAsyncThunk(
 const customerSlice = createSlice({
   name: 'customer',
   initialState: {
+    customers: [],
     status: 'idle',
     error: null,
   },
-  reducers: {},
+  reducers: {
+    addCustomer: (state, action) => {
+      state.customers.push(action.payload);
+      console.log('added user in slice',action.payload)
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(createCustomer.pending, (state) => {
@@ -34,3 +39,4 @@ const customerSlice = createSlice({
 });
 
 export default customerSlice.reducer;
+export const { addCustomer} = customerSlice.actions;
