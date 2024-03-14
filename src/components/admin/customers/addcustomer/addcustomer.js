@@ -1,13 +1,21 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { ArrowLeftOutlined } from "@ant-design/icons";
 import { useRouter } from "next/navigation";
 import { Form, Input,Button} from "antd";
+import { useDispatch, useSelector } from 'react-redux';
+import { addCustomer,createCustomer } from "../../../../redux/slices/addCustomerSlice";
+import { notification } from 'antd';
 
 // const { Option } = Select;
 
 const AddCustomer = () => {
+  const customers = useSelector((state)=> state.customerSlice.customers)
+  console.log(customers);
+  //  console.log(customers);
   const dispatch = useDispatch();
+  
+
   const [loading, setLoading] = useState(false);
   
   // const router = useRouter();
@@ -19,6 +27,7 @@ const AddCustomer = () => {
     setLoading(true);
     try {
       await dispatch(createCustomer(values));
+            dispatch(addCustomer(values));
       notification.success({
         message: 'Customer created successfully!',
       });

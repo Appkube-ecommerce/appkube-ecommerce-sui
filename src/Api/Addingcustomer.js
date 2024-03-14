@@ -1,10 +1,14 @@
 import { Amplify } from "aws-amplify";
 import { generateClient } from 'aws-amplify/api';
+import { v4 as uuidv4 } from 'uuid';
 
 const client = generateClient();
 
-export const createCustomer = async (name,phone) => {
+export const createCustomers = async (name, phone) => {
     try {
+        // Generate a unique ID for the customer
+        // const id = uuidv4();
+
         // Ensure proper configuration and initialization of Amplify
         await Amplify.configure({
             API: {
@@ -19,15 +23,16 @@ export const createCustomer = async (name,phone) => {
 
         const result = await client.graphql({
             query: `
-               
-                    mutation MyMutation {
-                        createCustomer(input: {name: $name,phone:$phone}){
-                      }
-
+                mutation MyMutation( $name: String!, $phone: String!) {
+                    createCustomer(input: {name: $name, phone: $phone }) {
+                    
+                        name
+                        phone
+                    }
                 }
             `,
             variables: {
-                
+                // id,
                 name,
                 phone,
             }
