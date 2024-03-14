@@ -1,9 +1,16 @@
-import React from 'react'
-import Orders from '@/components/admin/orders/orders'
+"use client"
+import { Provider } from 'react-redux';
+import store from '@/components/redux/store/store';
+import Orders from '@/components/admin/orders/orders';
+
 const App = () => {
   return (
-    <div><Orders/></div>
-  )
-}
+    <Provider store={store}>
+      <div>
+        <Orders />
+      </div>
+    </Provider>
+  );
+};
 
-export default App
+export default App;
