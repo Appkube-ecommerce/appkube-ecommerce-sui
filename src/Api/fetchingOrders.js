@@ -8,7 +8,7 @@ import { generateClient } from 'aws-amplify/api';
 const client = generateClient();
 
  
- export  const fetchcustomer = async () => {
+ export  const FetchOrders = async () => {
       try {
         // Ensure proper configuration and initialization of Amplify
         await Amplify.configure({
@@ -25,22 +25,20 @@ const client = generateClient();
         const result = await client.graphql({
           query: `
           query MyQuery {
-            listCustomers {
+            listOrders {
               items {
+                createdAt
+                customerOrdersId
                 id
-                name
-                phone
-          }
-          }
+                
+                totalPrice
+              }
+            }
           }
           `,
         });
 
-
-        
-
         console.log(result)
-        // setData(result.data.listProducts.items)
         return result
 
       }
@@ -48,11 +46,3 @@ const client = generateClient();
           console.log(error)
       }
     }
-//   fetchCategories()
-
-//   const [Data, setData] = useState([])
-//   console.log(Data);
-
-//   const uniqueCategories = [...new Set(Data.map((item) => item.category))];
-
-//   console.log(uniqueCategories);

@@ -12,14 +12,14 @@ import { fetchcustomer } from "@/Api/fetchingcustomers";
 
 
 const Customer = () => {
-  const [products, setProducts] = useState([]);
+  const [customer, setcustomer] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
       try {
         const result = await fetchcustomer(); // Assuming fetchCategories returns a list of products
 
         console.log(result)
-        setProducts(result.data.listCustomers.items);
+        setcustomer(result.data.listCustomers.items);
       } catch (error) {
         console.error("Error fetching customers:", error);
       }
@@ -325,6 +325,13 @@ const columns = [
     render: (name) => `${name}`,
   },
   {
+    title: "Phone",
+    dataIndex: "phone",
+    key: "phone",
+    width: 50, // Adjust the width as needed
+    render: (phone) => `₹${phone}`,
+  },
+  {
     title: "ID",
     dataIndex: "id",
     key: "id",
@@ -469,7 +476,7 @@ const columns = [
         //   ...rowSelection,
         // }}
         columns={columns}
-        dataSource={products}
+        dataSource={customer}
         pagination={false}
         scroll={{ x: 1000, y: 900 }}
          className="mt-5"
