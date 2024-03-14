@@ -12,7 +12,7 @@ import ProductList from "../productsList/Pro";
 import { fetchCategories } from "@/Api/fetchingProducts";
 
 const Products = () => {
-  const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState([]);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
   
   useEffect(() => {
     const fetchData = async () => {

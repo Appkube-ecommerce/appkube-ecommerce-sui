@@ -3,6 +3,7 @@ import React, { useState } from "react";
 // import Status from "./status";
 import Link from "next/link";
 import { CreateProduct } from "@/Api/createProducts";
+import { createProducts } from "@/components/redux/slices/addProductSlice";
 import { useDispatch } from "react-redux";
 import { Form, Input,Button, message, Upload, Col, Select, DatePicker } from "antd";
 import { setCreateProduct } from "@/components/redux/slices/addProductSlice";
@@ -106,7 +107,7 @@ const Addproduct = () => {
   //redux code
   const [formData, setFormData] = useState({
     category:"",
-    image:"",
+    // image:"",
     name: "",
     price:"",
     unit:"",
@@ -122,9 +123,10 @@ const Addproduct = () => {
   };
 
   const handleFormSubmit = () => {
-    dispatch(setCreateProduct({ ...formData, image: imageUrl }));
-    CreateProduct(formData.id,formData.name,formData.description,formData.unit,formData.category,formData.price)
-
+    console.log(formData)
+    // dispatch(setCreateProduct({ ...formData, image: imageUrl }));
+    // CreateProduct(formData.id,formData.name,formData.description,formData.unit,formData.category,formData.price)
+    dispatch(createProducts({ ...formData, image: imageUrl }))
     // dispatch(setCreateProduct(formData));
   };
   const backToProducts = () => {
