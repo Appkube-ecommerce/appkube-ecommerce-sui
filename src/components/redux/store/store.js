@@ -8,6 +8,8 @@ const store = configureStore({
   reducer: {
     productData: productSlice,
     ordersData: orderSlice,
+    
+
 
 // import productReducer from "../slices/addProductSlice";
 
@@ -21,7 +23,7 @@ const store = configureStore({
 // const store = configureStore({
 //   reducer: {
 //     productData: productSlice,
-    customer: customerReducer,
+    //customer: customerReducer,
   },
 });
 

@@ -5,74 +5,94 @@ import { Table } from 'antd';
 import { FetchOrders } from '@/Api/fetchingOrders';
 import Link from 'next/link';
 import { Button, Modal, Radio } from 'antd';
-import { useDispatch } from 'react-redux';
+import { useDispatch,useSelector } from 'react-redux';
+import { saveOrdersList } from '@/components/redux/slices/orderSlice';
+import { useRouter } from 'next/navigation';
 
-const columns = [
-  {
-    title: 'Order',
-    dataIndex: 'id',
-    className: 'text-xs', 
-    render: (text, record) => (
-      <Link href={`/admin/orders/summary`}>
-        <span>{text}</span>
-      </Link>
-    ),
-  },
-  {
-    title: 'Date',
-    className: 'text-xs', 
-    dataIndex: 'createdAt',
-    key: "createdAt",
-    render: (createdAt) => `${createdAt}`,
-  },
-  {
-    title: 'Customer Orders Id',
-    className: 'text-xs', 
-    dataIndex: 'customerOrdersId',
-    key: "customerOrdersId",
-    render: (customerOrdersId) => `${customerOrdersId}`,
-  },
-  {
-    title: 'Total Price',
-    className: 'text-xs', 
-    dataIndex: 'totalPrice',
-    key: "totalPrice",
-    render: (totalPrice) => `${totalPrice}`,
-  },
-];
-
-const rowSelection = {
-  onChange: (selectedRowKeys, selectedRows) => {
-    console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
-  },
-  getCheckboxProps: (record) => ({
-    disabled: record.name === 'Disabled User',
-    name: record.name,
-  }),
-};
 
 const Orders = () => {
+  const router = useRouter()
+  const HandlePush = (record)=>{
+    router.push(
+     '/admin/orders/summary',
+   {query:{data:record}})
+  }
+  const columns = [
+    {
+      title: 'Order',
+      dataIndex: 'id',
+      className: 'text-xs', 
+      render: (text, record) => (
+      //  <span onClick={()=>HandlePush(record)}>{text}</span>
+      <Link
+        href={{
+          pathname: '/admin/orders/summary',
+          query: {
+            data:`${record.id}`
+          }
+        }}
+      >
+        <span>{text}</span>
+      </Link>
+        
+      ),
+    },
+    {
+      title: 'Date',
+      className: 'text-xs', 
+      dataIndex: 'createdAt',
+      key: "createdAt",
+      render: (createdAt) => `${createdAt}`,
+    },
+    {
+      title: 'Customer Orders Id',
+      className: 'text-xs', 
+      dataIndex: 'customerOrdersId',
+      key: "customerOrdersId",
+      render: (customerOrdersId) => `${customerOrdersId}`,
+    },
+    {
+      title: 'Total Price',
+      className: 'text-xs', 
+      dataIndex: 'totalPrice',
+      key: "totalPrice",
+      render: (totalPrice) => `${totalPrice}`,
+    },
+  ];
+  
+  const rowSelection = {
+    onChange: (selectedRowKeys, selectedRows) => {
+      console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+    },
+    getCheckboxProps: (record) => ({
+      disabled: record.name === 'Disabled User',
+      name: record.name,
+    }),
+  };
   const [selectionType, setSelectionType] = useState('checkbox');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [exportOption, setExportOption] = useState('option1');
-  const [orders, setOrders] = useState([]);
-
+  // const [orders, setOrders] = useState([]);
+  const orders = useSelector((state) => state.ordersData.ordersList)
+ 
   const dispatch = useDispatch();
 
+  const fetchData = async () => { 
+    try {
+      console.log('fetching')
+      const result = await FetchOrders();
+
+      console.log('result',result);
+      dispatch(saveOrdersList(result.data.listOrders.items)); 
+      // dispatch(saveSelectedOrderData(record));
+    } catch (error) {
+      console.error('Error fetching orders:', error);
+    }
+  };
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const result = await FetchOrders();
 
-        console.log(result);
-        dispatch(setOrders(result.data.listOrders.items));
-      } catch (error) {
-        console.error('Error fetching orders:', error);
-      }
-    };
-
-    fetchData();
-  }, [dispatch]);
+    fetchData()
+  }, []);
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -86,9 +106,9 @@ const Orders = () => {
     setExportOption(e.target.value);
   };
 
-  const handleOrderClick = (record) => {
-    dispatch(saveSelectedOrderData(record));
-  };
+  // const handleOrderClick = (record) => {
+    
+  // };
   return (
     <>
       <div className='mr-2 px-4'>

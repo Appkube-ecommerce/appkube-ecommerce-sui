@@ -4,15 +4,17 @@ import { Button, Input, message, Upload } from "antd";
 import { ArrowLeftOutlined, EditOutlined } from "@ant-design/icons";
 import { useRouter } from "next/navigation";
 
-const OrderInfo = () => {
+const OrderInfo = (data) => {
   const [comment, setComment] = useState("");
   const router = useRouter();
   
   const backToOrders = () => {
     router.push("/admin/orders");
   };
-
+ 
+ 
   // const handlePostComment = () => {
+
   //   // Handle logic to post the comment (you can customize this part)
   //   if (comment.trim() !== "") {
   //     // Logic to handle the comment (e.g., send to server, update state, etc.)
@@ -23,6 +25,9 @@ const OrderInfo = () => {
   //   }
   // };
 
+// const id = data && data.length > 0 && data[0].id;
+//   const createdAt = data && data.length > 0 && data[0].createdAt;
+
   return ( 
     <>
   <div className="p-8"> 
@@ -31,16 +36,14 @@ const OrderInfo = () => {
     <h1 className="font-bold text-2xl"></h1>
     </header>
     </div>
-
-
 <div className='flex gap-5'>
 
 <div>
       <div className="border-2 shadow-md w-[37.5rem] h-72 bg-white rounded-xl p-4">
         <div></div>
         <div className='border border-slate-200 h-44 rounded-md'>
-        <div className='border-b h-14'></div>
-        <div className='border-b h-14'></div>
+        <div className='border-b h-14'><p>Order ID:{data.data[0].id}</p></div>
+        <div className='border-b h-14'>{data.data[0].createdAt}</div>
         <div className='h-14'></div></div>
         <div className='flex justify-end mt-2'>
   <button className="bg-gray-800 text-white rounded-lg h-7 w-30 px-2 text-sm">
