@@ -33,17 +33,10 @@ export default function RootLayout({ children }) {
 
     if (pathname === "/admin/orders/summary") {
       setDisplay(false);
+    } else {
+      setDisplay(true);
     }
-
-    // if (pathname === "/admin/products/addproduct") {
-    //   setDisplay(false);
-    // }
-    // else{
-    //   setDisplay(true);
-    // }
-
-
-  }, [pathname]);
+}, [pathname]);
 
   const onSearch = (value) => console.log(value);
 

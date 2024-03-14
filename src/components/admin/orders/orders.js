@@ -1,15 +1,16 @@
 'use client';
 import { InboxOutlined } from '@ant-design/icons';
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { Table } from 'antd';
+import { FetchOrders } from '@/Api/fetchingOrders';
 import Link from 'next/link';
-//import { useRouter } from 'next/router';
 import { Button, Modal, Radio } from 'antd';
+import { useDispatch } from 'react-redux';
 
 const columns = [
   {
     title: 'Order',
-    dataIndex: 'order',
+    dataIndex: 'id',
     className: 'text-xs', 
     render: (text, record) => (
       <Link href={`/admin/orders/summary`}>
@@ -19,63 +20,26 @@ const columns = [
   },
   {
     title: 'Date',
-    dataIndex: 'date',
+    className: 'text-xs', 
+    dataIndex: 'createdAt',
+    key: "createdAt",
+    render: (createdAt) => `${createdAt}`,
   },
   {
-    title: 'Customer',
-    dataIndex: 'customer',
+    title: 'Customer Orders Id',
+    className: 'text-xs', 
+    dataIndex: 'customerOrdersId',
+    key: "customerOrdersId",
+    render: (customerOrdersId) => `${customerOrdersId}`,
   },
   {
-    title: 'Channel',
-    dataIndex: 'channel',
-  },
-  {
-    title: 'Total',
-    dataIndex: 'total',
-  },
-  {
-    title: 'Payment status',
-    dataIndex: 'paymentstatus',
-  },
-  {
-    title: 'Fulfillment status',
-    dataIndex: 'fulfillmentstatus',
-  },
-  {
-    title: 'Items',
-    dataIndex: 'items',
-  },
-  {
-    title: 'Delivery status',
-    dataIndex: 'deliverystatus',
-  },
-  {
-    title: 'Delivery method',
-    dataIndex: 'deliverymethod',
-  },
-  {
-    title: 'Tags',
-    dataIndex: 'tags',
+    title: 'Total Price',
+    className: 'text-xs', 
+    dataIndex: 'totalPrice',
+    key: "totalPrice",
+    render: (totalPrice) => `${totalPrice}`,
   },
 ];
-
-const data = [
-  {
-    key: '1',
-    order: '#1',
-    date: '2022-01-01',
-    customer: 'John Doe',
-    channel: 'Online',
-    total: '$100.00',
-    paymentstatus: 'Paid',
-    fulfillmentstatus: 'Shipped',
-    items: '5',
-    deliverystatus: 'Delivered',
-    deliverymethod: 'Express',
-    tags: 'High Priority',
-  },
-];
-
 
 const rowSelection = {
   onChange: (selectedRowKeys, selectedRows) => {
@@ -88,10 +52,27 @@ const rowSelection = {
 };
 
 const Orders = () => {
-
   const [selectionType, setSelectionType] = useState('checkbox');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [exportOption, setExportOption] = useState('option1');
+  const [orders, setOrders] = useState([]);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const result = await FetchOrders();
+
+        console.log(result);
+        dispatch(setOrders(result.data.listOrders.items));
+      } catch (error) {
+        console.error('Error fetching orders:', error);
+      }
+    };
+
+    fetchData();
+  }, [dispatch]);
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -105,10 +86,9 @@ const Orders = () => {
     setExportOption(e.target.value);
   };
 
-  const handleOrderClick = (orderId) => {
-    router.push(`/admin/orders/summary${orderId}`);
+  const handleOrderClick = (record) => {
+    dispatch(saveSelectedOrderData(record));
   };
-
   return (
     <>
       <div className='mr-2 px-4'>
@@ -125,7 +105,7 @@ const Orders = () => {
         Export
       </button>
       <Modal
-        visible={isModalOpen}
+        open={isModalOpen}
         onCancel={handleCancel}
         style={{ padding: 0 }}
         footer={[
@@ -212,7 +192,7 @@ const Orders = () => {
           columns={[
             ...columns,
           ]}
-          dataSource={data}
+          dataSource={orders}
         />
       </div>
     </>

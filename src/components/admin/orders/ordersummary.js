@@ -5,23 +5,23 @@ import { ArrowLeftOutlined, EditOutlined } from "@ant-design/icons";
 import { useRouter } from "next/navigation";
 
 const OrderInfo = () => {
-  const [comment, setComment] = useState(""); // State for the comment input
+  const [comment, setComment] = useState("");
   const router = useRouter();
-
+  
   const backToOrders = () => {
     router.push("/admin/orders");
   };
 
-  const handlePostComment = () => {
-    // Handle logic to post the comment (you can customize this part)
-    if (comment.trim() !== "") {
-      // Logic to handle the comment (e.g., send to server, update state, etc.)
-      message.success("Comment posted successfully!");
-      setComment(""); // Clear the comment input after posting
-    } else {
-      message.warning("Please enter a comment before posting.");
-    }
-  };
+  // const handlePostComment = () => {
+  //   // Handle logic to post the comment (you can customize this part)
+  //   if (comment.trim() !== "") {
+  //     // Logic to handle the comment (e.g., send to server, update state, etc.)
+  //     message.success("Comment posted successfully!");
+  //     setComment(""); // Clear the comment input after posting
+  //   } else {
+  //     message.warning("Please enter a comment before posting.");
+  //   }
+  // };
 
   return ( 
     <>
@@ -69,7 +69,7 @@ const OrderInfo = () => {
                 <div className="bg-slate-50 flex justify-end h-full w-full"> {/* Use flex justify-end */}
     <button
       className="bg-gray-200 text-gray-400 font-semibold rounded-md h-6 w-12 border-0 mt-4 mb-4 mr-3"
-      onClick={handlePostComment}
+      //onClick={handlePostComment}
     >
       Post
     </button>
@@ -109,8 +109,6 @@ const OrderInfo = () => {
 </div>
 
 </div>
-  
-  
   </>
 )
 };
