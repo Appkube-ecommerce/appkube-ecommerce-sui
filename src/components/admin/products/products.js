@@ -318,6 +318,7 @@ const Products = () => {
         scroll={{ x: 800, y: 4000 }}
       />
       <ProductList/>
+    
       </>
   );
 };
