@@ -12,7 +12,7 @@ import ProductList from "../productsList/Pro";
 import { fetchCategories } from "@/Api/fetchingProducts";
 
 const Products = () => {
-  const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState([]);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
   
   useEffect(() => {
     const fetchData = async () => {
@@ -318,6 +318,7 @@ const Products = () => {
         scroll={{ x: 800, y: 4000 }}
       />
       <ProductList/>
+    
       </>
   );
 };

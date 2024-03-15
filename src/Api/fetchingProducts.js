@@ -1,9 +1,5 @@
 import { Amplify } from "aws-amplify";
 import { generateClient } from 'aws-amplify/api';
-// import { useDispatch} from "react-redux"
-// import { useEffect } from 'react';
-// import { AddAllProducts } from "../redux/slice/getAllProductSlice";
-
 
 const client = generateClient();
 

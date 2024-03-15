@@ -1,12 +1,11 @@
-// store.js
 import { configureStore } from "@reduxjs/toolkit";
-
 import productSlice from "../slices/addProductSlice";
-import orderSlice from "../slices/orderSlice"; 
+// import customerSlice from "../slices/addCustomerSlice";
 
 const store = configureStore({
   reducer: {
     productData: productSlice,
+
     ordersData: orderSlice,
     
 
@@ -24,6 +23,10 @@ const store = configureStore({
 //   reducer: {
 //     productData: productSlice,
     //customer: customerReducer,
+
+    // customer: customerReducer, 
+
+
   },
 });
 

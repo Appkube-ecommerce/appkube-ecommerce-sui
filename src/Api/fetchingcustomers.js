@@ -29,6 +29,7 @@ const client = generateClient();
               items {
                 id
                 name
+                phone
           }
           }
           }
