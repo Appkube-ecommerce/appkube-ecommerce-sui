@@ -38,7 +38,7 @@ const client = generateClient();
           `,
         });
 
-        console.log(result)
+        console.log("fetched result",result)
         return result
 
       }
