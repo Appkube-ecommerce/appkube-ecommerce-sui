@@ -8,6 +8,7 @@ const store = configureStore({
   reducer: {
     productData: productSlice,
     customerSlice: customerSlice, 
+    ordersData: orderSlice,
   
   },
 });

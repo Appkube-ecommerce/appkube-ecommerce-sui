@@ -6,7 +6,7 @@ import { FetchOrders } from '@/Api/fetchingOrders';
 import Link from 'next/link';
 import { Button, Modal, Radio } from 'antd';
 import { useDispatch,useSelector } from 'react-redux';
-import { saveOrdersList } from '@/components/redux/slices/orderSlice';
+import { saveOrdersList } from '@/redux/slices/orderSlice';
 import { useRouter } from 'next/navigation';
 
 
@@ -72,8 +72,10 @@ const Orders = () => {
   const [selectionType, setSelectionType] = useState('checkbox');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [exportOption, setExportOption] = useState('option1');
-  // const [orders, setOrders] = useState([]);
-  const orders = useSelector((state) => state.ordersData.ordersList)
+  //const [orders, setOrders] = useState([]);
+  // Correct usage of useSelector
+  const orders = useSelector((state) => state.ordersData.ordersList);
+
  
   const dispatch = useDispatch();
 
