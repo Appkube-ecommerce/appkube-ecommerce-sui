@@ -214,22 +214,10 @@ const ProductList = () => {
             `);
     
             printWindow.document.close();
+                  }
     
             // Wait for images to load before converting to PDF
-            printWindow.addEventListener('load', () => {
-                const opt = {
-                    margin:       1,
-                    filename:     'product_list.pdf',
-                    image:        { type: 'PNG', quality: 0.98 },
-                    html2canvas:  { scale: 2 },
-                    jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
-                };
-    
-                html2pdf().from(printWindow.document.body).set(opt).save();
-            });
-        };
-    
-                  
+           
 
 
 
@@ -300,19 +288,7 @@ const ProductList = () => {
               </Space>
             </Button>
           </Dropdown>
-          <Input
-                    type="number"
-                    min={1}
-                    value={shareCount}
-                    onChange={(e) => setShareCount(e.target.value)}
-                />
-                <Button
-                    key="link"
-                    className="bg-black text-white rounded-md px-8 py-2"
-                    onClick={handleShare}
-                >
-                    Share
-                </Button>
+        
 
         </Space>
         
