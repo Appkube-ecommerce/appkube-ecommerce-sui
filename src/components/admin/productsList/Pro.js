@@ -132,116 +132,7 @@ const ProductList = () => {
       
 const [isFormValid, setIsFormValid] = useState(false); 
 
-      const handleSend = () => {
-        
-                setModalVisible(false);
-                form.resetFields();
-                const printWindow = window.open('', '_blank');
-                printWindow.document.write(`
-            <html>
-            <head>
-                <title>Product List</title>
-                <style>
-                body {
-                  font-family: Arial, sans-serif;
-                  margin: 0;
-                }
       
-                .product-list {
-                  display: grid;
-                  grid-template-columns: repeat(5, 1fr); /* Adjust the number of columns as needed */
-                  gap: 8px; /* Adjust the gap between columns */
-                  flex-wrap: wrap;
-                  justify-content: flex-start;
-                  margin: 0;
-                  padding: 0;
-                  margin-left: 10px;
-                }
-                
-      
-                .product-card {
-                  border: 1px solid black;
-                  margin: 10px;
-                  padding: 5px;
-                  text-align: center;
-                  width: calc(33.33% - 150px);
-                  box-sizing: border-box;
-                  border-radius: 2px;
-                
-                }
-      
-                .product-image {
-                  max-width: 150px;
-                  max-height: 150px;
-                  border: 1px solid #ddd;
-                  border-radius: 5px;
-                  margin-bottom: 5px;
-                }
-      
-                .product-details {
-                  margin-top: 10px;
-                }
-      
-                .product-name {
-                  font-size: 16px;
-                  margin-bottom: 5px;
-                }
-      
-                .product-price {
-                  font-size: 14px;
-                  color: blue;
-                }
-              </style>
-              </head>
-              <body>
-                  <div class="product-list">
-          `);
-
-          products.forEach((product) => {
-            for (let i = 0; i < shareCount; i++) {
-                printWindow.document.write(`
-                    <div class="product-card">
-                    <Image
-                    src=${product.image}
-                    alt=${product.name}
-                    className="product-image"
-                    height=${200} // Adjust the height as needed
-                    width=${200}  // Adjust the width as needed
-                    style={{ borderRadius: 10 }}
-                  />
-                  <div className="product-details ml-5">
-                    <h3 className="product-name">${product.name}</h3>
-                    <p className="product-price">Price:₹${product.price}</p>
-                    <p className="product-unit">Unit:${product.unit}</p>
-            
-                  </div>
-                </div>
-                      `);
-            }
-                    });
-
-                    printWindow.document.write(`
-                    </div>
-                </body>
-                </html>
-            `);
-    
-            printWindow.document.close();
-    
-            // Wait for images to load before converting to PDF
-            printWindow.addEventListener('load', () => {
-              const opt = {
-                  margin: 1,
-                  filename: 'product_list.pdf',
-                  image: { type: 'jpeg', quality: 0.98 },
-                  html2canvas: { scale: 2 },
-                  jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
-              };
-      
-              html2pdf().from(printWindow.document.body).set(opt).save();
-              });
-           
-    };
 
     function handleShare(){
       setModalVisible(true);
@@ -326,7 +217,7 @@ const [isFormValid, setIsFormValid] = useState(false);
                     <button
                     key="link"
                     className="bg-neutral-800 text-white rounded-md mt-4 h-8 w-20 ml-4"
-                    onClick={handleSend}
+                    // onClick={handleSend}
                 >
                     Send
                 </button>
