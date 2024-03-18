@@ -3,12 +3,16 @@ import { DownOutlined } from '@ant-design/icons';
 import { Button, Dropdown, Space, Form, Modal, Input } from 'antd';
 import html2pdf from 'html2pdf.js';
 import { fetchCategories } from '@/Api/fetchingProducts';
+   
+
 
 const ProductList = () => {
     const [products, setProducts] = useState([]);
     const [shareCount, setShareCount] = useState(1);
     const [modalVisible, setModalVisible] = useState(false);
-    const [form] = Form.useForm();
+    const [form] = Form.useForm();    const [searchValue, setSearchValue] = useState('');
+
+
 
     useEffect(() => {
         const fetchData = async () => {
@@ -117,137 +121,110 @@ const ProductList = () => {
         printWindow.document.close();
       
         printWindow.addEventListener('load', () => {
-          const opt = {
-              margin: 1,
-              filename: 'product_list.pdf',
-              image: { type: 'jpeg', quality: 0.98 },
-              html2canvas: { scale: 2 },
-              jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
-          };
-
-          html2pdf().from(printWindow.document.body).set(opt).save();
-      });
-  };
-
-      
-const [isFormValid, setIsFormValid] = useState(false); 
-
-      
-
-    function handleShare(){
-      setModalVisible(true);
-     
-    }
-    const handleModalCancel = () => {
-      setModalVisible(false);
-      form.resetFields();
-  };
-
-
-    
-                  const items = [
-        {
-          label: 'Print All Products',
-          key: '1',
-          onClick: () => handlePrint(),
-        },
-        {
-          label: 'Print Fruits Products',
-          key: '2',
-          onClick: () => handlePrint('FRUITS'),
-        },
-        {
-          label: 'Print Leafy Vegetables',
-          key: '3',
-          onClick: () => handlePrint('LEAFY_VEGETABLES'),
-        },
-        {
-          label: 'Print Vegetables Products',
-          key: '4',
-          onClick: () => handlePrint('VEGETABLES'),
-        },
-      ];
-    
-      const menuProps = {
-        items,
-        
+          printWindow.print();
+        });
       };
+      console.log(products)
+  //};
 
-      return (
-      <div className="product-list-container">
 
-        <div className="product-list grid grid-cols-5">
+const handleShare = () => {
+  setModalVisible(true);
+};
 
-          
-          {/* {products.map((product, index) => (
-            <Product key={product.id} product={product} index={index} />
-          ))} */}
-        </div> 
+const handleModalCancel = () => {
+  setModalVisible(false);
+  form.resetFields();
+};
 
-        {/* /* Print button with categories */}
+const handleSearch = (value) => {
+  setSearchValue(value);
+  // You can add filtering logic here based on the search value
+};
 
-        <Space wrap>
-     
+
+  const items = [
+    {
+        label: 'Print All Products',
+        key: '1',
+        onClick: () => handlePrint(),
+    },
+    {
+        label: 'Print Fruits Products',
+        key: '2',
+        onClick: () => handlePrint('FRUITS'),
+    },
+    {
+        label: 'Print Leafy Vegetables',
+        key: '3',
+        onClick: () => handlePrint('LEAFY_VEGETABLES'),
+    },
+    {
+        label: 'Print Vegetables Products',
+        key: '4',
+        onClick: () => handlePrint('VEGETABLES'),
+    },
+];
+
+const menuProps = {
+    items,
+};
+
+return (
+  <div className="product-list-container">
+      <div className="product-list grid grid-cols-5">
+          {/* Your product display code goes here */}
+      </div> 
+
+      {/* Print button with categories */}
+      <Space wrap>
           <Dropdown menu={menuProps}>
-            <Button  className='mt-4 flex float-end'>
-              <Space>
-                Print
-                <DownOutlined />
-              </Space>
-            </Button>
+              <Button className='mt-4 flex float-end'>
+                  <Space>
+                      Print
+                      <DownOutlined />
+                  </Space>
+              </Button>
           </Dropdown>
-         
-                <button
-                    key="link"
-                    className="bg-black text-white rounded-md mt-4 h-8 w-20"
-                    onClick={handleShare}
-                >
-                    Share
-                </button>
+          <button
+              key="link"
+              className="bg-black text-white rounded-md mt-4 h-8 w-20"
+              onClick={handleShare}
+          >
+              Share
+          </button>
+      </Space>
 
-        </Space>
-        <Modal
-                title="Share PDF"
-                visible={modalVisible}
-                onCancel={handleModalCancel}
-                footer={[
-                    <button key="cancel" onClick={handleModalCancel} className="border border-neutral-800 text-black rounded-md mt-4 h-8 w-20 ml-4">
-                        Cancel
-                    </button>,
-                    <button
-                    key="link"
-                    className="bg-neutral-800 text-white rounded-md mt-4 h-8 w-20 ml-4"
-                    // onClick={handleSend}
-                >
-                    Send
-                </button>
-                ]}
-            >
-                <Form
-                    form={form}
-                    layout="vertical"
-                    name="shareForm"
-                >
-                    <Form.Item
-                        label="Name"
-                        name="name"
-                        rules={[{ required: true, message: 'Please input your name!' }]}
-                    >
-                        <Input />
-                    </Form.Item>
-                    <Form.Item
-                        label="Phone Number"
-                        name="phone"
-                        rules={[{ required: true, message: 'Please input your phone number!' }]}
-                    >
-                        <Input />
+      {/* Share Modal */}
+      <Modal
+          visible={modalVisible}
+          onCancel={handleModalCancel}
+          footer={[
+              <button key="cancel"  className="border border-neutral-800 text-black rounded-md mt-4 h-6 w-28">
+                  Add customer
+              </button>,
+              <button
+                  key="link"
+                  className="bg-neutral-800 text-white rounded-md mt-4 h-6 w-16 ml-2"
+                  onClick={() => console.log("Send clicked")} 
+              >
+                  Send
+              </button>
+          ]}
+      >
+        <Form layout="vertical">
+                    <Form.Item>
+                        <Input.Search
+                            placeholder="Search by name"
+                            onSearch={handleSearch}
+                            value={searchValue}
+                            onChange={(e) => handleSearch(e.target.value)}
+                        />
                     </Form.Item>
                 </Form>
             </Modal>
-        
-        </div>
-    );
-  };
-  
-  export default ProductList;
-  
+  </div>
+);
+};
+
+export default ProductList;
