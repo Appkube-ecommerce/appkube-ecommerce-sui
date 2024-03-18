@@ -2,11 +2,11 @@
 import React, { useState } from "react";
 // import Status from "./status";
 import Link from "next/link";
-import { CreateProduct } from "@/Api/createProducts";
-import { createProducts } from "@/components/redux/slices/addProductSlice";
+// import { createProducts } from "@/Api/createProducts";
+import { createProducts } from "../../../../redux/slices/addProductSlice";
 import { useDispatch } from "react-redux";
 import { Form, Input,Button, message, Upload, Col, Select, DatePicker } from "antd";
-import { setCreateProduct } from "@/components/redux/slices/addProductSlice";
+// import { setCreateProduct } from "@/components/redux/slices/addProductSlice";
 import {ArrowLeftOutlined,LoadingOutlined,PlusOutlined,} from "@ant-design/icons";
 // import UploadMediafun from "./uploadMedia";
 // import Pricing from "./pricing";
