@@ -234,9 +234,10 @@ const Products = () => {
           <button
             key="link"
           
-            className="bg-black text-white rounded-md px-8 py-2"
+            className="bg-black text-white rounded-md px-8 py-2 mr-3"
             loading={loading}
             onClick={AddProducts}
+            
           >
             Add Product
           </button>
@@ -307,7 +308,7 @@ const Products = () => {
 </Modal>
       </header>
       <Table
-        className="mt-5"
+        className="mt-5 mr-3"
         rowSelection={{
           type: "checkbox",
           ...rowSelection,

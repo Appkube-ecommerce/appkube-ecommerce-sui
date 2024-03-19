@@ -19,8 +19,8 @@ const App = () => {
 
   return (
     <div>
-      <h1 className="text-xl font-semibold m-6">Analytics</h1>
-      <div className="flex gap-3">
+      <h1 className="font-bold text-2xl mt-6">Analytics</h1>
+      <div className="flex gap-4 mt-4">
         <Space direction="vertical" size={12}>
           <RangePicker renderExtraFooter={() => 'extra footer'} />
         </Space>
