@@ -10,6 +10,7 @@ const Page = () => {
         <AddProduct />
       </div>
   
+
   );
 };
 

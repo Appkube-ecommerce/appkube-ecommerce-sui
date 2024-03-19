@@ -1,6 +1,8 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { createCustomers } from '../../Api/Addingcustomer';    
 
+
+
 export const createCustomer = createAsyncThunk(
   'customer/addcustomer',
   async ({ name, phone }) => {

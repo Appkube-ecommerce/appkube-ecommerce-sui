@@ -1,13 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { DownOutlined } from '@ant-design/icons';
-import { Button, Dropdown, Input, Space } from 'antd';
+import { Button, Dropdown, Space, Form, Modal, Input } from 'antd';
 import html2pdf from 'html2pdf.js';
 import { fetchCategories } from '@/Api/fetchingProducts';
+   
+
 
 
 const ProductList = () => {
     const [products, setProducts] = useState([]);
     const [shareCount, setShareCount] = useState(1);
+    const [modalVisible, setModalVisible] = useState(false);
+    const [form] = Form.useForm();    const [searchValue, setSearchValue] = useState('');
+
+
 
     useEffect(() => {
         const fetchData = async () => {
@@ -54,6 +60,7 @@ const ProductList = () => {
                   padding: 5px;
                   text-align: center;
                   width: calc(33.33% - 20px);
+
                   box-sizing: border-box;
                   border-radius: 2px;
                 
@@ -116,6 +123,7 @@ const ProductList = () => {
         printWindow.document.close();
       
         // Wait for images to load before triggering the print
+
         printWindow.addEventListener('load', () => {
           printWindow.print();
         });
@@ -298,6 +306,5 @@ const ProductList = () => {
   
   export default ProductList;
   
-
 
 

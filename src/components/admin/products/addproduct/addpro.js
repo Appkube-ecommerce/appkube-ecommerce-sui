@@ -7,6 +7,7 @@ import { createProducts } from "../../../../redux/slices/addProductSlice";
 import { useDispatch } from "react-redux";
 import { Form, Input,Button, message, Upload, Col, Select, DatePicker } from "antd";
 import { setCreateProduct } from "../../../../redux/slices/addProductSlice";
+
 import {ArrowLeftOutlined,LoadingOutlined,PlusOutlined,} from "@ant-design/icons";
 // import UploadMediafun from "./uploadMedia";
 // import Pricing from "./pricing";

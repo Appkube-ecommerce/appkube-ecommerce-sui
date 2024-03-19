@@ -1,13 +1,9 @@
 "use client"
-import { Provider } from 'react-redux';
-import store from '@/components/redux/store/store';
 import OrderInfo from '@/components/admin/orders/ordersummary';
 import React from 'react';
 import { useSearchParams } from 'next/navigation'
 import { data } from 'autoprefixer';
-
 import {useSelector} from 'react-redux'
-
 
 const Page = () => {
   // const router = useRouter();
@@ -21,9 +17,7 @@ const Page = () => {
   })
   console.log('filter value',data)
   return (
-  
-    
-      <OrderInfo data={data}/>
+     <OrderInfo data={data}/>
     
   );
 };
