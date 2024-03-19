@@ -204,12 +204,6 @@ const Orders = () => {
 
       <Table
 
-      
-          rowSelection={{
-            type: selectionType,
-            ...rowSelection,
-          }}
-
           columns={[
             ...columns,
           ]}
