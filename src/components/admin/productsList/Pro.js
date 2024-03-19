@@ -129,7 +129,7 @@ const ProductList = () => {
         });
       };
 
-      console.log(products)
+      // console.log(products)
   //};
 
 const handleModalCancel = () => {
