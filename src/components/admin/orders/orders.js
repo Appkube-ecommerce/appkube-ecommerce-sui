@@ -12,11 +12,11 @@ import { useRouter } from 'next/navigation';
 
 const Orders = () => {
   const router = useRouter()
-  const HandlePush = (record)=>{
-    router.push(
-     '/admin/orders/summary',
-   {query:{data:record}})
-  }
+  // const HandlePush = (record)=>{
+  //   router.push(
+  //    '/admin/orders/summary',
+  //  {query:{data:record}})
+  // }
   const columns = [
     {
       title: 'Order',
@@ -60,16 +60,6 @@ const Orders = () => {
     },
   ];
   
-  const rowSelection = {
-    onChange: (selectedRowKeys, selectedRows) => {
-      console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
-    },
-    getCheckboxProps: (record) => ({
-      disabled: record.name === 'Disabled User',
-      name: record.name,
-    }),
-  };
-  const [selectionType, setSelectionType] = useState('checkbox');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [exportOption, setExportOption] = useState('option1');
   //const [orders, setOrders] = useState([]);
@@ -207,10 +197,6 @@ const Orders = () => {
       </div>
 
       <Table
-          rowSelection={{
-            type: selectionType,
-            ...rowSelection,
-          }}
           columns={[
             ...columns,
           ]}

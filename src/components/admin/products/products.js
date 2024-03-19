@@ -13,7 +13,6 @@ import { fetchCategories } from "@/Api/fetchingProducts";
 
 const Products = () => {
   const [products, setProducts] = useState([]);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
-  
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -181,21 +180,21 @@ const Products = () => {
       title: "Product",
       dataIndex: "name",
       key: "name",
-      width: "20%",
+      width: "10%",
       ...getColumnSearchProps("name"),
     },
     {
       title: "Category",
       dataIndex: "category",
       key: "category",
-      width: "20%",
+      width: "10%",
       render: (category) => `${category}`,
     },
     {
       title: "Price",
       dataIndex: "price",
       key: "price",
-      width: "20%",
+      width: "10%",
       render: (price) => `₹${price}`,
     },
     {
@@ -205,13 +204,6 @@ const Products = () => {
       width: "10%",
       render: (unit) => `${unit}`,
     },];
-  const rowSelection = {
-    onChange: (selectedRowKeys, selectedRows) => {
-      console.log("selectedRowKeys:", selectedRowKeys);
-      console.log("selectedRows:", selectedRows);
-    },
-  };
-
 
   return (
     <>
@@ -234,12 +226,13 @@ const Products = () => {
           <button
             key="link"
           
-            className="bg-black text-white rounded-md px-8 py-2"
+            className="md:text-sm bg-black text-white rounded-md px-8 py-2"
             loading={loading}
             onClick={AddProducts}
           >
             Add Product
           </button>
+          <ProductList/>
           {/* </Link> */}
         </div>
         <Modal
@@ -308,17 +301,11 @@ const Products = () => {
       </header>
       <Table
         className="mt-5"
-        rowSelection={{
-          type: "checkbox",
-          ...rowSelection,
-        }}
         columns={columns}
         dataSource={products}
         pagination={false}
         scroll={{ x: 800, y: 4000 }}
       />
-      <ProductList/>
-    
       </>
   );
 };

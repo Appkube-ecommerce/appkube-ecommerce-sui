@@ -171,15 +171,11 @@ const menuProps = {
 };
 
 return (
-  <div className="product-list-container">
-      <div className="product-list grid grid-cols-5">
-          {/* Your product display code goes here */}
-      </div> 
-
+  <div className=" md:flex flex-col product-list-container">
       {/* Print button with categories */}
-      <Space wrap>
+      <Space>
           <Dropdown menu={menuProps}>
-              <Button className='mt-4 flex float-end'>
+              <Button className=''>
                   <Space>
                       Print
                       <DownOutlined />
@@ -188,7 +184,7 @@ return (
           </Dropdown>
           <button
               key="link"
-              className="bg-black text-white rounded-md mt-4 h-8 w-20"
+              className="bg-black text-white rounded-md px-8 py-2"
               onClick={handleShare}
           >
               Share
