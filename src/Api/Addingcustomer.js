@@ -19,6 +19,7 @@ export const createCustomers = async (name, phone) => {
                     apiKey: 'da2-tt7a24loa5ch7ceq7onemeej7a'
                 }
               }
+})
 
         const result = await client.graphql({
             query: `
