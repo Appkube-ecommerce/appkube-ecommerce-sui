@@ -363,8 +363,10 @@ const Addproduct = () => {
             borderRadius: "5px",
             // padding: "8px 0px 0px 90px",
             width: "40%",
+            
           }}
           onClick={handleFormSubmit}
+          className="ml-44"
         >
           Submit
         </Button>
