@@ -9,22 +9,24 @@ import { Radio } from 'antd';
 import ImportButton from "../importButton";
 
 const inventory = () => {
-  const [products, setProducts] = useState([]);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
+
+   const [products, setProducts] = useState([]);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
   
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const result = await fetchCategories();
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const result = await fetchCategories();
   
-        console.log(result)
-        setProducts(result.data.listProducts.items);
-      } catch (error) {
-        console.error("Error fetching products:", error);
-      }
-    };
+  //       console.log(result)
+  //       setProducts(result.data.listProducts.items);
+  //     } catch (error) {
+  //       console.error("Error fetching products:", error);
+  //     }
+  //   };
   
-    fetchData();
-  }, []);
+  //   fetchData();
+  // }, []);
+
   const router = useRouter();
   const [radio1, setradio1] = useState(1);
   const onChangeRadio1 = (e) => {
@@ -182,6 +184,13 @@ const inventory = () => {
       ...getColumnSearchProps("name"),
     },
     {
+      title: "SKU",
+      dataIndex: "sku",
+      key: "sku",
+      width: "20%",
+    
+    },
+    {
       title: "Unavailable",
       dataIndex: "unavailable",
       key: "unavailable",
@@ -232,8 +241,11 @@ const inventory = () => {
         {/* <Link href="/admin/products/addproduct"> */}
         <button
           key="link"
-        
-          className="bg-black text-white rounded-md w-24 mr-2 h-10"
+          style={{
+           
+            padding: "8px 15px 8px 15px",
+          }}
+          className="bg-black text-white rounded-md w-32 mr-3"
           loading={loading}
           onClick={Products}
         >
@@ -304,13 +316,27 @@ footer={[
 
   </Modal>
       </header>
+      
+      <div className='bg-white p-2 rounded-lg mt-6 mr-3'>
+      <div className='h-8 p-1'>
+        <button className="rounded-lg w-10  hover:bg-gray-100">All</button>
+        <button className="rounded-lg w-6  hover:bg-gray-100">+</button>
+      </div>
       <Table
+
         className="mt-5"
+
+        rowSelection={{
+          type: "checkbox",
+          ...rowSelection,
+        }}
+
         columns={columns}
         dataSource={products}
         pagination={false}
         scroll={{ x: 800, y: 4000 }}
       />
+      </div>
       </>
   );
 };

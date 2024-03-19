@@ -5,10 +5,12 @@ import AddProduct from '@/components/admin/products/addproduct/addpro';
 
 const Page = () => {
   return (
+  
       <div>
         <AddProduct />
       </div>
-    
+  
+
   );
 };
 

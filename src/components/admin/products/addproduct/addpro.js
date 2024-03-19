@@ -2,11 +2,12 @@
 import React, { useState } from "react";
 // import Status from "./status";
 import Link from "next/link";
-// import { createProducts } from "@/Api/createProducts";
+import { CreateProduct } from "@/Api/createProducts";
 import { createProducts } from "../../../../redux/slices/addProductSlice";
 import { useDispatch } from "react-redux";
 import { Form, Input,Button, message, Upload, Col, Select, DatePicker } from "antd";
-// import { setCreateProduct } from "@/components/redux/slices/addProductSlice";
+import { setCreateProduct } from "../../../../redux/slices/addProductSlice";
+
 import {ArrowLeftOutlined,LoadingOutlined,PlusOutlined,} from "@ant-design/icons";
 // import UploadMediafun from "./uploadMedia";
 // import Pricing from "./pricing";
@@ -362,8 +363,10 @@ const Addproduct = () => {
             borderRadius: "5px",
             // padding: "8px 0px 0px 90px",
             width: "40%",
+            
           }}
           onClick={handleFormSubmit}
+          className="ml-44"
         >
           Submit
         </Button>

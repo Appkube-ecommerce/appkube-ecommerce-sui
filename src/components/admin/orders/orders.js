@@ -21,7 +21,7 @@ const Orders = () => {
     {
       title: 'Order',
       dataIndex: 'id',
-      className: 'text-xs', 
+      // className: 'text-xs', 
       render: (text, record) => (
       //  <span onClick={()=>HandlePush(record)}>{text}</span>
       <Link
@@ -39,21 +39,21 @@ const Orders = () => {
     },
     {
       title: 'Date',
-      className: 'text-xs', 
+      // className: 'text-xs', 
       dataIndex: 'createdAt',
       key: "createdAt",
       render: (createdAt) => `${createdAt}`,
     },
     {
       title: 'Customer Orders Id',
-      className: 'text-xs', 
+      // className: 'text-xs', 
       dataIndex: 'customerOrdersId',
       key: "customerOrdersId",
       render: (customerOrdersId) => `${customerOrdersId}`,
     },
     {
       title: 'Total Price',
-      className: 'text-xs', 
+      // className: 'text-xs', 
       dataIndex: 'totalPrice',
       key: "totalPrice",
       render: (totalPrice) => `${totalPrice}`,
@@ -103,16 +103,22 @@ const Orders = () => {
   // };
   return (
     <>
-      <div className='mr-2 px-4'>
+      <div className='mr-2 px-'>
         <div className='flex justify-between mt-4 items-center'>
           <div>
-            <p className="font-bold text-lg ">Orders</p>
+            <p className="font-bold text-2xl">Orders</p>
           </div>
           <div className="flex gap-2">
           <>
       <button
+      style={{
+        backgroundColor: "#E3E3E3",
+        borderRadius: "5px",
+        padding: "8px 15px 8px 15px",
+      }}
         onClick={showModal}
-        className="rounded-lg font-medium w-16 text-xs h-6 bg-gray-300 text-slate-800 hover:bg-slate-300"
+        className='mr-1'
+        
       >
         Export
       </button>
@@ -161,42 +167,49 @@ const Orders = () => {
           </div>
         </div>
 
-        <div className='bg-white rounded-xl h-16 border border-gray-200 flex items-center mb-4 mt-4 '>
+        <div className='bg-white rounded-xl h-16 border border-gray-200 flex items-center mb-4 mt-4 mr-1'>
           <div className=' border-r w-32 justify-center flex'>
-            <button className='rounded-lg w-28 hover:bg-gray-100 h-12 text-slate-800 text-xs font-semibold flex justify-center items-center'>
+            <button className='rounded-lg w-28 hover:bg-gray-100 h-12  font-semibold flex justify-center items-center'>
               <div><InboxOutlined /> </div>Today
             </button>
           </div>
           <div className=' border-r w-48 justify-center text-center'>
-            <button className='rounded-lg w-44 hover:bg-gray-100 h-12 text-slate-800 text-xs font-semibold'>Total orders</button>
+            <button className='rounded-lg w-44 hover:bg-gray-100 h-12  font-semibold'>Total orders</button>
           </div>
           <div className=' border-r w-48 justify-center text-center'>
-            <button className='rounded-lg w-44 hover:bg-gray-100 h-12 text-slate-800 text-xs font-semibold'>Ordered items over time</button>
+            <button className='rounded-lg w-44 hover:bg-gray-100 h-12  font-semibold'>Ordered items over time</button>
           </div>
           <div className=' border-r w-48 justify-center text-center'>
-            <button className='rounded-lg w-44 hover:bg-gray-100 h-12 text-slate-800 text-xs font-semibold'>Return</button>
+            <button className='rounded-lg w-44 hover:bg-gray-100 h-12  font-semibold'>Return</button>
           </div>
           <div className=' border-r w-48 justify-center text-center'>
-            <button className='rounded-lg w-44 hover:bg-gray-100 h-12 text-slate-800 text-xs font-semibold'>Fulfilled orders over time</button>
+            <button className='rounded-lg w-44 hover:bg-gray-100 h-12  font-semibold'>Fulfilled orders over time</button>
           </div>
           <div className='w-48 justify-center text-center'>
-            <button className='rounded-lg hover:bg-gray-100 h-12 w-44 text-slate-800 text-xs font-semibold'>Delivered orders over time</button>
+            <button className='rounded-lg hover:bg-gray-100 h-12 w-44  font-semibold'>Delivered orders over time</button>
           </div>
         </div>
       </div>
 
-<div className='bg-white p-2 rounded-lg'>
-      <div className='gap-2'>
-        <button className="rounded-lg w-10 h-6 text-xs  hover:bg-gray-100">All</button>
-        <button className="rounded-lg w-20 h-6 text-xs  hover:bg-gray-100">Unfulfilled</button>
-        <button className="rounded-lg h-6 text-xs w-14  hover:bg-gray-100">Unpaid</button>
-        <button className="rounded-lg h-6 text-xs w-12  hover:bg-gray-100">Open</button>
-        <button className="rounded-lg w-14 h-6 text-xs  hover:bg-gray-100">Closed</button>
-        <button className="rounded-lg w-24 h-6 text-xs  hover:bg-gray-100">Local Delivery</button>
-        <button className="rounded-lg w-6 h-6 text-xs  hover:bg-gray-100">+</button>
+<div className='bg-white p-4 rounded-lg mr-3'>
+      <div className='gap-2 h-8'>
+        <button className="rounded-lg w-10  hover:bg-gray-100">All</button>
+        <button className="rounded-lg w-20  hover:bg-gray-100">Unfulfilled</button>
+        <button className="rounded-lg  w-14  hover:bg-gray-100">Unpaid</button>
+        <button className="rounded-lg  w-12  hover:bg-gray-100">Open</button>
+        <button className="rounded-lg w-14    hover:bg-gray-100">Closed</button>
+        <button className="rounded-lg w-24    hover:bg-gray-100">Local Delivery</button>
+        <button className="rounded-lg w-6  hover:bg-gray-100">+</button>
       </div>
 
       <Table
+
+      
+          rowSelection={{
+            type: selectionType,
+            ...rowSelection,
+          }}
+
           columns={[
             ...columns,
           ]}
