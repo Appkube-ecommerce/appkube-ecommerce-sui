@@ -11,6 +11,7 @@ import { useRouter } from 'next/navigation';
 
 
 const Orders = () => {
+  
   const router = useRouter()
   // const HandlePush = (record)=>{
   //   router.push(
@@ -203,7 +204,6 @@ const Orders = () => {
       </div>
 
       <Table
-
           columns={[
             ...columns,
           ]}
