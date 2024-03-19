@@ -56,12 +56,12 @@ const AddCustomer = () => {
     <div className="p-16 md:flex ">
     <Form onFinish={onFinish}
     requiredMark={false}
-    className="w-[70%] m-auto">
+    className="w-[70%] m-auto justify-center">
       <Form.Item
         label="Name"
         name="name"
         rules={[{ required: true, message: 'Please input customer name!' }]}
-        r
+        
       >
         <Input />
       </Form.Item>
@@ -74,10 +74,11 @@ const AddCustomer = () => {
         <Input />
       </Form.Item>
 
-      <Form.Item>
-        <Button type="primary" htmlType="submit" loading={loading}>
+      <Form.Item className=" text-center">
+        
+        <button type="primary" htmlType="submit" loading={loading} className="bg-black text-white w-36 h-8 rounded-lg">
           Create Customer
-        </Button>
+        </button>
       </Form.Item>
     </Form>
 
