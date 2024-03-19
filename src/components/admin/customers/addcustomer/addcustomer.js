@@ -6,10 +6,13 @@ import { Form, Input,Button} from "antd";
 import { useDispatch, useSelector } from 'react-redux';
 import { addCustomer,createCustomer } from "../../../../redux/slices/addCustomerSlice";
 import { notification } from 'antd';
+import { usePathname } from "next/navigation";
 
 // const { Option } = Select;
 
 const AddCustomer = () => {
+  const [form] = Form.useForm();
+
   const customers = useSelector((state)=> state.customerSlice.customers)
   console.log(customers);
   //  console.log(customers);
@@ -19,8 +22,13 @@ const AddCustomer = () => {
   const [loading, setLoading] = useState(false);
   
   // const router = useRouter();
+  const pathname = usePathname();
   const backToCustomers = () => {
+    if(pathname==="/admin/customers/addcustomer"){
     router.push("/admin/customers");
+    } else if (pathname==="/admin/Share/addcustomer"){
+      router.push("/admin/Share");
+    }
   };
   const router = useRouter();
   const onFinish = async (values) => {
@@ -31,6 +39,8 @@ const AddCustomer = () => {
       notification.success({
         message: 'Customer created successfully!',
       });
+       // Reset form fields
+    form.resetFields();
     } catch (error) {
       notification.error({
         message: 'Failed to create customer',
@@ -54,7 +64,9 @@ const AddCustomer = () => {
     </header>
     <hr />
     <div className="p-16 md:flex ">
-    <Form onFinish={onFinish}
+    <Form 
+     form={form}
+    onFinish={onFinish}
     requiredMark={false}
     className="w-[70%] m-auto justify-center">
       <Form.Item

@@ -2,18 +2,18 @@ import React, { useState, useEffect } from 'react';
 import { DownOutlined } from '@ant-design/icons';
 import { Button, Dropdown, Space, Form, Modal, Input } from 'antd';
 import html2pdf from 'html2pdf.js';
-import { fetchCategories } from '@/Api/fetchingProducts';
-   
-
-
+import { useRouter } from "next/navigation";
+import { fetchCategories } from '@/Api/fetchingProducts'; 
 
 const ProductList = () => {
     const [products, setProducts] = useState([]);
-    const [shareCount, setShareCount] = useState(1);
-    const [modalVisible, setModalVisible] = useState(false);
+   
     const [form] = Form.useForm();    const [searchValue, setSearchValue] = useState('');
 
-
+    const handleShare = () => {
+      router.push("/admin/Share");
+    };
+    const router = useRouter();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -55,8 +55,8 @@ const ProductList = () => {
                 
       
                 .product-card {
-                  border: 1px solid black;
-                  margin: 10px;
+                
+                  margin: 5px;
                   padding: 5px;
                   text-align: center;
                   width: calc(33.33% - 20px);
@@ -95,19 +95,19 @@ const ProductList = () => {
       
         filteredProducts.forEach((product, index) =>  {
           printWindow.document.write(`
-            <div className="product-card">
+            <div class="product-card">
       <Image
         src=${product.image}
         alt=${product.name}
-        className="product-image"
+        class="product-image"
         height=${200} // Adjust the height as needed
         width=${200}  // Adjust the width as needed
         style={{ borderRadius: 10 }}
       />
-      <div className="product-details ml-5">
-        <h3 className="product-name">${product.name}</h3>
-        <p className="product-price">Price:₹${product.price}</p>
-        <p className="product-unit">Unit:${product.unit}</p>
+      <div class="product-details ml-5">
+        <h3 class="product-name">${product.name}</h3>
+        <p class="product-price">Price:₹${product.price}</p>
+        <p class="product-unit">Unit:${product.unit}</p>
 
       </div>
     </div>
@@ -131,11 +131,6 @@ const ProductList = () => {
 
       console.log(products)
   //};
-
-
-const handleShare = () => {
-  setModalVisible(true);
-};
 
 const handleModalCancel = () => {
   setModalVisible(false);
@@ -198,7 +193,7 @@ return (
 
       {/* Share Modal */}
       <Modal
-          visible={modalVisible}
+          // visible={modalVisible}
           onCancel={handleModalCancel}
           footer={[
               <button key="cancel"  className="border border-neutral-800 text-black rounded-md mt-4 h-6 w-28">
@@ -229,5 +224,3 @@ return (
 };
 
 export default ProductList;
-
-     

@@ -12,10 +12,6 @@ import ProductList from "../productsList/Pro";
 import { fetchCategories } from "@/Api/fetchingProducts";
 
 const Products = () => {
- 
-  const Share = () => {
-    router.push("/admin/Share");
-  };
 
   const [products, setProducts] = useState([]);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
   useEffect(() => {
@@ -232,7 +228,7 @@ const Products = () => {
             key="link"
           
 
-            className="md:text-sm bg-black text-white rounded-md px-8 py-2"
+            // className="md:text-sm bg-black text-white rounded-md px-8 py-2"
 
             className="bg-black text-white rounded-md px-8 py-2 mr-3"
 
@@ -311,29 +307,12 @@ const Products = () => {
       </header>
       <Table
         className="mt-5 mr-3"
-        rowSelection={{
-          type: "checkbox",
-          ...rowSelection,
-        }}        columns={columns}
+       columns={columns}
         dataSource={products}
         pagination={false}
         scroll={{ x: 800, y: 4000 }}
       />
-
-
-      <ProductList/>
-      <button
-            key="link"
-          
-            className="bg-black text-white rounded-md px-8 py-2"
-            loading={loading}
-            onClick={Share}
-          >
-            Share
-          </button>
-    
-
-      </>
+     </>
   );
 };
 

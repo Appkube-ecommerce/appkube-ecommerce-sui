@@ -17,7 +17,7 @@ const Share = () => {
     const router = useRouter();
     const AddCustomers = ()=>{
      
-      router.push('/admin/customers/addcustomer')
+      router.push('/admin/Share/addcustomer')
     }
         const [products, setProducts] = useState([]);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
         

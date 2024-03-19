@@ -204,8 +204,6 @@ const Orders = () => {
       </div>
 
       <Table
-
-
           columns={[
             ...columns,
           ]}
