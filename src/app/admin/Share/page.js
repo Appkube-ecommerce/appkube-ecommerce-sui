@@ -1,4 +1,4 @@
-import Share from '@/components/admin/share/Share'
+import Share from '@/components/admin/Share/Share'
 import React from 'react'
 
 const page = () => {
