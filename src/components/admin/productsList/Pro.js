@@ -7,8 +7,7 @@ import { fetchCategories } from '@/Api/fetchingProducts';
 
 const ProductList = () => {
     const [products, setProducts] = useState([]);
-    const [shareCount, setShareCount] = useState(1);
-    const [modalVisible, setModalVisible] = useState(false);
+   
     const [form] = Form.useForm();    const [searchValue, setSearchValue] = useState('');
 
     const handleShare = () => {
@@ -56,8 +55,8 @@ const ProductList = () => {
                 
       
                 .product-card {
-                  border: 1px solid black;
-                  margin: 10px;
+                
+                  margin: 5px;
                   padding: 5px;
                   text-align: center;
                   width: calc(33.33% - 20px);
@@ -96,19 +95,19 @@ const ProductList = () => {
       
         filteredProducts.forEach((product, index) =>  {
           printWindow.document.write(`
-            <div className="product-card">
+            <div class="product-card">
       <Image
         src=${product.image}
         alt=${product.name}
-        className="product-image"
+        class="product-image"
         height=${200} // Adjust the height as needed
         width=${200}  // Adjust the width as needed
         style={{ borderRadius: 10 }}
       />
-      <div className="product-details ml-5">
-        <h3 className="product-name">${product.name}</h3>
-        <p className="product-price">Price:₹${product.price}</p>
-        <p className="product-unit">Unit:${product.unit}</p>
+      <div class="product-details ml-5">
+        <h3 class="product-name">${product.name}</h3>
+        <p class="product-price">Price:₹${product.price}</p>
+        <p class="product-unit">Unit:${product.unit}</p>
 
       </div>
     </div>
@@ -226,4 +225,92 @@ return (
 
 export default ProductList;
 
+
       
+
+      // console.log(product)
+      
+            // Wait for images to load before converting to PDF
+           
+
+
+
+
+      
+      const items = [
+        {
+          label: 'Print All Products',
+          key: '1',
+          onClick: () => handlePrint(),
+        },
+        {
+          label: 'Print Fruits Products',
+          key: '2',
+          onClick: () => handlePrint('FRUITS'),
+        },
+        {
+          label: 'Print Leafy Vegetables',
+          key: '3',
+          onClick: () => handlePrint('LEAFY_VEGETABLES'),
+        },
+        {
+          label: 'Print Vegetables Products',
+          key: '4',
+          onClick: () => handlePrint('VEGETABLES'),
+        },
+      ];
+    
+      const menuProps = {
+        items,
+        
+      };
+      
+
+  
+      
+
+
+    
+      
+      
+  
+    return (
+      <div className="product-list-container">
+
+        <div className="product-list grid grid-cols-5">
+
+          
+          {/* {products.map((product, index) => (
+            <Product key={product.id} product={product} index={index} />
+          ))} */}
+        </div> 
+
+        {/* /* Print button with categories */}
+
+        
+     
+     
+        <Space wrap>
+     
+          
+      
+          <Dropdown menu={menuProps}>
+            <Button  className='mt-4 flex float-end'>
+              <Space>
+                Print
+                <DownOutlined />
+              </Space>
+            </Button>
+          </Dropdown>
+        
+
+        </Space>
+        
+        </div>
+    );
+  };
+  
+  export default ProductList;
+  
+
+

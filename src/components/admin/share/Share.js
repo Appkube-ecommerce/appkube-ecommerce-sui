@@ -17,7 +17,7 @@ const Share = () => {
     const router = useRouter();
     const AddCustomers = ()=>{
      
-      router.push('/admin/customers/addcustomer')
+      router.push('/admin/Share/addcustomer')
     }
         const [products, setProducts] = useState([]);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
         
@@ -94,7 +94,9 @@ const Share = () => {
             size="small"
             style={{
               width: 90,
+              
             }}
+            className="bg-black text-white hover:bg-black"
           >
             Search
           </Button>
