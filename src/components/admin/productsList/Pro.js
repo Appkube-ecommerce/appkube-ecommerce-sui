@@ -2,17 +2,18 @@ import React, { useState, useEffect } from 'react';
 import { DownOutlined } from '@ant-design/icons';
 import { Button, Dropdown, Space, Form, Modal, Input } from 'antd';
 import html2pdf from 'html2pdf.js';
-import { fetchCategories } from '@/Api/fetchingProducts';
-   
-
-
+import { useRouter } from "next/navigation";
+import { fetchCategories } from '@/Api/fetchingProducts'; 
 
 const ProductList = () => {
     const [products, setProducts] = useState([]);
    
     const [form] = Form.useForm();    const [searchValue, setSearchValue] = useState('');
 
-
+    const handleShare = () => {
+      router.push("/admin/Share");
+    };
+    const router = useRouter();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -131,11 +132,6 @@ const ProductList = () => {
       console.log(products)
   //};
 
-
-const handleShare = () => {
-  setModalVisible(true);
-};
-
 const handleModalCancel = () => {
   setModalVisible(false);
   form.resetFields();
@@ -229,6 +225,9 @@ return (
 
 export default ProductList;
 
+
+      
+
       // console.log(product)
       
             // Wait for images to load before converting to PDF
@@ -313,4 +312,5 @@ export default ProductList;
   
   export default ProductList;
   
+
 

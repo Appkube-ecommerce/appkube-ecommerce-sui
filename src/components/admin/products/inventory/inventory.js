@@ -326,11 +326,6 @@ footer={[
 
         className="mt-5"
 
-        rowSelection={{
-          type: "checkbox",
-          ...rowSelection,
-        }}
-
         columns={columns}
         dataSource={products}
         pagination={false}
