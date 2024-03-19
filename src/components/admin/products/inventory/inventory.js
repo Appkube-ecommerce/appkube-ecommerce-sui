@@ -170,6 +170,7 @@ const inventory = () => {
 
   const columns = [
     {
+      title:"Image",
       dataIndex: "image",
       key: "image",
       // width: "10%",
@@ -218,13 +219,6 @@ const inventory = () => {
       render: (unit) => `${unit}`,
     },  
   ];
-  const rowSelection = {
-    onChange: (selectedRowKeys, selectedRows) => {
-      console.log("selectedRowKeys:", selectedRowKeys);
-      console.log("selectedRows:", selectedRows);
-    },
-  };
-
 
   return (
     <>
@@ -329,10 +323,14 @@ footer={[
         <button className="rounded-lg w-6  hover:bg-gray-100">+</button>
       </div>
       <Table
+
+        className="mt-5"
+
         rowSelection={{
           type: "checkbox",
           ...rowSelection,
         }}
+
         columns={columns}
         dataSource={products}
         pagination={false}
