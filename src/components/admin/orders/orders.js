@@ -11,6 +11,7 @@ import { useRouter } from 'next/navigation';
 
 
 const Orders = () => {
+  
   const router = useRouter()
   // const HandlePush = (record)=>{
   //   router.push(
@@ -204,11 +205,6 @@ const Orders = () => {
 
       <Table
 
-      
-          rowSelection={{
-            type: selectionType,
-            ...rowSelection,
-          }}
 
           columns={[
             ...columns,
