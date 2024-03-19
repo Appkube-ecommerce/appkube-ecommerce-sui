@@ -14,7 +14,7 @@ const Product = ({ product, index }) => {
         width={200}  // Adjust the width as needed
       />
       <div className="product-details ml-5">
-        <h3 className="product-name ">{product.name}</h3>
+        <h3 className="product-name">{product.name}</h3>
         <p className="product-price">₹{product.price}</p>
         <p className="product-unit">{product.unit}</p>
       </div>

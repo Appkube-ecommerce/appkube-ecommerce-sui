@@ -13,9 +13,9 @@ import { fetchCategories } from "@/Api/fetchingProducts";
 
 const Products = () => {
  
-  const Share = () => {
-    router.push("/admin/Share");
-  };
+  // const Share = () => {
+  //   router.push("/admin/Share");
+  // };
 
   const [products, setProducts] = useState([]);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
   useEffect(() => {
@@ -322,7 +322,7 @@ const Products = () => {
 
 
       <ProductList/>
-      <button
+      {/* <button
             key="link"
           
             className="bg-black text-white rounded-md px-8 py-2"
@@ -330,7 +330,7 @@ const Products = () => {
             onClick={Share}
           >
             Share
-          </button>
+          </button> */}
     
 
       </>
