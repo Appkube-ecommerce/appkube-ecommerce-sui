@@ -41,7 +41,7 @@ export default function RootLayout({ children }) {
   const onSearch = (value) => console.log(value);
 
   const items = [
-    getItem(<Link href={"/admin/home"}>home</Link>, "1", <HomeFilled />),
+    getItem(<Link href={"/admin"}>home</Link>, "1", <HomeFilled />),
     getItem(<Link href={"/admin/orders"}>Orders</Link>, "2", <ShoppingCartOutlined />),
     {
       key: "3",

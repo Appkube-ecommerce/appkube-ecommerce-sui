@@ -5,7 +5,6 @@ const client = generateClient();
 
 export const CreateProduct = async (id, image, name, description, unit, category, price) => {
     try {
-        // Ensure proper configuration and initialization of Amplify
         await Amplify.configure({
             API: {
                 GraphQL: {
@@ -42,6 +41,6 @@ export const CreateProduct = async (id, image, name, description, unit, category
 
     } catch (error) {
         console.log(error);
-        throw error; // Rethrow the error for handling in the calling function
+        throw error; 
     }
 }

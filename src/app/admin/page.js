@@ -1,9 +1,9 @@
 import React from 'react'
-
-const Admin = () => {
+import Home from '@/components/admin/home/home'
+const App = () => {
   return (
-    <div>Admin</div>
+    <div><Home/></div>
   )
 }
 
-export default Admin
+export default App

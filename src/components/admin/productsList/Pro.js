@@ -128,6 +128,108 @@ const ProductList = () => {
           printWindow.print();
         });
       };
+
+      console.log(products)
+  //};
+
+
+const handleShare = () => {
+  setModalVisible(true);
+};
+
+const handleModalCancel = () => {
+  setModalVisible(false);
+  form.resetFields();
+};
+
+const handleSearch = (value) => {
+  setSearchValue(value);
+  // You can add filtering logic here based on the search value
+};
+
+
+  const items = [
+    {
+        label: 'Print All Products',
+        key: '1',
+        onClick: () => handlePrint(),
+    },
+    {
+        label: 'Print Fruits Products',
+        key: '2',
+        onClick: () => handlePrint('FRUITS'),
+    },
+    {
+        label: 'Print Leafy Vegetables',
+        key: '3',
+        onClick: () => handlePrint('LEAFY_VEGETABLES'),
+    },
+    {
+        label: 'Print Vegetables Products',
+        key: '4',
+        onClick: () => handlePrint('VEGETABLES'),
+    },
+];
+
+const menuProps = {
+    items,
+};
+
+return (
+  <div className=" md:flex flex-col product-list-container">
+      {/* Print button with categories */}
+      <Space>
+          <Dropdown menu={menuProps}>
+              <Button className=''>
+                  <Space>
+                      Print
+                      <DownOutlined />
+                  </Space>
+              </Button>
+          </Dropdown>
+          <button
+              key="link"
+              className="bg-black text-white rounded-md px-8 py-2"
+              onClick={handleShare}
+          >
+              Share
+          </button>
+      </Space>
+
+      {/* Share Modal */}
+      <Modal
+          visible={modalVisible}
+          onCancel={handleModalCancel}
+          footer={[
+              <button key="cancel"  className="border border-neutral-800 text-black rounded-md mt-4 h-6 w-28">
+                  Add customer
+              </button>,
+              <button
+                  key="link"
+                  className="bg-neutral-800 text-white rounded-md mt-4 h-6 w-16 ml-2"
+                  onClick={() => console.log("Send clicked")} 
+              >
+                  Send
+              </button>
+          ]}
+      >
+        <Form layout="vertical">
+                    <Form.Item>
+                        <Input.Search
+                            placeholder="Search by name"
+                            onSearch={handleSearch}
+                            value={searchValue}
+                            onChange={(e) => handleSearch(e.target.value)}
+                        />
+                    </Form.Item>
+                </Form>
+            </Modal>
+  </div>
+);
+};
+
+export default ProductList;
+
       // console.log(product)
       const handleShare = () => {
         const printWindow = window.open('', '_blank');
@@ -306,5 +408,4 @@ const ProductList = () => {
   
   export default ProductList;
   
-
 
