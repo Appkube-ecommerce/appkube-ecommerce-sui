@@ -14,10 +14,7 @@ const App = () => {
     // Add more data points as needed
   ];
   
-
- 
-
-  return (
+return (
     <div>
       <h1 className="font-bold text-2xl mt-6">Analytics</h1>
       <div className="flex gap-4 mt-4">

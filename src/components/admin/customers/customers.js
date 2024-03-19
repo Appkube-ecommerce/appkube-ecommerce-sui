@@ -248,6 +248,7 @@ const Customer = () => {
             style={{
               width: 90,
             }}
+            className="bg-black text-white hover:bg-black"
           >
             Search
           </Button>
