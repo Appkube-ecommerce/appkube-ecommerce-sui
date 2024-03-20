@@ -9,7 +9,8 @@ import { Radio } from 'antd';
 import { fetchcustomer } from "@/Api/fetchingcustomers";
 import { fetchCategories } from "@/Api/fetchingProducts";
 import jsPDF from 'jspdf';
-import html2pdf from "html2pdf.js";
+
+import 'jspdf-autotable';
 
 
 
@@ -185,98 +186,61 @@ const Share = () => {
       )
     }
   ];
+
+    const rowSelection = {
+        onChange: (selectedRowKeys, selectedRows) => {
+          console.log("selectedRowKeys:", selectedRowKeys);
+          console.log("selectedRows:", selectedRows);
+        },
+      };
+  const generatePdf = async () => {
+    try {
+      const pdf = new jsPDF();
+      
+      // Add title
+      pdf.text("Synectiks Farm", 10, 10);
+
+      // Add date and time
+
+
       const currentDate = new Date().toLocaleDateString();
       const currentTime = new Date().toLocaleTimeString([], {
         hour: '2-digit',
         minute: '2-digit',
       });
-      const htmlContent = `
-     <html>
-      <body>
-        <h1 style="color: blue; font-size: 16px; font-family: Arial; text-align: center; font-weight: 600;">Synectiks Farm</h1>
-        <div style="display: flex; justify-content: space-between; padding:30px">
-       
-        <div>
-            <p>${currentDate}</p>
-            <p>${currentTime}</p>
-        </div>
-    </div>
-    <div>
-    
-    
-        <table style="width:100%">
-          <tr>
-            <th>Name</th>
-            <th>Image</th>
-            <th>Name</th>
-            <th>Price</th>
-            <th>Quantity</th>
-            <th>Total</th>
-          </tr>
-          ${products.map((data, index) => {
-            return `
-            <tr style="text-align: center">
-              <td>${index + 1}</td>
-              <td><img src="${data.image}" alt="Product Image" style="width: 50px; height: 50px;"></td>
-              <td>${data.name}</td>
-              <td>${data.price}</td>
-              <td>${data.category}</td>
-              <td>${data.unit}</td>
-              </tr>
-              `;
-          })}
-  
-        </table>
-        </div>
-    
-      </body>
-    </html>
-    `;
+      pdf.text(currentDate + ' ' + currentTime, 10, 20);
 
-    //using html2pdf library
+      // Define columns and rows for the table
+      const columns = ["ID", "Name", "Image", "Price", "Category", "Unit"];
+      const rows = products.map((product, index) => [
+        index + 1,
+        product.name,
+        { imageData: product.image, width: 50, height: 50 },
+        product.price,
+        product.category,
+        product.unit
+      ]);
 
-  //   html2pdf(htmlContent, {
-  //     filename: "generated.pdf",
-  //     html2canvas: { scale: 2 },
-  //     jsPDF: { unit: "in", format: "letter", orientation: "portrait" },
-  //     margin: 0.5,
-  //     image: { type: "jpeg", quality: 0.98 },
-  //     output: "datauristring",
-  //   }).then((file) => {
-   
-  //     sendBills(file);
-     
-  //     console.log(file);
-  //     setshow(true);
-  //   });
-  // };
-   
-   
-    const generatePdf = async () => {
-        try {
-          const pdf = new jsPDF();
-          pdf.html(htmlContent, {
-            callback: async (pdf) => {
-              // Convert PDF to base64 string
-              const base64String = pdf.output('datauristring');
-const prefixLength = "data:application/pdf;filename=generated.pdf;base64,".length;
-const remainingString = base64String.substring(prefixLength);
+      // Add table using jspdf-autotable
+      pdf.autoTable({
+        head: [columns],
+        body: rows,
+        startY: 30 // Adjust startY as needed
+      });
 
-      
-              // Save PDF or send it to an API
-              // using splice to remove  this string from base64url data:application/pdf;filename=generated.pdf;base64
-              await sendBills(remainingString);
-              console.log(remainingString);
-      
-              // Set show state to true after PDF is generated
-              setshow(true);
-            }
-          });
-        } catch (error) {
-          console.error('Error generating PDF:', error);
-          // Show error message
-        }
-      };
+      // Save or send the PDF
+      const base64String = pdf.output('datauristring');
+      const prefixLength = "data:application/pdf;filename=generated.pdf;base64,".length;
+      const remainingString = base64String.substring(prefixLength);
+      await sendBills(remainingString);
+
+      // Set show state to true after PDF is generated
+      setshow(true);
+    } catch (error) {
+      console.error('Error generating PDF:', error);
+      // Show error message
+    }
+  };
       console.log(products);
   // ------- api fetching------
   const sendBills = async content => {
