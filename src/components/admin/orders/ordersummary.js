@@ -1,4 +1,4 @@
-
+"use client"
 import React, { useState } from "react";
 import { Button, Input, message, Upload } from "antd";
 import { ArrowLeftOutlined, EditOutlined } from "@ant-design/icons";
@@ -39,22 +39,25 @@ const OrderInfo = (data) => {
     style={{
       backgroundColor: "#E3E3E3",
       borderRadius: "5px",
-      padding: "8px 15px 8px 15px",
+      //padding: "8px 15px 8px 15px",
     }}
+    className="h-8 w-16"
     >Refund</button>
     <button
     style={{
       backgroundColor: "#E3E3E3",
       borderRadius: "5px",
-      padding: "8px 15px 8px 15px",
+      //padding: "8px 15px 8px 15px",
     }}
+    className="h-8 w-16"
     >Return</button>
     <button
     style={{
       backgroundColor: "#E3E3E3",
       borderRadius: "5px",
-      padding: "8px 15px 8px 15px",
+      //padding: "8px 15px 8px 15px",
     }}
+    className="h-8 w-12"
     >Edit</button></div>
     </header>
     <div className="ml-10">{data.data[0].createdAt}</div>
@@ -88,14 +91,20 @@ const OrderInfo = (data) => {
               
               <Input
                 placeholder="Leave a comment..."
-                value={comment}
+                value={comment} 
                 onChange={(e) => setComment(e.target.value)}
-                className='border-none hover:border-0  h-16 w-full'
+                className='border-none hover:border-0 h-16 rounded-none'
               />
                 <div className="bg-slate-50 flex justify-end h-full w-full"> {/* Use flex justify-end */}
     <button
-      className="bg-gray-200 text-gray-400 font-semibold rounded-md h-6 w-12 border-0 mt-4 mb-4 mr-3"
+      className="text-gray-500 font-semibold h-6 w-12  mt-4 mb-4 mr-3"
       //onClick={handlePostComment}
+      style={{
+        backgroundColor: "#E3E3E3",
+        borderRadius: "5px",
+        
+      }}
+  
     >
       Post
     </button>
@@ -103,7 +112,7 @@ const OrderInfo = (data) => {
             </div>
         </div>
         </div>
-      <p className='text-slate-400 text-end'>Only you and other staff can see comments</p>
+      <p className='text-slate-500 text-end'>Only you and other staff can see comments</p>
 </div>
 
 <div>
