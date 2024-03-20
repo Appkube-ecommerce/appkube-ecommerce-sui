@@ -8,15 +8,29 @@ import { Button, Modal, Radio } from 'antd';
 import { useDispatch,useSelector } from 'react-redux';
 import { saveOrdersList } from '@/redux/slices/orderSlice';
 import { useRouter } from 'next/navigation';
+import { useSearchParams } from 'next/navigation'
+import { data } from 'autoprefixer';
+
+
 
 
 const Orders = () => {
+  
   const router = useRouter()
   // const HandlePush = (record)=>{
   //   router.push(
   //    '/admin/orders/summary',
   //  {query:{data:record}})
   // }
+
+  const searchParams = useSearchParams()
+  console.log("data",searchParams.get('data')) 
+  const id = searchParams.get('data')
+  const order = useSelector((state) => state.ordersData.ordersList); 
+    const data = order.filter((item)=>{
+    return item.id === id
+  })
+  console.log('filter value',data)
   const columns = [
     {
       title: 'Order',
@@ -25,13 +39,14 @@ const Orders = () => {
       render: (text, record) => (
       //  <span onClick={()=>HandlePush(record)}>{text}</span>
       <Link
-        href={{
-          pathname: '/admin/orders/summary',
-          query: {
-            data:`${record.id}`
-          }
-        }}
-      >
+  href={{
+    pathname: '/admin/orders/summary',
+    query: {
+      data: `${record.id}`
+    }
+  }}
+>
+
         <span>{text}</span>
       </Link>
         
@@ -93,6 +108,7 @@ const Orders = () => {
   const handleCancel = () => {
     setIsModalOpen(false);
   };
+  
 
   const handleExportOptionChange = (e) => {
     setExportOption(e.target.value);
@@ -203,11 +219,10 @@ const Orders = () => {
       </div>
 
       <Table
-
           columns={[
             ...columns,
           ]}
-          dataSource={orders}
+          dataSource={order}
         />
       </div>
     </>

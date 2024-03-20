@@ -33,8 +33,31 @@ const OrderInfo = (data) => {
   <div className="p-8"> 
   <header className="flex gap-5">
   <ArrowLeftOutlined className="text-lg font-semibold" onClick={backToOrders}/>
-    <h1 className="font-bold text-2xl"></h1>
+  <div className="flex gap-4 justify-center">
+    <h1 className="font-bold text-xl">{data.data[0].id}</h1>
+    <button 
+    style={{
+      backgroundColor: "#E3E3E3",
+      borderRadius: "5px",
+      padding: "8px 15px 8px 15px",
+    }}
+    >Refund</button>
+    <button
+    style={{
+      backgroundColor: "#E3E3E3",
+      borderRadius: "5px",
+      padding: "8px 15px 8px 15px",
+    }}
+    >Return</button>
+    <button
+    style={{
+      backgroundColor: "#E3E3E3",
+      borderRadius: "5px",
+      padding: "8px 15px 8px 15px",
+    }}
+    >Edit</button></div>
     </header>
+    <div className="ml-10">{data.data[0].createdAt}</div>
     </div>
 <div className='flex gap-5'>
 
@@ -42,8 +65,8 @@ const OrderInfo = (data) => {
       <div className="border-2 shadow-md w-[37.5rem] h-72 bg-white rounded-xl p-4">
         <div></div>
         <div className='border border-slate-200 h-44 rounded-md'>
-        <div className='border-b h-14'><p>Order ID:{data.data[0].id}</p></div>
-        <div className='border-b h-14'>{data.data[0].createdAt}</div>
+        <div className='border-b h-14'><p></p></div>
+        <div className='border-b h-14'></div>
         <div className='h-14'></div></div>
         <div className='flex justify-end mt-2'>
   <button className="bg-gray-800 text-white rounded-lg h-7 w-30 px-2 text-sm">
@@ -102,11 +125,27 @@ const OrderInfo = (data) => {
       className="border-2 border-gray-300 px-2 py-1 rounded-md w-full"
     />
   </div>
+  <div className="justify-between">
+  <div className="w-full h-12 mt-4 flex justify-between">
+    <p>Contact information</p>
+    <div><EditOutlined /></div>
+  </div>
+  <div className="w-full h-12 mt-2 flex justify-between">
+    <p>Shipping address</p>
+    <div><EditOutlined /></div>
+  </div>
+  <div className="w-full mt-2 flex justify-between">
+    <p>Billing address</p>
+    <div><EditOutlined /></div>
+  </div>
+</div>
+
       </div>
-      <div className="border-2 shadow-md w-80 h-36 bg-white p-2 mt-5 rounded-xl">
-        <p className='font-semibold text-slate-800 h-10'>Conversion summary</p>
-        <p className='text-slate-800 h-10'>There aren't any conversion details available for this order.</p>
-        <a className='text-sky-500 font-semibold'>Learn more</a>
+
+      <div className="border-2 shadow-md w-80 h-36 bg-white p-2 rounded-xl mt-5">
+        <p className='font-semibold text-slate-800'>Conversion summary</p>
+        <p className='text-slate-800 mt-4'>There aren't any conversion details available for this order.</p>
+        <div className="mt-4"><a className='text-sky-500 font-semibold'>Learn more</a></div>
       </div>
       <div className="border-2 shadow-md w-80 h-44 bg-white p-2 mt-5 rounded-xl font-semibold text-slate-800">Fraud analysis</div>
 </div>
