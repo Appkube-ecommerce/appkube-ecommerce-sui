@@ -69,7 +69,7 @@ const AddCustomer = () => {
     onFinish={onFinish}
     requiredMark={false}
     className="w-[70%] m-auto justify-center">
-      <Form.Item
+      <Form.Item 
         label="Name"
         name="name"
         rules={[{ required: true, message: 'Please input customer name!' }]}
@@ -79,7 +79,7 @@ const AddCustomer = () => {
       </Form.Item>
 
       <Form.Item
-        label="Phone"
+        label="WhatsApp No"
         name="phone"
         rules={[{ required: true, message: 'Please input customer phone number!' }]}
       >

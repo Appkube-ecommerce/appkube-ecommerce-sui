@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link"
 import { Radio } from 'antd';
 import { fetchcustomer } from "@/Api/fetchingcustomers";
-import { fetchCategories } from "@/Api/fetchingProducts";
+import { fetchProducts } from "@/Api/fetchingProducts";
 import jsPDF from 'jspdf';
 
 import 'jspdf-autotable';
@@ -28,7 +28,7 @@ const Share = () => {
         useEffect(() => {
           const fetchData = async () => {
             try {
-              const result = await fetchCategories();
+              const result = await fetchProducts();
         
               console.log(result)
               setProducts(result.data.listProducts.items);
@@ -39,7 +39,7 @@ const Share = () => {
         
           fetchData();
         }, []);
-        // console.log(products);
+        console.log(products);
   const [customer, setcustomer] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
@@ -65,7 +65,17 @@ const Share = () => {
     confirm();
     setSearchText(selectedKeys[0]);
     setSearchedColumn(dataIndex);
-  };
+  };   
+  const handleShare = async (phoneNumber) => {
+    try {
+        const base64String = await generatePdf(phoneNumber);
+        // await sendBills(base64String, phoneNumber);
+        console.log(phoneNumber);
+        setshow(true);
+    } catch (error) {
+        console.error('Error sharing PDF:', error);
+    }
+};
 
   const handleReset = (clearFilters) => {
     clearFilters();
@@ -174,14 +184,20 @@ const Share = () => {
       title: "Customer name",
       dataIndex: "name",
       key: "name",
+      
+
       width: 50, // Adjust the width as needed
-      render: (name) => (
+      render: (name,record) => (
         <div>
           {name}
-          <button onClick={generatePdf}  className=" border  border-black text-xs m-1 rounded-md px-2 py-1 float-end">
-       
-            <p>Share</p>
-          </button>
+          <button
+             onClick={() =>{ handleShare(record.phone)
+              console.log(record.phone);
+             }}
+             // Pass phoneNumber to handleShare function
+             className="border border-black text-xs m-1 rounded-md px-2 py-1 float-end" >
+             <p>Share</p>
+       </button>
         </div>
       )
     }
@@ -193,7 +209,7 @@ const Share = () => {
           console.log("selectedRows:", selectedRows);
         },
       };
-  const generatePdf = async () => {
+  const generatePdf = async (phoneNumber) => {
     try {
       const pdf = new jsPDF();
       
@@ -229,10 +245,11 @@ const Share = () => {
       });
 
       // Save or send the PDF
+      console.log(phoneNumber);
       const base64String = pdf.output('datauristring');
       const prefixLength = "data:application/pdf;filename=generated.pdf;base64,".length;
       const remainingString = base64String.substring(prefixLength);
-      await sendBills(remainingString);
+      await sendBills(remainingString,phoneNumber);
 
       // Set show state to true after PDF is generated
       setshow(true);
@@ -243,14 +260,15 @@ const Share = () => {
   };
       console.log(products);
   // ------- api fetching------
-  const sendBills = async content => {
+  const sendBills = async (content, phoneNumber)=> {
+    console.log(phoneNumber);
     const myHeaders = new Headers();
     myHeaders.append('Content-Type', 'application/json');
 
     const raw = JSON.stringify({
       content: content,
       name: 'directory',
-      phoneNumber: '8919538397',
+      phoneNumber: phoneNumber,
     });
 
     const requestOptions = {
