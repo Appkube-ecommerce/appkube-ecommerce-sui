@@ -9,8 +9,8 @@ import { Radio } from 'antd';
 import { fetchcustomer } from "@/Api/fetchingcustomers";
 import { fetchProducts } from "@/Api/fetchingProducts";
 import jsPDF from 'jspdf';
-
 import 'jspdf-autotable';
+import {notification} from "antd"
 
 
 
@@ -69,8 +69,11 @@ const Share = () => {
   const handleShare = async (phoneNumber) => {
     try {
         const base64String = await generatePdf(phoneNumber);
-        // await sendBills(base64String, phoneNumber);
+       
         console.log(phoneNumber);
+         show && notification.success({
+          message: 'Successfully Shared!',
+        });
         setshow(true);
     } catch (error) {
         console.error('Error sharing PDF:', error);
@@ -249,7 +252,7 @@ const Share = () => {
       const base64String = pdf.output('datauristring');
       const prefixLength = "data:application/pdf;filename=generated.pdf;base64,".length;
       const remainingString = base64String.substring(prefixLength);
-      await sendBills(remainingString,phoneNumber);
+      await shareProducts(remainingString,phoneNumber);
 
       // Set show state to true after PDF is generated
       setshow(true);
@@ -260,7 +263,7 @@ const Share = () => {
   };
       console.log(products);
   // ------- api fetching------
-  const sendBills = async (content, phoneNumber)=> {
+  const shareProducts = async (content, phoneNumber)=> {
     console.log(phoneNumber);
     const myHeaders = new Headers();
     myHeaders.append('Content-Type', 'application/json');
@@ -294,10 +297,6 @@ const Share = () => {
       return null; // Return null or handle the error as needed
     }
   };
-    
-
-
-
       return (
         <div>
           <button
@@ -322,13 +321,13 @@ const Share = () => {
       scroll={{ x: 1000, y: 900 }}
        className="mt-5"
     />
-       {show && (
+       {/* {show && (
         <div>
           
           <p >
             Successfully Shared
           </p>
-     </div>)}
+     </div>)} */}
   </div>
 );
 };
