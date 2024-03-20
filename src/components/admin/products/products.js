@@ -250,14 +250,14 @@ const Products = () => {
       title: "Product",
       dataIndex: "name",
       key: "name",
-      width: "10%",
+      width: "16%",
       ...getColumnSearchProps("name"),
     },
     {
       title: "Category",
       dataIndex: "category",
       key: "category",
-      width: "10%",
+      width: "16%",
       render: (category) => `${category}`,
     },
     {
@@ -277,7 +277,7 @@ const Products = () => {
     {
       title: "Action",
       key: "action",
-      width: "10%",
+      width: "8%",
       render: (text, record) => (
         <Space size="middle">
           <button onClick={() => showModalForEdit(record)}>
@@ -305,7 +305,9 @@ const Products = () => {
             Export
           </button>
           <ImportButton />
+          <ProductList />
           {/* <Link href="/admin/products/addproduct"> */}
+
           <button
             key="link"
             // className="md:text-sm bg-black text-white rounded-md px-8 py-2"
@@ -316,7 +318,6 @@ const Products = () => {
           >
             Add Product
           </button>
-          <ProductList />
           {/* </Link> */}
         </div>
         <Modal
