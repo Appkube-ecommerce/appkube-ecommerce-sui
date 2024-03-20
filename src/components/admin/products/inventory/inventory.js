@@ -173,7 +173,6 @@ const inventory = () => {
       title:"Image",
       dataIndex: "image",
       key: "image",
-      // width: "10%",
       
       render: (image) => <img src={image} alt="Product" style={{ width: 50 }} />,
     },
@@ -210,7 +209,7 @@ const inventory = () => {
       dataIndex: "available",
       key: "available",
       width: "20%",
-      height:"10%",
+      
       render: (category) => `${category}`,
       
     },
@@ -218,7 +217,6 @@ const inventory = () => {
       title: "Onhand",
       dataIndex: "onhand",
       key: "onhand",
-      width: "10%",
       render: (unit) => `${unit}`,
     },  
   ];
@@ -245,8 +243,7 @@ const inventory = () => {
         <button
           key="link"
           style={{
-           
-            padding: "8px 15px 8px 15px",
+          padding: "8px 15px 8px 15px",
           }}
           className="bg-black text-white rounded-md w-32 mr-3"
           loading={loading}
@@ -326,9 +323,6 @@ footer={[
         <button className="rounded-lg w-6  hover:bg-gray-100">+</button>
       </div>
       <Table
-
-        className="mt-5"
-
         columns={columns}
         dataSource={products}
         pagination={false}
