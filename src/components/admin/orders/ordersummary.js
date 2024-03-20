@@ -1,4 +1,4 @@
-
+"use client"
 import React, { useState } from "react";
 import { Button, Input, message, Upload } from "antd";
 import { ArrowLeftOutlined, EditOutlined } from "@ant-design/icons";
