@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link"
 import { Radio } from 'antd';
 import { fetchcustomer } from "@/Api/fetchingcustomers";
-import { fetchCategories } from "@/Api/fetchingProducts";
+import { fetchProducts } from "@/Api/fetchingProducts";
 import jsPDF from 'jspdf';
 
 import 'jspdf-autotable';
@@ -28,7 +28,7 @@ const Share = () => {
         useEffect(() => {
           const fetchData = async () => {
             try {
-              const result = await fetchCategories();
+              const result = await fetchProducts();
         
               console.log(result)
               setProducts(result.data.listProducts.items);
@@ -39,7 +39,7 @@ const Share = () => {
         
           fetchData();
         }, []);
-        // console.log(products);
+        console.log(products);
   const [customer, setcustomer] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
@@ -250,7 +250,7 @@ const Share = () => {
     const raw = JSON.stringify({
       content: content,
       name: 'directory',
-      phoneNumber: '8919538397',
+      phoneNumber: "8919538397",
     });
 
     const requestOptions = {
