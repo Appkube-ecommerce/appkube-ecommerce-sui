@@ -69,7 +69,7 @@ const Share = () => {
   const handleShare = async (phoneNumber) => {
     try {
         const base64String = await generatePdf(phoneNumber);
-        // await sendBills(base64String, phoneNumber);
+       
         console.log(phoneNumber);
         setshow(true);
     } catch (error) {
@@ -249,7 +249,7 @@ const Share = () => {
       const base64String = pdf.output('datauristring');
       const prefixLength = "data:application/pdf;filename=generated.pdf;base64,".length;
       const remainingString = base64String.substring(prefixLength);
-      await sendBills(remainingString,phoneNumber);
+      await shareProducts(remainingString,phoneNumber);
 
       // Set show state to true after PDF is generated
       setshow(true);
@@ -260,7 +260,7 @@ const Share = () => {
   };
       console.log(products);
   // ------- api fetching------
-  const sendBills = async (content, phoneNumber)=> {
+  const shareProducts = async (content, phoneNumber)=> {
     console.log(phoneNumber);
     const myHeaders = new Headers();
     myHeaders.append('Content-Type', 'application/json');
@@ -294,10 +294,6 @@ const Share = () => {
       return null; // Return null or handle the error as needed
     }
   };
-    
-
-
-
       return (
         <div>
           <button

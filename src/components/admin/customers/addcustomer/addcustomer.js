@@ -68,14 +68,19 @@ const AddCustomer = () => {
      form={form}
     onFinish={onFinish}
     requiredMark={false}
+    labelAlign="left"
+    labelCol={{
+      span: 4,
+    }}
     className="w-[70%] m-auto justify-center">
       <Form.Item 
         label="Name"
         name="name"
         rules={[{ required: true, message: 'Please input customer name!' }]}
-        
-      >
-        <Input />
+       
+         >
+      
+        <Input/>
       </Form.Item>
 
       <Form.Item
