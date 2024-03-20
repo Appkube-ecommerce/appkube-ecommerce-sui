@@ -218,13 +218,19 @@ const Orders = () => {
         <button className="rounded-lg w-6  hover:bg-gray-100">+</button>
       </div>
 
-      <Table
-          columns={[
-            ...columns,
-          ]}
+      
+        {/* Pagination customization */}
+        <Table
+          columns={columns}
           dataSource={order}
+          pagination={{
+            position: ['bottomCenter'], 
+            prevIcon: <Button type='link' className='custom-pagination-btn'>{`<`}</Button>,
+            nextIcon: <Button type='link' className='custom-pagination-btn'>{`>`}</Button>,
+          }}
         />
       </div>
+        
     </>
     
   );

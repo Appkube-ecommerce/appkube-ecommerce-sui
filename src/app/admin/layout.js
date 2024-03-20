@@ -74,19 +74,19 @@ export default function RootLayout({ children }) {
           <div className="md:flex">
             <h2 className="text-white uppercase">Synectiks</h2>
           </div>
-          <div className="flex ">
-            <div className="flex bg-white border rounded-md">
+          <div className="flex">
+            <div className="flex bg-white border rounded-md ml-6">
               <Search
                 placeholder="input search text"
                 onSearch={onSearch}
                 style={{width:600}}
-       
+      
               />
             </div>
           </div>
-          <div>
+          <div className="">
             <BellOutlined className="text-white text-lg" />
-            <Button className="text-white">My Store</Button>
+            <Button className="text-white ml-2">My Store</Button>
           </div>
         </Header>
       )}

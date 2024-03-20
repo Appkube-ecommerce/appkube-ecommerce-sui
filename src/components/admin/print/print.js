@@ -165,7 +165,7 @@ return (
       {/* Print button with categories */}
       <Space>
           <Dropdown menu={menuProps}>
-              <Button className=''>
+              <Button className='h-9 border-black'>
                   <Space>
                       Print
                       <DownOutlined />

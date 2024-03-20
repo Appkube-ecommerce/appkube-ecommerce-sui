@@ -174,6 +174,7 @@ const inventory = () => {
       dataIndex: "image",
       key: "image",
       // width: "10%",
+      
       render: (image) => <img src={image} alt="Product" style={{ width: 50 }} />,
     },
     {
@@ -209,7 +210,9 @@ const inventory = () => {
       dataIndex: "available",
       key: "available",
       width: "20%",
+      height:"10%",
       render: (category) => `${category}`,
+      
     },
     {
       title: "Onhand",
