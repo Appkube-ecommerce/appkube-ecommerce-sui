@@ -174,6 +174,7 @@ const inventory = () => {
       dataIndex: "image",
       key: "image",
       // width: "10%",
+      
       render: (image) => <img src={image} alt="Product" style={{ width: 50 }} />,
     },
     {
@@ -209,7 +210,9 @@ const inventory = () => {
       dataIndex: "available",
       key: "available",
       width: "20%",
+      height:"10%",
       render: (category) => `${category}`,
+      
     },
     {
       title: "Onhand",
@@ -221,7 +224,7 @@ const inventory = () => {
   ];
 
   return (
-    <>
+    <div>
     <header className="flex justify-between mt-4 ">
       <h1 className="font-bold text-2xl">Inventory</h1>
     
@@ -332,7 +335,7 @@ footer={[
         scroll={{ x: 800, y: 4000 }}
       />
       </div>
-      </>
+      </div>
   );
 };
 

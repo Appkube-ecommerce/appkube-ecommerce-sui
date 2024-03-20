@@ -186,6 +186,7 @@ const Share = () => {
       )
     }
   ];
+
     const rowSelection = {
         onChange: (selectedRowKeys, selectedRows) => {
           console.log("selectedRowKeys:", selectedRowKeys);
@@ -200,6 +201,8 @@ const Share = () => {
       pdf.text("Synectiks Farm", 10, 10);
 
       // Add date and time
+
+
       const currentDate = new Date().toLocaleDateString();
       const currentTime = new Date().toLocaleTimeString([], {
         hour: '2-digit',
@@ -278,7 +281,7 @@ const Share = () => {
 
 
       return (
-        <>
+        <div>
           <button
             key="link"
           
@@ -308,7 +311,7 @@ const Share = () => {
             Successfully Shared
           </p>
      </div>)}
-  </>
+  </div>
 );
 };
 export default Share;
