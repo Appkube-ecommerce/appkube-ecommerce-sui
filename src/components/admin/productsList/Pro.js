@@ -129,7 +129,7 @@ const ProductList = () => {
         });
       };
 
-      console.log(products)
+      // console.log(products)
   //};
 
 
@@ -181,15 +181,11 @@ return (
           </button>
       </Space>
 
-    
+   
      
   </div>
 );
 };
 
-
-  
-  export default ProductList;
-  
-
+export default ProductList;
 

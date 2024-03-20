@@ -1,56 +1,80 @@
 "use client";
-import React, { useRef, useState,useEffect } from "react";
-import { SearchOutlined } from "@ant-design/icons";
-import { Button, Input, Space, Table, Tag, Modal } from "antd";
+import React, { useRef, useState, useEffect } from "react";
+import {
+  SearchOutlined,
+  EditOutlined,
+  SaveOutlined,
+  CloseOutlined,
+  LoadingOutlined,
+   PlusOutlined
+} from "@ant-design/icons";
+import { Button, Input,Form,Upload, Space, Table, Tag, Modal } from "antd";
 import Highlighter from "react-highlight-words";
 import ImportButton from "./importButton";
 import { useRouter } from "next/navigation";
-import Link from "next/link"
-import { Radio } from 'antd';
+import Link from "next/link";
+import { Radio } from "antd";
 import ProductList from "../productsList/Pro";
 // import Addproduct from "./addproduct";
 import { fetchCategories } from "@/Api/fetchingProducts";
 
 const Products = () => {
+  const [imageUrl, setImageUrl] = useState(); // Define imageUrl state variable
+  const [openExportModal, setOpenExportModal] = useState(false);
+  const [editingProduct, setEditingProduct] = useState(null);
+  const [editedData, setEditedData] = useState({});
+  const [openEditModal, setOpenEditModal] = useState(false);
+  const [products, setProducts] = useState([]);
 
-
- 
-  // const Share = () => {
-  //   router.push("/admin/Share");
-  // };
-
-
-  const [products, setProducts] = useState([]);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
   useEffect(() => {
     const fetchData = async () => {
       try {
         const result = await fetchCategories();
-  
-        console.log(result)
+
+        console.log(result);
         setProducts(result.data.listProducts.items);
       } catch (error) {
         console.error("Error fetching products:", error);
       }
     };
-  
+
     fetchData();
   }, []);
+  const showModalForEdit = (record) => {
+    setOpen(true);
+    setOpenEditModal(true);
+    console.log("Editing product:", record);
+    setEditingProduct(record);
+    setEditedData(record);
+    setImageUrl(record.image);
+  };
+
+  const handleSaveForEdit = () => {
+    console.log("Saving edited data:", editedData);
+    setEditingProduct(null);
+    setEditedData({});
+    setOpenEditModal(false)
+  };
+  const handleCancelForEdit = () => {
+    setOpenEditModal(false);
+  };
+
+  const isEditing = (record) => record === editingProduct;
   const router = useRouter();
   const [radio1, setradio1] = useState(1);
   const onChangeRadio1 = (e) => {
-    console.log('radio checked', e.target.value);
+    console.log("radio checked", e.target.value);
     setradio1(e.target.value);
   };
   const [radio2, setradio2] = useState(1);
   const onChangeRadio2 = (e) => {
-    console.log('radio checked', e.target.value);
+    console.log("radio checked", e.target.value);
     setradio2(e.target.value);
   };
 
-  const AddProducts = ()=>{
-
-    router.push('/admin/products/addproduct')
-  }
+  const AddProducts = () => {
+    router.push("/admin/products/addproduct");
+  };
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
   const [loading, setLoading] = useState(false);
@@ -64,10 +88,11 @@ const Products = () => {
     setTimeout(() => {
       setLoading(false);
       setOpen(false);
+      setOpenExportModal(true);
     }, 3000);
   };
   const handleCancel = () => {
-    setOpen(false);
+    setOpenExportModal(false);
   };
 
   const handleSearch = (selectedKeys, confirm, dataIndex) => {
@@ -82,7 +107,13 @@ const Products = () => {
   };
 
   const getColumnSearchProps = (dataIndex) => ({
-    filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters, close }) => (
+    filterDropdown: ({
+      setSelectedKeys,
+      selectedKeys,
+      confirm,
+      clearFilters,
+      close,
+    }) => (
       <div
         style={{
           padding: 8,
@@ -93,11 +124,13 @@ const Products = () => {
           ref={searchInput}
           placeholder={`Search ${dataIndex}`}
           value={selectedKeys[0]}
-          onChange={(e) => setSelectedKeys(e.target.value ? [e.target.value] : [])}
+          onChange={(e) =>
+            setSelectedKeys(e.target.value ? [e.target.value] : [])
+          }
           onPressEnter={() => handleSearch(selectedKeys, confirm, dataIndex)}
           style={{
             marginBottom: 8,
-            display: 'block',
+            display: "block",
           }}
         />
         <Space>
@@ -149,7 +182,7 @@ const Products = () => {
     filterIcon: (filtered) => (
       <SearchOutlined
         style={{
-          color: filtered ? '#1677ff' : undefined,
+          color: filtered ? "#1677ff" : undefined,
         }}
       />
     ),
@@ -164,25 +197,51 @@ const Products = () => {
       searchedColumn === dataIndex ? (
         <Highlighter
           highlightStyle={{
-            backgroundColor: '#ffc069',
+            backgroundColor: "#ffc069",
             padding: 0,
           }}
           searchWords={[searchText]}
           autoEscape
-          textToHighlight={text ? text.toString() : ''}
+          textToHighlight={text ? text.toString() : ""}
         />
       ) : (
         text
       ),
   });
+  // upload imag code for edit modal
+  const beforeUpload = (file) => {
+    const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
+    if (!isJpgOrPng) {
+      message.error('You can only upload JPG/PNG file!');
+    }
+    return isJpgOrPng;
+  };
 
+  const handleChange = (info) => {
+    if (info.file.status === 'uploading') {
+      return;
+    }
+    if (info.file.status === 'done') {
+      // Get this url from response in real world.
+      setImageUrl(info.file.response.url);
+    }
+  };
+
+  const uploadButton = (
+    <div>
+      {loading ? <LoadingOutlined /> : <PlusOutlined />}
+      <div style={{ marginTop: 8 }}>Upload</div>
+    </div>
+  );
   const columns = [
     {
       title: "Image",
       dataIndex: "image",
       key: "image",
       width: "10%",
-      render: (image) => <img src={image} alt="Product" style={{ width: 50 }} />,
+      render: (image) => (
+        <img src={image} alt="Product" style={{ width: 50 }} />
+      ),
     },
     {
       title: "Product",
@@ -211,13 +270,26 @@ const Products = () => {
       key: "unit",
       width: "10%",
       render: (unit) => `${unit}`,
-    },];
+    },
+    {
+      title: "Action",
+      key: "action",
+      width: "10%",
+      render: (text, record) => (
+        <Space size="middle">
+          <button onClick={() => showModalForEdit(record)}>
+            <EditOutlined /> Edit
+          </button>
+        </Space>
+      ),
+    },
+  ];
 
   return (
     <>
       <header className="flex justify-between mt-4 ">
         <h1 className="font-bold text-2xl">Products</h1>
-      
+
         <div className="flex gap-3">
           <button
             style={{
@@ -233,97 +305,161 @@ const Products = () => {
           {/* <Link href="/admin/products/addproduct"> */}
           <button
             key="link"
-          
-
             // className="md:text-sm bg-black text-white rounded-md px-8 py-2"
 
             className="bg-black text-white rounded-md px-8 py-2 mr-3"
-
             loading={loading}
             onClick={AddProducts}
-            
           >
             Add Product
           </button>
-          <ProductList/>
+          <ProductList />
           {/* </Link> */}
         </div>
         <Modal
-  open={open}
-  title="Export products"
-  onOk={handleOk}
-  onCancel={handleCancel}
-  footer={[
-    <Button key="back" className="shadow-lg" onClick={handleCancel}>
-      Cancel
-    </Button>,
-    <Button
-      key="Cancel"
-      className="bg-black text-white"
-      loading={loading}
-      onClick={handleOk}
-    >
-      Export Products
-    </Button>,
-  ]}
->
-  <hr></hr>
-  <div className="mt-5 mb-5">
-  <p>This CSV file can update all product information. To update just 
-    inventory quantities use the <Link href="/" className="text-blue-500 underline" >
-      CSV file for inventory.</Link></p>
-    
-      <div className="m-5">
-        <div className="mb-5">
-          <Space direction="vertical">
-          <h5>Export</h5>
- 
-      <Radio.Group onChange={onChangeRadio1} value={radio1} defaultValue="A">
-      <Space direction="vertical">
-      <Radio value="A">Current Page</Radio>
-        <Radio value="B">All products</Radio>
-        <Radio value="C" disabled>Selected:0 products</Radio>
-      <Radio value="D" disabled>1 product matching your search </Radio>
- </Space>
+          open={openExportModal}
+          title="Export products"
+          onOk={handleOk}
+          onCancel={handleCancel}
+          footer={[
+            <Button key="back" className="shadow-lg" onClick={handleCancel}>
+              Cancel
+            </Button>,
+            <Button
+              key="Cancel"
+              className="bg-black text-white"
+              loading={loading}
+              onClick={handleOk}
+            >
+              Export Products
+            </Button>,
+          ]}
+        >
+          <hr></hr>
+          <div className="mt-5 mb-5">
+            <p>
+              This CSV file can update all product information. To update just
+              inventory quantities use the{" "}
+              <Link href="/" className="text-blue-500 underline">
+                CSV file for inventory.
+              </Link>
+            </p>
 
-    </Radio.Group>
-    </Space>
-        </div>
-        <div className="mb-5"> 
-        <Space direction="vertical">
-          <h5>Export as</h5>
-    <Radio.Group onChange={onChangeRadio2} value={radio2} defaultValue="E">
-      <Space direction="vertical">
-      <Radio value="E">CSV for Excel,Numbers,or other spreadsheet programs</Radio>
-      <Radio value="F">Plain CSV file</Radio>
-     
- </Space>
+            <div className="m-5">
+              <div className="mb-5">
+                <Space direction="vertical">
+                  <h5>Export</h5>
 
-    </Radio.Group>
-    </Space>
-
-        </div>
-      </div>
-  <p>Learn more about <Link href="/" className="text-blue-400 underline">exporting products to CSV file</Link> or the   <Link href="/" className="text-blue-400 underline">bulk editor.</Link></p>
-
-  </div>
-  <hr></hr>
-  
-  
-</Modal>
+                  <Radio.Group
+                    onChange={onChangeRadio1}
+                    value={radio1}
+                    defaultValue="A"
+                  >
+                    <Space direction="vertical">
+                      <Radio value="A">Current Page</Radio>
+                      <Radio value="B">All products</Radio>
+                      <Radio value="C" disabled>
+                        Selected:0 products
+                      </Radio>
+                      <Radio value="D" disabled>
+                        1 product matching your search{" "}
+                      </Radio>
+                    </Space>
+                  </Radio.Group>
+                </Space>
+              </div>
+              <div className="mb-5">
+                <Space direction="vertical">
+                  <h5>Export as</h5>
+                  <Radio.Group
+                    onChange={onChangeRadio2}
+                    value={radio2}
+                    defaultValue="E"
+                  >
+                    <Space direction="vertical">
+                      <Radio value="E">
+                        CSV for Excel,Numbers,or other spreadsheet programs
+                      </Radio>
+                      <Radio value="F">Plain CSV file</Radio>
+                    </Space>
+                  </Radio.Group>
+                </Space>
+              </div>
+            </div>
+            <p>
+              Learn more about{" "}
+              <Link href="/" className="text-blue-400 underline">
+                exporting products to CSV file
+              </Link>{" "}
+              or the{" "}
+              <Link href="/" className="text-blue-400 underline">
+                bulk editor.
+              </Link>
+            </p>
+          </div>
+          <hr></hr>
+        </Modal>
+        <Modal
+          title="Title"
+          open={openEditModal}
+          onCancel={handleCancelForEdit}
+          footer={[
+            <button
+              key="save"
+              className="bg-black text-white px-8 py-2 rounded-lg"
+              onClick={handleSaveForEdit}
+            >
+              Save
+            </button>,
+          ]}
+        >
+          <div className="">
+            <Form 
+            layout="vertical">
+              <Form.Item label="Image">
+              {/* <Input value={editedData.image} onChange={(e) => setEditedData({...editedData, image: e.target.value})} /> */}
+              <Upload
+                name="image"
+                listType="picture-card"
+                className="avatar-uploader"
+                showUploadList={false}
+                action="/uploadURL"
+                beforeUpload={beforeUpload}
+                onChange={handleChange}
+              >
+                {imageUrl ? (
+                  <img src={imageUrl} alt="image" style={{ width: '100%' }} />
+                ) : (
+                  uploadButton
+                )}
+              </Upload>
+              </Form.Item>
+              <Form.Item label="Product">
+              <Input value={editedData.name} onChange={(e) => setEditedData({...editedData, name: e.target.value})} />
+              </Form.Item>
+              <Form.Item label="Category">
+              <Input value={editedData.category} onChange={(e) => setEditedData({...editedData, category: e.target.value})} />
+              </Form.Item>
+              <Form.Item label="Price">
+              <Input value={editedData.price} onChange={(e) => setEditedData({...editedData, price: e.target.value})} />
+              </Form.Item >
+              <Form.Item label="Unit">
+              <Input value={editedData.unit} onChange={(e) => setEditedData({...editedData, unit: e.target.value})} />
+              </Form.Item>
+            </Form>
+          </div>
+          <p>opened successfully</p>
+        </Modal>
       </header>
       <Table
         className="mt-5 mr-3"
-       columns={columns}
+        columns={columns}
         dataSource={products}
         pagination={false}
         scroll={{ x: 800, y: 4000 }}
       />
-
-
-
       <ProductList/>
-     
+    
     
 
       </>
