@@ -9,8 +9,8 @@ import { Radio } from 'antd';
 import { fetchcustomer } from "@/Api/fetchingcustomers";
 import { fetchProducts } from "@/Api/fetchingProducts";
 import jsPDF from 'jspdf';
-
 import 'jspdf-autotable';
+import {notification} from "antd"
 
 
 
@@ -71,6 +71,9 @@ const Share = () => {
         const base64String = await generatePdf(phoneNumber);
        
         console.log(phoneNumber);
+         show && notification.success({
+          message: 'Successfully Shared!',
+        });
         setshow(true);
     } catch (error) {
         console.error('Error sharing PDF:', error);
@@ -318,13 +321,13 @@ const Share = () => {
       scroll={{ x: 1000, y: 900 }}
        className="mt-5"
     />
-       {show && (
+       {/* {show && (
         <div>
           
           <p >
             Successfully Shared
           </p>
-     </div>)}
+     </div>)} */}
   </div>
 );
 };
