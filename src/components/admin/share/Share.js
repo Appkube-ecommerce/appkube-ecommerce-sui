@@ -264,9 +264,9 @@ const Share = () => {
           pdf.html(htmlContent, {
             callback: async (pdf) => {
               // Convert PDF to base64 string
-              const base64String = pdf.output('datauristring');
-const prefixLength = "data:application/pdf;filename=generated.pdf;base64,".length;
-const remainingString = base64String.substring(prefixLength);
+                const base64String = pdf.output('datauristring');
+                const prefixLength = "data:application/pdf;filename=generated.pdf;base64,".length;
+                const remainingString = base64String.substring(prefixLength);
 
       
               // Save PDF or send it to an API

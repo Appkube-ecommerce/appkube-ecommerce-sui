@@ -323,15 +323,7 @@ const Products = () => {
 
 
       <ProductList/>
-      {/* <button
-            key="link"
-          
-            className="bg-black text-white rounded-md px-8 py-2"
-            loading={loading}
-            onClick={Share}
-          >
-            Share
-          </button> */}
+     
     
 
       </>
