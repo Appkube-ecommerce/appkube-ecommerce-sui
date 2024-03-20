@@ -9,6 +9,9 @@ import { Radio } from 'antd';
 import { fetchcustomer } from "@/Api/fetchingcustomers";
 import { fetchCategories } from "@/Api/fetchingProducts";
 import jsPDF from 'jspdf';
+import html2pdf from "html2pdf.js";
+
+
 
 // import Addproduct from "./addproduct";
 
@@ -35,6 +38,7 @@ const Share = () => {
         
           fetchData();
         }, []);
+        // console.log(products);
   const [customer, setcustomer] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
@@ -195,7 +199,7 @@ const Share = () => {
       const htmlContent = `
      <html>
       <body>
-        <h1 style="color: blue; font-size: 30px; font-family: Arial; text-align: center; font-weight: 600;">Synectiks Farm</h1>
+        <h1 style="color: blue; font-size: 16px; font-family: Arial; text-align: center; font-weight: 600;">Synectiks Farm</h1>
         <div style="display: flex; justify-content: space-between; padding:30px">
        
         <div>
@@ -203,6 +207,7 @@ const Share = () => {
             <p>${currentTime}</p>
         </div>
     </div>
+    <div>
     
     
         <table style="width:100%">
@@ -218,22 +223,39 @@ const Share = () => {
             return `
             <tr style="text-align: center">
               <td>${index + 1}</td>
-              <td><img src="${
-                data.image
-              }" alt="Product Image" style="width: 50px; height: 50px;"></td>
+              <td><img src="${data.image}" alt="Product Image" style="width: 50px; height: 50px;"></td>
               <td>${data.name}</td>
               <td>${data.price}</td>
-              <td>${data.quantity}</td>
-              <td>${data.price * data.quantity}</td>
+              <td>${data.category}</td>
+              <td>${data.unit}</td>
               </tr>
               `;
           })}
   
         </table>
+        </div>
     
       </body>
     </html>
     `;
+
+    //using html2pdf library
+
+  //   html2pdf(htmlContent, {
+  //     filename: "generated.pdf",
+  //     html2canvas: { scale: 2 },
+  //     jsPDF: { unit: "in", format: "letter", orientation: "portrait" },
+  //     margin: 0.5,
+  //     image: { type: "jpeg", quality: 0.98 },
+  //     output: "datauristring",
+  //   }).then((file) => {
+   
+  //     sendBills(file);
+     
+  //     console.log(file);
+  //     setshow(true);
+  //   });
+  // };
    
    
     const generatePdf = async () => {
@@ -243,9 +265,14 @@ const Share = () => {
             callback: async (pdf) => {
               // Convert PDF to base64 string
               const base64String = pdf.output('datauristring');
+const prefixLength = "data:application/pdf;filename=generated.pdf;base64,".length;
+const remainingString = base64String.substring(prefixLength);
+
       
               // Save PDF or send it to an API
-              await sendBills(base64String);
+              // using splice to remove  this string from base64url data:application/pdf;filename=generated.pdf;base64
+              await sendBills(remainingString);
+              console.log(remainingString);
       
               // Set show state to true after PDF is generated
               setshow(true);

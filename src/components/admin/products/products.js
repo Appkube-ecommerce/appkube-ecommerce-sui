@@ -458,7 +458,9 @@ const Products = () => {
         pagination={false}
         scroll={{ x: 800, y: 4000 }}
       />
-    </>
+      <ProductList/>
+      </>
+
   );
 };
 
