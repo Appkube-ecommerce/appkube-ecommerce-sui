@@ -185,12 +185,6 @@ const Share = () => {
       )
     }
   ];
-    const rowSelection = {
-        onChange: (selectedRowKeys, selectedRows) => {
-          console.log("selectedRowKeys:", selectedRowKeys);
-          console.log("selectedRows:", selectedRows);
-        },
-      };
       const currentDate = new Date().toLocaleDateString();
       const currentTime = new Date().toLocaleTimeString([], {
         hour: '2-digit',
@@ -323,7 +317,7 @@ const remainingString = base64String.substring(prefixLength);
 
 
       return (
-        <>
+        <div>
           <button
             key="link"
           
@@ -353,7 +347,7 @@ const remainingString = base64String.substring(prefixLength);
             Successfully Shared
           </p>
      </div>)}
-  </>
+  </div>
 );
 };
 export default Share;
