@@ -3,7 +3,7 @@ import { DownOutlined } from '@ant-design/icons';
 import { Button, Dropdown, Space, Form, Modal, Input } from 'antd';
 import html2pdf from 'html2pdf.js';
 import { useRouter } from "next/navigation";
-import { fetchCategories } from '@/Api/fetchingProducts'; 
+import { fetchProducts } from '@/Api/fetchingProducts'; 
 
 const ProductList = () => {
     const [products, setProducts] = useState([]);
@@ -18,7 +18,7 @@ const ProductList = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const result = await fetchCategories();
+                const result = await fetchProducts();
                 setProducts(result.data.listProducts.items);
             } catch (error) {
                 console.error("Error fetching products:", error);
@@ -132,16 +132,6 @@ const ProductList = () => {
       // console.log(products)
   //};
 
-const handleModalCancel = () => {
-  setModalVisible(false);
-  form.resetFields();
-};
-
-const handleSearch = (value) => {
-  setSearchValue(value);
-  // You can add filtering logic here based on the search value
-};
-
 
   const items = [
     {
@@ -191,36 +181,11 @@ return (
           </button>
       </Space>
 
-      {/* Share Modal */}
-      <Modal
-          // visible={modalVisible}
-          onCancel={handleModalCancel}
-          footer={[
-              <button key="cancel"  className="border border-neutral-800 text-black rounded-md mt-4 h-6 w-28">
-                  Add customer
-              </button>,
-              <button
-                  key="link"
-                  className="bg-neutral-800 text-white rounded-md mt-4 h-6 w-16 ml-2"
-                  onClick={() => console.log("Send clicked")} 
-              >
-                  Send
-              </button>
-          ]}
-      >
-        <Form layout="vertical">
-                    <Form.Item>
-                        <Input.Search
-                            placeholder="Search by name"
-                            onSearch={handleSearch}
-                            value={searchValue}
-                            onChange={(e) => handleSearch(e.target.value)}
-                        />
-                    </Form.Item>
-                </Form>
-            </Modal>
+
+
   </div>
 );
 };
 
 export default ProductList;
+

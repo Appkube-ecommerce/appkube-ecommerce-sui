@@ -3,8 +3,6 @@ import React, { useRef, useState, useEffect } from "react";
 import {
   SearchOutlined,
   EditOutlined,
-  SaveOutlined,
-  CloseOutlined,
   LoadingOutlined,
   PlusOutlined,
 } from "@ant-design/icons";
@@ -15,7 +13,6 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Radio } from "antd";
 import ProductList from "../print/print";
-// import Addproduct from "./addproduct";
 import { fetchProducts } from "@/Api/fetchingProducts";
 
 const Products = () => {
@@ -419,7 +416,6 @@ const Products = () => {
           <div className="">
             <Form layout="vertical">
               <Form.Item label="Image">
-                {/* <Input value={editedData.image} onChange={(e) => setEditedData({...editedData, image: e.target.value})} /> */}
                 <Upload
                   name="image"
                   listType="picture-card"

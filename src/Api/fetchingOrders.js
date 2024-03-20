@@ -6,8 +6,6 @@ import { generateClient } from 'aws-amplify/api';
 
 
 const client = generateClient();
-
- 
  export  const FetchOrders = async () => {
       try {
         // Ensure proper configuration and initialization of Amplify
