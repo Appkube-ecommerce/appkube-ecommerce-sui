@@ -2,18 +2,13 @@
 import React, { useState } from "react";
 // import Status from "./status";
 import Link from "next/link";
-import { CreateProduct } from "@/Api/createProducts";
 import { createProducts } from "../../../../redux/slices/addProductSlice";
 import { useDispatch } from "react-redux";
-import { Form, Input,Button, message, Upload, Col, Select, DatePicker } from "antd";
+import { Form, Input,Button, message, Upload, Col, Select, DatePicker,Row } from "antd";
 import { setCreateProduct } from "../../../../redux/slices/addProductSlice";
-
+import axios from '@/Api/axios'
 import {ArrowLeftOutlined,LoadingOutlined,PlusOutlined,} from "@ant-design/icons";
-// import UploadMediafun from "./uploadMedia";
-// import Pricing from "./pricing";
-// import Publishing from "./publishing";
 import { useRouter } from "next/navigation";
-// import Producttitle from "./producttitle";
 
 //uploadimage code
 const getBase64 = (img, callback) => {
@@ -22,10 +17,10 @@ const getBase64 = (img, callback) => {
   reader.readAsDataURL(img);
 };
 const beforeUpload = (file) => {
-  // const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png";
-  // if (!isJpgOrPng) {
-  //   message.error("You can only upload JPG/PNG file!");
-  // }
+  const isPng = file.type === "image/png";
+  if (!isPng) {
+    message.error("You can only upload PNG file!");
+  }
   const isLt2M = file.size / 1024 / 1024 < 2;
   if (!isLt2M) {
     message.error("Image must smaller than 2MB!");
@@ -73,6 +68,8 @@ const Addproduct = () => {
       getBase64(info.file.originFileObj, (url) => {
         setLoading(false);
         setImageUrl(url);
+        const base64Data = url.split(",")[1];
+        setFormData({ ...formData, image: base64Data }); 
       });
     }
   };
@@ -107,28 +104,54 @@ const Addproduct = () => {
   };
   //redux code
   const [formData, setFormData] = useState({
+    availability:"",
+    brand:"",
     category:"",
-    // image:"",
+    description: "",
+    image:null,
     name: "",
     price:"",
+    currency:"",
     unit:"",
-    description: "",
-    id:"1123"
   });
 
   const dispatch = useDispatch();
 
   const handleInputChange = (e) => {
+    console.log('form data',formData)
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+    console.log(name,value,"change")
   };
 
-  const handleFormSubmit = () => {
-    console.log(formData)
+  const handleFormSubmit = async() => {
+    console.log(formData,"hitting api")
+    console.log('imagr',imageUrl)
     // dispatch(setCreateProduct({ ...formData, image: imageUrl }));
     // CreateProduct(formData.id,formData.name,formData.description,formData.unit,formData.category,formData.price)
-    dispatch(createProducts({ ...formData, image: imageUrl }))
-    // dispatch(setCreateProduct(formData));
+    // dispatch(createProducts({ ...formData, image: imageUrl }))
+   
+    // dispatch(setCreateProduct(values));
+   const data = {
+    availability:formData.availability,
+    brand:formData.brand,
+    category:formData.category,
+    description:formData.description,
+    image:formData.image,
+    name:formData.name,
+    price:formData.price,
+    currency:formData.currency,
+    unit:formData.unit
+   }
+   try {
+    console.log("data", data);
+    const response = await axios.post('/product',data);
+    console.log("response", response);
+    if(response.status==200){
+    dispatch(setCreateProduct(data));}
+  } catch (error) {
+    console.log("error", error);
+  }
   };
   const backToProducts = () => {
     router.push("/admin/products");
@@ -230,7 +253,8 @@ const Addproduct = () => {
                 span: 20,
               }}
             >
-              <Col>
+              <Row gutter={20}>
+              <Col span={12}>
                 <Form.Item
                   label="Category"
                   name="category"
@@ -248,27 +272,88 @@ const Addproduct = () => {
                     onChange={handleInputChange}
                   />
                 </Form.Item>
-              </Col>
-              <Col>
+                </Col>
+                <Col span={12}>
                 <Form.Item
-                  label="Unit"
-                  name="unit"
+                  label="Brand"
+                  name="brand"
                   rules={[
                     {
                       required: true,
-                      message: "Please input Unit!",
+                      message: "Please input Brand!",
                     },
                   ]}
                 >
                   <Input
-                    name="unit"
-                    placeholder="Unit"
+                    name="brand"
+                    placeholder="brand"
                     className="border border-black"
                     onChange={handleInputChange}
                   />
                 </Form.Item>
               </Col>
-              <Col>
+              </Row>
+              <Row gutter={20}>
+                    <Col span={12}>
+                      <Form.Item
+                        label="Unit"
+                        name="unit"
+                        rules={[
+                          {
+                            required: true,
+                            message: "Please input Unit!",
+                          },
+                        ]}
+                      >
+                        <Input
+                          name="unit"
+                          placeholder="Unit"
+                          className="border border-black"
+                          onChange={handleInputChange}
+                        />
+                      </Form.Item>
+                    </Col>
+              <Col span={12}>
+                <Form.Item
+                  label="Availability"
+                  name="availability"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please input the availability!",
+                    },
+                  ]}
+                >
+                  <Input
+                    name="availability"
+                    placeholder="availability"
+                    className="border border-black"
+                    onChange={handleInputChange}
+                  />
+                </Form.Item>
+              </Col>
+              </Row>
+              <Row gutter={20}>
+              <Col span={12}>
+                <Form.Item
+                  label="Currency"
+                  name="currency"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please input currency!",
+                    },
+                  ]}
+                >
+                  <Input
+                    name="currency"
+                    placeholder="currency"
+                    className="border border-black"
+                    onChange={handleInputChange}
+                  />
+                </Form.Item>
+              </Col>
+              <Col span={12}>
                 <Form.Item
                   label="Price"
                   name="price"
@@ -287,6 +372,7 @@ const Addproduct = () => {
                   />
                 </Form.Item>
               </Col>
+              </Row>
             </Form>
           </div>
         </sectionleft>

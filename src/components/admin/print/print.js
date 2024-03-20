@@ -3,7 +3,6 @@ import { DownOutlined } from '@ant-design/icons';
 import { Button, Dropdown, Space, Form, Modal, Input } from 'antd';
 import html2pdf from 'html2pdf.js';
 import { useRouter } from "next/navigation";
-import { fetchProducts } from '@/Api/fetchingProducts'; 
 
 const ProductList = () => {
     const [products, setProducts] = useState([]);
@@ -165,7 +164,7 @@ return (
       {/* Print button with categories */}
       <Space>
           <Dropdown menu={menuProps}>
-              <Button className=''>
+              <Button className='h-9 border-black'>
                   <Space>
                       Print
                       <DownOutlined />
@@ -181,8 +180,8 @@ return (
           </button>
       </Space>
 
-
-
+   
+     
   </div>
 );
 };

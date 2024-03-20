@@ -7,7 +7,7 @@ import ImportButton from "./importButton";
 import { useRouter } from "next/navigation";
 import Link from "next/link"
 import { Radio } from 'antd';
-import { fetchcustomer } from "@/Api/fetchingcustomers";
+// import { fetchcustomer } from "@/Api/fetchingcustomers";
 // import Addproduct from "./addproduct";
 
 

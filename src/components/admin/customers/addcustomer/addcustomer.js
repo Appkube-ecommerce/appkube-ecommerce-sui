@@ -79,7 +79,7 @@ const AddCustomer = () => {
       </Form.Item>
 
       <Form.Item
-        label="Phone"
+        label="WhatsApp Number"
         name="phone"
         rules={[{ required: true, message: 'Please input customer phone number!' }]}
       >
