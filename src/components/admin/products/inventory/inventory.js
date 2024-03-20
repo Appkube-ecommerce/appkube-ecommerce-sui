@@ -221,7 +221,7 @@ const inventory = () => {
   ];
 
   return (
-    <>
+    <div>
     <header className="flex justify-between mt-4 ">
       <h1 className="font-bold text-2xl">Inventory</h1>
     
@@ -332,7 +332,7 @@ footer={[
         scroll={{ x: 800, y: 4000 }}
       />
       </div>
-      </>
+      </div>
   );
 };
 

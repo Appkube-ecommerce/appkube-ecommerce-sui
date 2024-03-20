@@ -221,7 +221,7 @@ const Addproduct = () => {
 
           {/* <Pricing /> */}
           {/* pricing form code */}
-          <div className="border-2 shadow-md w-full h-[18rem] bg-white px-8 pt-3 mt-5 rounded-xl">
+          <div className="border-2 shadow-md w-full h-[19.5rem] bg-white px-8 pt-3 mt-5 rounded-xl">
             <h1 className="text-md font-semibold mt-1">Pricing</h1>
             <Form
               requiredMark={false}

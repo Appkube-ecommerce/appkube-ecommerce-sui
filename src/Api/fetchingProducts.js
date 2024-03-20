@@ -4,7 +4,7 @@ import { generateClient } from 'aws-amplify/api';
 const client = generateClient();
 
  
- export  const fetchCategories = async () => {
+ export  const fetchProducts = async () => {
       try {
         // Ensure proper configuration and initialization of Amplify
         await Amplify.configure({
@@ -14,8 +14,8 @@ const client = generateClient();
                 region: 'us-east-1',
                 defaultAuthMode: 'apiKey',
                 apiKey: 'da2-tt7a24loa5ch7ceq7onemeej7a'
-            }
-          
+       }
+
 
           }
         });
@@ -46,11 +46,3 @@ const client = generateClient();
           console.log(error)
       }
     }
-//   fetchCategories()
-
-//   const [Data, setData] = useState([])
-//   console.log(Data);
-
-//   const uniqueCategories = [...new Set(Data.map((item) => item.category))];
-
-//   console.log(uniqueCategories);

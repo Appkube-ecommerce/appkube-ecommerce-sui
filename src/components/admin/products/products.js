@@ -6,17 +6,17 @@ import {
   SaveOutlined,
   CloseOutlined,
   LoadingOutlined,
-   PlusOutlined
+  PlusOutlined,
 } from "@ant-design/icons";
-import { Button, Input,Form,Upload, Space, Table, Tag, Modal } from "antd";
+import { Button, Input, Form, Upload, Space, Table, Tag, Modal } from "antd";
 import Highlighter from "react-highlight-words";
 import ImportButton from "./importButton";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Radio } from "antd";
-import ProductList from "../productsList/Pro";
+import ProductList from "../print/print";
 // import Addproduct from "./addproduct";
-import { fetchCategories } from "@/Api/fetchingProducts";
+import { fetchProducts } from "@/Api/fetchingProducts";
 
 const Products = () => {
   const [imageUrl, setImageUrl] = useState(); // Define imageUrl state variable
@@ -29,7 +29,7 @@ const Products = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const result = await fetchCategories();
+        const result = await fetchProducts();
 
         console.log(result);
         setProducts(result.data.listProducts.items);
@@ -53,7 +53,7 @@ const Products = () => {
     console.log("Saving edited data:", editedData);
     setEditingProduct(null);
     setEditedData({});
-    setOpenEditModal(false)
+    setOpenEditModal(false);
   };
   const handleCancelForEdit = () => {
     setOpenEditModal(false);
@@ -82,6 +82,7 @@ const Products = () => {
   const searchInput = useRef(null);
   const showModal = () => {
     setOpen(true);
+    setOpenExportModal(true)
   };
   const handleOk = () => {
     setLoading(true);
@@ -210,20 +211,22 @@ const Products = () => {
   });
   // upload imag code for edit modal
   const beforeUpload = (file) => {
-    const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
+    const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png";
     if (!isJpgOrPng) {
-      message.error('You can only upload JPG/PNG file!');
+      message.error("You can only upload JPG/PNG file!");
     }
     return isJpgOrPng;
   };
 
   const handleChange = (info) => {
-    if (info.file.status === 'uploading') {
+    if (info.file.status === "uploading") {
       return;
     }
-    if (info.file.status === 'done') {
+    if (info.file.status === "done") {
       // Get this url from response in real world.
-      setImageUrl(info.file.response.url);
+      const newImageUrl = info.file.response.url;
+      setEditedData({ ...editedData, image: newImageUrl }); // Update editedData with new image URL
+      setImageUrl(newImageUrl); // Update imageUrl state with new image URL
     }
   };
 
@@ -286,7 +289,7 @@ const Products = () => {
   ];
 
   return (
-    <>
+    <div>
       <header className="flex justify-between mt-4 ">
         <h1 className="font-bold text-2xl">Products</h1>
 
@@ -414,41 +417,59 @@ const Products = () => {
           ]}
         >
           <div className="">
-            <Form 
-            layout="vertical">
+            <Form layout="vertical">
               <Form.Item label="Image">
-              {/* <Input value={editedData.image} onChange={(e) => setEditedData({...editedData, image: e.target.value})} /> */}
-              <Upload
-                name="image"
-                listType="picture-card"
-                className="avatar-uploader"
-                showUploadList={false}
-                action="/uploadURL"
-                beforeUpload={beforeUpload}
-                onChange={handleChange}
-              >
-                {imageUrl ? (
-                  <img src={imageUrl} alt="image" style={{ width: '100%' }} />
-                ) : (
-                  uploadButton
-                )}
-              </Upload>
+                {/* <Input value={editedData.image} onChange={(e) => setEditedData({...editedData, image: e.target.value})} /> */}
+                <Upload
+                  name="image"
+                  listType="picture-card"
+                  className="avatar-uploader"
+                  showUploadList={false}
+                  action="/uploadURL"
+                  beforeUpload={beforeUpload}
+                  onChange={handleChange}
+                >
+                  {imageUrl ? (
+                    <img src={imageUrl} alt="image" style={{ width: "100%" }} />
+                  ) : (
+                    uploadButton
+                  )}
+                </Upload>
               </Form.Item>
               <Form.Item label="Product">
-              <Input value={editedData.name} onChange={(e) => setEditedData({...editedData, name: e.target.value})} />
+                <Input
+                  value={editedData.name}
+                  onChange={(e) =>
+                    setEditedData({ ...editedData, name: e.target.value })
+                  }
+                />
               </Form.Item>
               <Form.Item label="Category">
-              <Input value={editedData.category} onChange={(e) => setEditedData({...editedData, category: e.target.value})} />
+                <Input
+                  value={editedData.category}
+                  onChange={(e) =>
+                    setEditedData({ ...editedData, category: e.target.value })
+                  }
+                />
               </Form.Item>
               <Form.Item label="Price">
-              <Input value={editedData.price} onChange={(e) => setEditedData({...editedData, price: e.target.value})} />
-              </Form.Item >
+                <Input
+                  value={editedData.price}
+                  onChange={(e) =>
+                    setEditedData({ ...editedData, price: e.target.value })
+                  }
+                />
+              </Form.Item>
               <Form.Item label="Unit">
-              <Input value={editedData.unit} onChange={(e) => setEditedData({...editedData, unit: e.target.value})} />
+                <Input
+                  value={editedData.unit}
+                  onChange={(e) =>
+                    setEditedData({ ...editedData, unit: e.target.value })
+                  }
+                />
               </Form.Item>
             </Form>
           </div>
-          <p>opened successfully</p>
         </Modal>
       </header>
       <Table
@@ -458,7 +479,7 @@ const Products = () => {
         pagination={false}
         scroll={{ x: 800, y: 4000 }}
       />
-    </>
+    </div>
   );
 };
 
