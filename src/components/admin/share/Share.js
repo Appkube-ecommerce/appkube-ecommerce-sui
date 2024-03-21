@@ -1,11 +1,9 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
 import { SearchOutlined } from "@ant-design/icons";
-import { Button, Input, Space, Table, Tag, Modal } from "antd";
+import { Button, Input, Space, Table } from "antd";
 import Highlighter from "react-highlight-words";
 import { useRouter } from "next/navigation";
-import Link from "next/link"
-import { Radio } from 'antd';
 import { fetchcustomer } from "@/Api/fetchingcustomers";
 import { fetchProducts } from "@/Api/fetchingProducts";
 import jsPDF from 'jspdf';
@@ -59,7 +57,6 @@ const Share = () => {
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
   const [loading, setLoading] = useState(false);
-  const [open, setOpen] = useState(false);
   const searchInput = useRef(null);
   const handleSearch = (selectedKeys, confirm, dataIndex) => {
     confirm();
@@ -198,7 +195,7 @@ const Share = () => {
               console.log(record.phone);
              }}
              // Pass phoneNumber to handleShare function
-             className="border border-black text-xs m-1 rounded-md px-2 py-1 float-end" >
+             className="border border-black text-xs m-1 rounded-md px-2 py-1 float-end hover:bg-gray-200" >
              <p>Share</p>
        </button>
         </div>
@@ -229,7 +226,8 @@ const Share = () => {
       });
       pdf.text(currentDate + ' ' + currentTime, 10, 20);
 
-     // trying to pdf with images )Function to fetch image data and convert to Base64
+
+       // trying to pdf with images )Function to fetch image data and convert to Base64
 // const fetchAndConvertToBase64 = (imageUrl) => {
 //   const response = (imageUrl , { mode: 'no-cors' });
 //   // const blob = await response.blob();
@@ -264,11 +262,14 @@ const Share = () => {
 // ];
 // });
 
-      // (pdf without images)  Define columns and rows for the table      // const columns = ["ID", "Name", "Image", "Price", "Category", "Unit"];
+
+      // Define columns and rows for the table
+      const columns = ["ID", "Name", "Image", "Price", "Category", "Unit"];
       const rows = products.map((product, index) => [
         index + 1,
         product.name,
         { imageData: product.image, width: 50, height: 50 },
+        // product.image,
         product.price,
         product.category,
         product.unit
