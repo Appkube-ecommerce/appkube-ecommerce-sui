@@ -229,8 +229,42 @@ const Share = () => {
       });
       pdf.text(currentDate + ' ' + currentTime, 10, 20);
 
-      // Define columns and rows for the table
-      const columns = ["ID", "Name", "Image", "Price", "Category", "Unit"];
+     // trying to pdf with images )Function to fetch image data and convert to Base64
+// const fetchAndConvertToBase64 = (imageUrl) => {
+//   const response = (imageUrl , { mode: 'no-cors' });
+//   // const blob = await response.blob();
+//   // return new Promise((resolve, reject) => {
+//       const reader = new FileReader();
+//       // reader.onloadend = () => resolve(reader.result.split(',')[1]);
+//       // reader.onerror = reject;
+//       reader.readAsDataURL(response);
+//   // });
+// };
+// const image="https://subzfresh.com/product/fresh-fruits/apple/"
+// const base64Image =  fetchAndConvertToBase64(image);
+// console.log(base64Image);
+
+// // Assuming `products` is an array of objects with `name` and `image` properties
+// const columns = ["ID", "Name", "Image", "Price", "Category", "Unit"];
+// const rows = products.map((product, index) => {
+//   // const base64Image =  fetchAndConvertToBase64(product.image);
+ 
+//   // console.log(base64Image);
+//   const x = 15; // Adjust these values as needed
+//   const y = 30; // Adjust these values as needed
+//   const width = 40; // Adjust these values as needed
+//   const height = 40; // Adjust these values as needed
+//   return [
+//       index + 1,
+//       product.name,
+//       pdf.addImage(img, "JPEG", x, y, width, height),
+//       product.price,
+//       product.category,
+//       product.unit
+// ];
+// });
+
+      // (pdf without images)  Define columns and rows for the table      // const columns = ["ID", "Name", "Image", "Price", "Category", "Unit"];
       const rows = products.map((product, index) => [
         index + 1,
         product.name,
@@ -332,5 +366,4 @@ const Share = () => {
 );
 };
 export default Share;
-
 
