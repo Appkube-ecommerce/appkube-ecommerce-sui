@@ -38,6 +38,8 @@ export default function RootLayout({ children }) {
     }
 }, [pathname]);
 
+
+
   const onSearch = (value) => console.log(value);
 
   const items = [
@@ -65,7 +67,7 @@ export default function RootLayout({ children }) {
             zIndex: 1,
             width: "100%",
             display: "flex",
-            justifyContent: "space-between",
+            justifyContent: "space-between" ,
             alignItems: "center",
             alignContent: "center",
             backgroundColor: "#1a1a1a",
