@@ -135,22 +135,22 @@ const ProductList = () => {
 
   const items = [
     {
-        label: 'Print All Products',
+        label: 'All Products',
         key: '1',
         onClick: () => handlePrint(),
     },
     {
-        label: 'Print Fruits Products',
+        label: 'Fruits',
         key: '2',
         onClick: () => handlePrint('FRUITS'),
     },
     {
-        label: 'Print Leafy Vegetables',
+        label: 'Leafy Vegetables',
         key: '3',
         onClick: () => handlePrint('LEAFY_VEGETABLES'),
     },
     {
-        label: 'Print Vegetables Products',
+        label: 'Vegetables',
         key: '4',
         onClick: () => handlePrint('VEGETABLES'),
     },
