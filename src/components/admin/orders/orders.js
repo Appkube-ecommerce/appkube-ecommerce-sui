@@ -11,11 +11,7 @@ import { useRouter } from 'next/navigation';
 import { useSearchParams } from 'next/navigation'
 import { data } from 'autoprefixer';
 
-
-
-
 const Orders = () => {
-  
   const router = useRouter()
   // const HandlePush = (record)=>{
   //   router.push(
@@ -46,11 +42,9 @@ const Orders = () => {
     }
   }}
 >
-
-        <span>{text}</span>
+  <span>{text}</span>
       </Link>
-        
-      ),
+        ),
     },
     {
       title: 'Date',
@@ -68,7 +62,7 @@ const Orders = () => {
     },
     {
       title: 'Total Price',
-      // className: 'text-xs', 
+      // className: 'text-xs',   
       dataIndex: 'totalPrice',
       key: "totalPrice",
       render: (totalPrice) => `${totalPrice}`,
@@ -81,8 +75,7 @@ const Orders = () => {
   // Correct usage of useSelector
   const orders = useSelector((state) => state.ordersData.ordersList);
 
- 
-  const dispatch = useDispatch();
+ const dispatch = useDispatch();
 
   const fetchData = async () => { 
     try {
@@ -109,14 +102,13 @@ const Orders = () => {
     setIsModalOpen(false);
   };
   
-
-  const handleExportOptionChange = (e) => {
+const handleExportOptionChange = (e) => {
     setExportOption(e.target.value);
   };
 
   // const handleOrderClick = (record) => {
-    
-  // };
+    // };
+  
   return (
     <>
       <div className='mr-2 px-'>
@@ -134,8 +126,7 @@ const Orders = () => {
       }}
         onClick={showModal}
         className='mr-1'
-        
-      >
+        >
         Export
       </button>
       <Modal
@@ -209,17 +200,14 @@ const Orders = () => {
 
 <div className='bg-white p-4 rounded-lg mr-3'>
       <div className='gap-2 h-8'>
-        <button className="rounded-lg w-10  hover:bg-gray-100">All</button>
-        <button className="rounded-lg w-20  hover:bg-gray-100">Unfulfilled</button>
-        <button className="rounded-lg  w-14  hover:bg-gray-100">Unpaid</button>
-        <button className="rounded-lg  w-12  hover:bg-gray-100">Open</button>
-        <button className="rounded-lg w-14    hover:bg-gray-100">Closed</button>
-        <button className="rounded-lg w-24    hover:bg-gray-100">Local Delivery</button>
-        <button className="rounded-lg w-6  hover:bg-gray-100">+</button>
+        <button className="rounded-lg w-10 text-xs font-semibold hover:bg-gray-100">All</button>
+        <button className="rounded-lg w-20 text-xs font-semibold hover:bg-gray-100">Unfulfilled</button>
+        <button className="rounded-lg  w-14 text-xs font-semibold hover:bg-gray-100">Unpaid</button>
+        <button className="rounded-lg  w-12 text-xs font-semibold hover:bg-gray-100">Open</button>
+        <button className="rounded-lg w-14 text-xs font-semibold hover:bg-gray-100">Closed</button>
+        <button className="rounded-lg w-24 text-xs font-semibold hover:bg-gray-100">Local Delivery</button>
+        <button className="rounded-lg w-6 text-xs font-semibold hover:bg-gray-100">+</button>
       </div>
-
-      
-        {/* Pagination customization */}
         <Table
           columns={columns}
           dataSource={order}
@@ -230,10 +218,7 @@ const Orders = () => {
           }}
         />
       </div>
-        
-    </>
-    
-  );
+        </>
+    );
 };
-
 export default Orders;
