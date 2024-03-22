@@ -1,16 +1,14 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
 import { SearchOutlined } from "@ant-design/icons";
-import { Button, Input, Space, Table, Tag, Modal } from "antd";
+import { Button, Input, Space, Table } from "antd";
 import Highlighter from "react-highlight-words";
 import { useRouter } from "next/navigation";
-import Link from "next/link"
-import { Radio } from 'antd';
-import { fetchcustomer } from "@/Api/fetchingcustomers";
 import { fetchProducts } from "@/Api/fetchingProducts";
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import {notification} from "antd"
+import useFetchCustomers from "@/components/customHooks/useFetchCustomers";
 
 
 
@@ -40,26 +38,11 @@ const Share = () => {
           fetchData();
         }, []);
         console.log(products);
-  const [customer, setcustomer] = useState([]);
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const result = await fetchcustomer(); // Assuming fetchCategories returns a list of products
-
-        console.log(result)
-        setcustomer(result.data.listCustomers.items);
-      } catch (error) {
-        console.error("Error fetching customers:", error);
-      }
-    };
-
-    fetchData();
-  }, []);
+   const { customers, loadings, error } = useFetchCustomers();
   const [show, setshow] = useState(false);
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
   const [loading, setLoading] = useState(false);
-  const [open, setOpen] = useState(false);
   const searchInput = useRef(null);
   const handleSearch = (selectedKeys, confirm, dataIndex) => {
     confirm();
@@ -198,7 +181,7 @@ const Share = () => {
               console.log(record.phone);
              }}
              // Pass phoneNumber to handleShare function
-             className="border border-black text-xs m-1 rounded-md px-2 py-1 float-end" >
+             className="border border-black text-xs m-1 rounded-md px-2 py-1 float-end hover:bg-gray-200" >
              <p>Share</p>
        </button>
         </div>
@@ -229,12 +212,56 @@ const Share = () => {
       });
       pdf.text(currentDate + ' ' + currentTime, 10, 20);
 
+
+      //  trying to pdf with images )Function to fetch image data and convert to Base64
+//       const fetchAndConvertToBase64 = async (imageUrl) => {
+//         try {
+//           const response = await fetch(imageUrl, { mode: 'cors' });
+//           if (!response.ok) {
+//             throw new Error('Network response was not ok');
+//           }
+//           const blob = await response.blob();
+//           return new Promise((resolve, reject) => {
+//             const reader = new FileReader();
+//             reader.onloadend = () => resolve(reader.result.split(',')[1]);
+//             reader.onerror = reject; // Handle FileReader errors
+//             reader.readAsDataURL(blob);
+//           });
+//         } catch (error) {
+//           console.error('Error fetching image:', error);
+//           return null;
+//         }
+//       };
+      
+
+
+// // Assuming `products` is an array of objects with `name` and `image` properties
+// const columns = ["ID", "Name", "Image", "Price", "Category", "Unit"];
+// const rows = products.map((product, index) => {
+//   base64=fetchAndConvertToBase64(product.image)
+  const x = 15; // Adjust these values as needed
+  const y = 30; // Adjust these values as needed
+  const width = 40; // Adjust these values as needed
+  const height = 40; // Adjust these values as needed
+//   return [
+//       index + 1,
+//       product.name,
+//       pdf.addImage(base64String, "PNG", x, y, width, height),
+//       product.price,
+//       product.category,
+//       product.unit
+// ];
+// });
+     
+
       // Define columns and rows for the table
       const columns = ["ID", "Name", "Image", "Price", "Category", "Unit"];
       const rows = products.map((product, index) => [
+        
         index + 1,
         product.name,
-        { imageData: product.image, width: 50, height: 50 },
+        pdf.addImage(product.image, "JPEG", x, y, width, height),
+        // product.image,
         product.price,
         product.category,
         product.unit
@@ -316,7 +343,7 @@ const Share = () => {
       //   ...rowSelection,
       // }}
       columns={columns}
-      dataSource={customer}
+      dataSource={customers}
       pagination={false}
       scroll={{ x: 1000, y: 900 }}
        className="mt-5"
@@ -332,5 +359,3 @@ const Share = () => {
 );
 };
 export default Share;
-
-
