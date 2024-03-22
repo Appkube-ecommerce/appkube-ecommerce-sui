@@ -14,18 +14,18 @@ const ProductList = () => {
     };
     const router = useRouter();
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const result = await fetchProducts();
-                setProducts(result.data.listProducts.items);
-            } catch (error) {
-                console.error("Error fetching products:", error);
-            }
-        };
+    // useEffect(() => {
+    //     const fetchData = async () => {
+    //         try {
+    //             const result = await fetchProducts();
+    //             setProducts(result.data.listProducts.items);
+    //         } catch (error) {
+    //             console.error("Error fetching products:", error);
+    //         }
+    //     };
 
-        fetchData();
-    }, []);
+    //     fetchData();
+    // }, []);
 
     const handlePrint = (category) => {
         const filteredProducts = category ? products.filter((product) => product.category === category) : products;

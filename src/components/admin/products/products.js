@@ -5,14 +5,16 @@ import {
   EditOutlined,
   LoadingOutlined,
   PlusOutlined,
+  ShoppingCartOutlined
 } from "@ant-design/icons";
-import { Button, Input, Form, Upload, Space, Table, Tag, Modal } from "antd";
+import { Button, Input, Form, Upload, Space, Table,Checkbox, Modal } from "antd";
 import Highlighter from "react-highlight-words";
 import ImportButton from "./importButton";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Radio } from "antd";
 import ProductList from "../print/print";
+import axios from "@/Api/axios";
 
 const Products = () => {
   const [imageUrl, setImageUrl] = useState(); // Define imageUrl state variable
@@ -21,14 +23,14 @@ const Products = () => {
   const [editedData, setEditedData] = useState({});
   const [openEditModal, setOpenEditModal] = useState(false);
   const [products, setProducts] = useState([]);
+  const [selectedCount, setSelectedCount] = useState(0);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const result = await fetchProducts();
-
+        const result = await axios.get("/product");
         console.log(result);
-        setProducts(result.data.listProducts.items);
+        setProducts(result.data);
       } catch (error) {
         console.error("Error fetching products:", error);
       }
@@ -36,6 +38,13 @@ const Products = () => {
 
     fetchData();
   }, []);
+
+  useEffect(() => {
+    const count = products.reduce((acc, curr) => {
+      return curr.selected ? acc + 1 : acc;
+    }, 0);
+    setSelectedCount(count);
+  }, [products]);
   const showModalForEdit = (record) => {
     setOpen(true);
     setOpenEditModal(true);
@@ -233,6 +242,36 @@ const Products = () => {
     </div>
   );
   const columns = [
+    {
+      title: () => (
+        <Checkbox
+          onChange={(e) => {
+            // Logic to handle select all
+            const checked = e.target.checked;
+            const updatedProducts = products.map((product) => ({
+              ...product,
+              selected: checked,
+            }));
+            setProducts(updatedProducts);
+          }}
+          checked={products.every((product) => product.selected)}
+        />
+      ),
+      width: "5%",
+      render: (_, record) => (
+        <Checkbox
+          checked={record.selected}
+          onChange={(e) => {
+            // Logic to handle individual row selection
+            const checked = e.target.checked;
+            const updatedProducts = products.map((product) =>
+              product === record ? { ...product, selected: checked } : product
+            );
+            setProducts(updatedProducts);
+          }}
+        />
+      ),
+    },
     {
       title: "Image",
       dataIndex: "image",
@@ -467,8 +506,12 @@ const Products = () => {
             </Form>
           </div>
         </Modal>
+        <ShoppingCartOutlined />
       </header>
+      <br/>
+      <div><button className="border-2 rounded-lg p-3">{selectedCount} Items Added to Cart</button></div>
       <Table
+      
         className="mt-5 mr-3"
         columns={columns}
         dataSource={products}

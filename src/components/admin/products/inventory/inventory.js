@@ -173,14 +173,14 @@ const Inventory = () => {
       dataIndex: "image",
       key: "image",
       // width: "10%",
-<<<<<<< HEAD
+
       render: (image) => (
         <img src={image} alt="Product" style={{ width: 50 }} />
       ),
-=======
+
       
       render: (image) => <img src={image} alt="Product" style={{ width: 50 }} />,
->>>>>>> 1916894123fb50dd351906d3aa78f74f16fec4d0
+
     },
     {
       title: "Product",

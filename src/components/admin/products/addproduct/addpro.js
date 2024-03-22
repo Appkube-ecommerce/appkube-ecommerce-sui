@@ -4,12 +4,26 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { createProducts } from "../../../../redux/slices/addProductSlice";
 import { useDispatch } from "react-redux";
-import { Form, Input,Button, message, Upload, Col, Select, DatePicker,Row } from "antd";
+import {
+  Form,
+  Input,
+  Button,
+  message,
+  Upload,
+  Col,
+  Select,
+  DatePicker,
+  Row,
+} from "antd";
 import { setCreateProduct } from "../../../../redux/slices/addProductSlice";
-import axios from '@/Api/axios'
-import {ArrowLeftOutlined,LoadingOutlined,PlusOutlined,} from "@ant-design/icons";
+import axios from "@/Api/axios";
+import {
+  ArrowLeftOutlined,
+  LoadingOutlined,
+  PlusOutlined,
+} from "@ant-design/icons";
 import { useRouter } from "next/navigation";
-
+const { Option } = Select;
 //uploadimage code
 const getBase64 = (img, callback) => {
   const reader = new FileReader();
@@ -29,24 +43,24 @@ const beforeUpload = (file) => {
 };
 const { TextArea } = Input;
 // publishing form code
-const formItemLayout = {
-  labelCol: {
-    xs: {
-      span: 24,
-    },
-    sm: {
-      span: 8,
-    },
-  },
-  wrapperCol: {
-    xs: {
-      span: 24,
-    },
-    sm: {
-      span: 16,
-    },
-  },
-};
+// const formItemLayout = {
+//   labelCol: {
+//     xs: {
+//       span: 24,
+//     },
+//     sm: {
+//       span: 8,
+//     },
+//   },
+//   wrapperCol: {
+//     xs: {
+//       span: 24,
+//     },
+//     sm: {
+//       span: 16,
+//     },
+//   },
+// };
 const config = {
   rules: [
     {
@@ -69,7 +83,7 @@ const Addproduct = () => {
         setLoading(false);
         setImageUrl(url);
         const base64Data = url.split(",")[1];
-        setFormData({ ...formData, image: base64Data }); 
+        setFormData({ ...formData, image: base64Data });
       });
     }
   };
@@ -104,54 +118,59 @@ const Addproduct = () => {
   };
   //redux code
   const [formData, setFormData] = useState({
-    availability:"",
-    brand:"",
-    category:"",
+    availability: "",
+    brand: "",
+    category: "",
     description: "",
-    image:null,
+    image: null,
     name: "",
-    price:"",
-    currency:"",
-    unit:"",
+    price: "",
+    currency: "",
+    unit: "",
   });
 
   const dispatch = useDispatch();
-
+  
   const handleInputChange = (e) => {
-    console.log('form data',formData)
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-    console.log(name,value,"change")
+    console.log("form data", formData);
+    if (e && e.target) {
+      const { name, value } = e.target;
+      setFormData({ ...formData, [name]: value });
+      console.log(name, value, "change");
+    } else {
+      console.log("Event or event target is undefined");
+    }
+  };
+  
+  const handleDropDownChange = (name, value) => {
+    setFormData({ ...formData, [name]: value }); 
+    console.log(name, value, "change");
   };
 
-  const handleFormSubmit = async() => {
-    console.log(formData,"hitting api")
-    console.log('imagr',imageUrl)
-    // dispatch(setCreateProduct({ ...formData, image: imageUrl }));
-    // CreateProduct(formData.id,formData.name,formData.description,formData.unit,formData.category,formData.price)
-    // dispatch(createProducts({ ...formData, image: imageUrl }))
-   
-    // dispatch(setCreateProduct(values));
-   const data = {
-    availability:formData.availability,
-    brand:formData.brand,
-    category:formData.category,
-    description:formData.description,
-    image:formData.image,
-    name:formData.name,
-    price:formData.price,
-    currency:formData.currency,
-    unit:formData.unit
-   }
-   try {
-    console.log("data", data);
-    const response = await axios.post('/product',data);
-    console.log("response", response);
-    if(response.status==200){
-    dispatch(setCreateProduct(data));}
-  } catch (error) {
-    console.log("error", error);
-  }
+  const handleFormSubmit = async () => {
+    console.log(formData, "hitting api");
+    console.log("imagr", imageUrl);
+    const data = {
+      availability: formData.availability,
+      brand: formData.brand,
+      category: formData.category,
+      description: formData.description,
+      image: formData.image,
+      name: formData.name,
+      price: formData.price,
+      currency: formData.currency,
+      unit: formData.unit,
+    };
+    try {
+      console.log("data", data);
+      const response = await axios.post("/product", data);
+      console.log("response", response);
+      if (response.status == 200) {
+        dispatch(setCreateProduct(data));
+      }
+    } catch (error) {
+      console.log("error", error);
+    }
   };
   const backToProducts = () => {
     router.push("/admin/products");
@@ -254,124 +273,139 @@ const Addproduct = () => {
               }}
             >
               <Row gutter={20}>
-              <Col span={12}>
-                <Form.Item
-                  label="Category"
-                  name="category"
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please input Category!",
-                    },
-                  ]}
-                >
-                  <Input
+                <Col span={12}>
+                  <Form.Item
+                    label="Category"
                     name="category"
-                    placeholder="Category"
-                    className="border border-black"
-                    onChange={handleInputChange}
-                  />
-                </Form.Item>
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please input Category!",
+                      },
+                    ]}
+                  >
+                     <Select
+                      className="border rounded-md border-black"
+                      placeholder="Select a option for Category"
+                      onChange={(value) => handleDropDownChange("category", value)} name="category"
+                      
+                      allowClear
+                    >
+                      <Option value="VEGETABLES">VEGETABLES</Option>
+                      <Option value="LEAFY_VEGETABLES">LEAFY_VEGETABLES</Option>
+                      <Option value="FRUITS">FRUITS</Option>
+                      <Option value="TESTING">TESTING</Option>
+                    </Select>
+                   
+                  </Form.Item>
                 </Col>
                 <Col span={12}>
-                <Form.Item
-                  label="Brand"
-                  name="brand"
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please input Brand!",
-                    },
-                  ]}
-                >
-                  <Input
+                  <Form.Item
+                    label="Brand"
                     name="brand"
-                    placeholder="brand"
-                    className="border border-black"
-                    onChange={handleInputChange}
-                  />
-                </Form.Item>
-              </Col>
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please input Brand!",
+                      },
+                    ]}
+                  >
+                    <Input
+                      name="brand"
+                      placeholder="brand"
+                      className="border border-black"
+                      onChange={handleInputChange}
+                    />
+                  </Form.Item>
+                </Col>
               </Row>
               <Row gutter={20}>
-                    <Col span={12}>
-                      <Form.Item
-                        label="Unit"
-                        name="unit"
-                        rules={[
-                          {
-                            required: true,
-                            message: "Please input Unit!",
-                          },
-                        ]}
-                      >
-                        <Input
-                          name="unit"
-                          placeholder="Unit"
-                          className="border border-black"
-                          onChange={handleInputChange}
-                        />
-                      </Form.Item>
-                    </Col>
-              <Col span={12}>
-                <Form.Item
-                  label="Availability"
-                  name="availability"
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please input the availability!",
-                    },
-                  ]}
-                >
-                  <Input
+                <Col span={12}>
+                  <Form.Item
+                    label="Unit"
+                    name="unit"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please input Unit!",
+                      },
+                    ]}
+                  >
+                    <Select
+                      className="border rounded-md border-black"
+                      placeholder="Select a option for UNIT"
+                      onChange={(value) => handleDropDownChange("unit", value)} name="unit"
+                      
+                      allowClear
+                    >
+                      <Option value="kg">KG</Option>
+                      <Option value="piece">PIECE</Option>
+                    </Select>
+                  </Form.Item>
+                </Col>
+                <Col span={12}>
+                  <Form.Item
+                    label="Availability"
                     name="availability"
-                    placeholder="availability"
-                    className="border border-black"
-                    onChange={handleInputChange}
-                  />
-                </Form.Item>
-              </Col>
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please input the availability!",
+                      },
+                    ]}
+                  >
+                    <Select
+                      className="border rounded-md border-black"
+                      placeholder="Select a option for availability"
+                      onChange={(value) => handleDropDownChange("availability", value)} name="availability"
+                      allowClear
+                    >
+                      <Option value="in stock">in stock</Option>
+                      <Option value="out stock">out of stock</Option>
+                    </Select>
+                  
+                  </Form.Item>
+                </Col>
               </Row>
               <Row gutter={20}>
-              <Col span={12}>
-                <Form.Item
-                  label="Currency"
-                  name="currency"
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please input currency!",
-                    },
-                  ]}
-                >
-                  <Input
+                <Col span={12}>
+                  <Form.Item
+                    label="Currency"
                     name="currency"
-                    placeholder="currency"
-                    className="border border-black"
-                    onChange={handleInputChange}
-                  />
-                </Form.Item>
-              </Col>
-              <Col span={12}>
-                <Form.Item
-                  label="Price"
-                  name="price"
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please input Price!",
-                    },
-                  ]}
-                >
-                  <Input
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please input currency!",
+                      },
+                    ]}
+                  >
+                    <Input
+                      name="currency"
+                      placeholder="currency"
+                      className="border border-black"
+                      onChange={handleInputChange}
+                    />
+                  </Form.Item>
+                </Col>
+                <Col span={12}>
+                  <Form.Item
+                    label="Price"
                     name="price"
-                    placeholder="Price"
-                    className="border border-black"
-                    onChange={handleInputChange}
-                  />
-                </Form.Item>
-              </Col>
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please input Price!",
+                      },
+                    ]}
+                  >
+                    <Input
+                      name="price"
+                      placeholder="Price"
+                      className="border border-black"
+                      onChange={handleInputChange}
+                    />
+                  </Form.Item>
+                </Col>
               </Row>
             </Form>
           </div>
@@ -401,7 +435,6 @@ const Addproduct = () => {
                 Online Store
                 <Form
                   name="time_related_controls"
-                  {...formItemLayout}
                   onFinish={onFinish}
                   style={{
                     maxWidth: 600,
@@ -439,7 +472,9 @@ const Addproduct = () => {
             </ul>
           </div>
         </sectionright>
-      </main><br/><br/>
+      </main>
+      <br />
+      <br />
       <div className="flex">
         <Button
           type="primary"
@@ -449,7 +484,6 @@ const Addproduct = () => {
             borderRadius: "5px",
             // padding: "8px 0px 0px 90px",
             width: "40%",
-            
           }}
           onClick={handleFormSubmit}
           className="ml-44"
