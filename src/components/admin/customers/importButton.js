@@ -47,7 +47,7 @@ const ImportButton = () => {
         Import
       </button>
       <Modal
-        title="Basic Modal"
+        //title="Basic Modal"
         open={isModalOpen}
         onOk={handleOk}
         onCancel={handleCancel}

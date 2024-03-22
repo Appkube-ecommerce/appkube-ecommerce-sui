@@ -170,57 +170,57 @@ const inventory = () => {
 
   const columns = [
     {
-      title:"Image",
+      //title: "Image",
       dataIndex: "image",
       key: "image",
-      // width: "10%",
-      
-      render: (image) => <img src={image} alt="Product" style={{ width: 50 }} />,
+      width: "6%",
+      render: (image) => (
+        <img src={image} alt="Product" style={{ width: 50 }} />
+      ),
     },
     {
       title: "Product",
       dataIndex: "name",
       key: "name",
-      width: "20%",
+      width: "16%",
       ...getColumnSearchProps("name"),
     },
     {
       title: "SKU",
       dataIndex: "sku",
       key: "sku",
-      width: "20%",
-    
+      width: "16%",
+      //render: (category) => `${category}`,
     },
     {
       title: "Unavailable",
       dataIndex: "unavailable",
-      key: "unavailable",
-      width: "20%",
-      render: (category) => `${category}`,
+      key: "unavauilable",
+      width: "10%",
+      //render: (price) => `₹${price}`,
     },
     {
       title: "Committed",
       dataIndex: "committed",
       key: "committed",
-      width: "20%",
-      render: (price) => `₹${price}`,
+      width: "10%",
+      //render: (unit) => `${unit}`,
     },
     {
       title: "Available",
       dataIndex: "available",
-      key: "available",
-      width: "20%",
-      height:"10%",
-      render: (category) => `${category}`,
-      
+      key: "avauilable",
+      width: "10%",
+      //render: (price) => `₹${price}`,
     },
     {
       title: "Onhand",
       dataIndex: "onhand",
       key: "onhand",
       width: "10%",
-      render: (unit) => `${unit}`,
-    },  
+      //render: (unit) => `${unit}`,
+    },
+   
   ];
 
   return (
@@ -245,8 +245,7 @@ const inventory = () => {
         <button
           key="link"
           style={{
-           
-            padding: "8px 15px 8px 15px",
+          padding: "8px 15px 8px 15px",
           }}
           className="bg-black text-white rounded-md w-32 mr-3"
           loading={loading}
@@ -322,18 +321,18 @@ footer={[
       
       <div className='bg-white p-2 rounded-lg mt-6 mr-3'>
       <div className='h-8 p-1'>
-        <button className="rounded-lg w-10  hover:bg-gray-100">All</button>
-        <button className="rounded-lg w-6  hover:bg-gray-100">+</button>
+        <button className="rounded-lg w-10 font-semibold text-xs hover:bg-gray-100">All</button>
+        <button className="rounded-lg w-6 font-semibold hover:bg-gray-100">+</button>
       </div>
+      
       <Table
-
-        className="mt-5"
-
+        className=" mr-3"
         columns={columns}
         dataSource={products}
         pagination={false}
-        scroll={{ x: 800, y: 4000 }}
+        //scroll={{ x: 800, y: 4000 }}
       />
+      
       </div>
       </div>
   );
