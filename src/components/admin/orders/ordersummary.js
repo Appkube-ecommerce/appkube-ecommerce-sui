@@ -8,6 +8,7 @@ import { FetchOrders } from "@/Api/fetchingOrders";
 import { Button, Input, message, Upload } from "antd";
 import { EditOutlined } from "@ant-design/icons";
 
+
 const OrderInfo = () => {
   const [comment, setComment] = useState("");
   const router = useRouter();
@@ -37,6 +38,10 @@ const OrderInfo = () => {
 
   const data = orders.filter((item) => item.id === idFromParams);
   console.log("filter value", data);
+  
+  function Refund(){
+     router.push("/admin/orders/Refund")
+  }
 
   return (
     <>
@@ -54,6 +59,7 @@ const OrderInfo = () => {
                 borderRadius: "5px",
                 padding: "8px 15px 8px 15px",
               }}
+              onClick={Refund}
             >
               Refund
             </button>
