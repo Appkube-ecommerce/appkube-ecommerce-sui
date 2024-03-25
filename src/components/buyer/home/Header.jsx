@@ -6,11 +6,16 @@ import { BsFillBasketFill } from "react-icons/bs";
 import { MdAccountCircle } from "react-icons/md";
 import { GiHamburgerMenu } from "react-icons/gi";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const Header = () => {
   const [isNavOpen, setIsNavOpen] = useState(false);
 
   const HandleNav = () => {
+    // const router=useRouter
+    // function addtocart(){
+    //    router.push("/buyer/AddTocardProd")
+    // }
     console.log("open or close");
     setIsNavOpen(!isNavOpen);
   };
@@ -61,8 +66,8 @@ const Header = () => {
           <MdAccountCircle className=" bg-black text-white md:hidden sm:inline" />
         </div>
         <div className="relative ">
-          <Link href="/buyer/orders">
-            <button className="btn bg-red-200 rounded-md p-2 hover:bg-red-300 transition-colors">
+          <Link href="/buyer/AddTocardProd">
+            <button className="btn bg-red-200 rounded-md p-2 hover:bg-red-300 transition-colors ">
               <div className="rounded-full bg-red-600 p-1">
                 <BsFillBasketFill className="text-white" />
               </div>

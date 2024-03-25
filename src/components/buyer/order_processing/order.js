@@ -69,23 +69,18 @@ export default function Myorders() {
               UPI
             </Menu.Item>
           </Menu>
-          <Header >
+          <Header className="w-full">
             <Button
               type="text"
               icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
               onClick={() => setCollapsed(!collapsed)}
-              style={{
-                fontSize: "16px",
-                width: "100%",
-                backgroundColor: "teal",
-               
-              }}
+             
             />
           </Header>
         </Sider>
         <Layout>
           <Content
-            className="w-[90%]"
+            className="w-full"
             style={{
               margin: "0px 0px 0px 18px",
               width: 500,
