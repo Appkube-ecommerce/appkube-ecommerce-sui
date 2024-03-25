@@ -7,7 +7,7 @@ import {
   PlusOutlined,
   ShoppingCartOutlined
 } from "@ant-design/icons";
-import { Button, Input, Form, Upload, Space, Table,Checkbox, Modal } from "antd";
+import { Button, Input, Form, Upload, Space, Table,Checkbox, Modal ,Select} from "antd";
 import Highlighter from "react-highlight-words";
 import ImportButton from "./importButton";
 import { useRouter } from "next/navigation";
@@ -21,16 +21,18 @@ const Products = () => {
   const [openExportModal, setOpenExportModal] = useState(false);
   const [editingProduct, setEditingProduct] = useState(null);
   const [editedData, setEditedData] = useState({});
+  // const [selectedRows, setselectedRows] = useState([]);
   const [openEditModal, setOpenEditModal] = useState(false);
   const [products, setProducts] = useState([]);
   const [selectedCount, setSelectedCount] = useState(0);
-
+  const [cart,setCart] = useState([])
   useEffect(() => {
     const fetchData = async () => {
       try {
         const result = await axios.get("/product");
-        console.log(result);
-        setProducts(result.data);
+        console.log('products',result);
+        // setProducts(result.data);
+        // console.log(result.data)
       } catch (error) {
         console.error("Error fetching products:", error);
       }
@@ -38,13 +40,42 @@ const Products = () => {
 
     fetchData();
   }, []);
-
   useEffect(() => {
-    const count = products.reduce((acc, curr) => {
-      return curr.selected ? acc + 1 : acc;
-    }, 0);
-    setSelectedCount(count);
+    const updatedCart = products.filter(product => product.selected);
+    setCart(updatedCart);
+    setSelectedCount(updatedCart.length);
+    console.log("cart items",cart)
+    console.log("count of cart",selectedCount)
   }, [products]);
+  
+
+  // useEffect(() => {
+  //   const count = products.reduce((acc, curr,record) => {
+  //     // console.log('current',curr)
+  //     // console.log('acc',acc)
+  //     // return curr.selected ? acc + 1 : acc;
+  //     if(curr.selected){
+  //       setCart([...cart,curr.record])
+  //       return acc +  1
+  //       console.log('cart details',cart)
+  //     }
+  //     // else if(!curr.selected){
+  //     //   const itemIndex = cart.findIndex(
+  //     //     (item) => item.id === curr.id,
+  //     //     );
+          
+  //     //     const newCart = cart.splice(itemIndex, 1); 
+  //     //   // setCart(newCart)
+  //     //  {(newCart.length > 0) ? (console.log('new Cart',newCart)) : ("")}
+        
+  //     // }
+  //     else{
+  //       return acc
+      
+  //     }
+  //   }, 0);
+  //   setSelectedCount(count);
+  // }, [products]);
   const showModalForEdit = (record) => {
     setOpen(true);
     setOpenEditModal(true);
@@ -52,6 +83,8 @@ const Products = () => {
     setEditingProduct(record);
     setEditedData(record);
     setImageUrl(record.image);
+    console.log(editedData.category)
+
   };
 
   const handleSaveForEdit = () => {
@@ -325,10 +358,10 @@ const Products = () => {
 
   return (
     <div>
-      <header className="flex justify-between mt-4 ">
+      <header className="flex justify-between items-center mt-4  ">
         <h1 className="font-bold text-2xl">Products</h1>
 
-        <div className="flex gap-3">
+        <div className="flex gap-3 px-5">
           <button
             style={{
               backgroundColor: "#E3E3E3",
@@ -347,12 +380,15 @@ const Products = () => {
             key="link"
             // className="md:text-sm bg-black text-white rounded-md px-8 py-2"
 
-            className="bg-black text-white rounded-md px-8 py-2 mr-3"
+            className="bg-black text-white rounded-md px-8 py-2 "
             loading={loading}
             onClick={AddProducts}
           >
             Add Product
           </button>
+          <div className="bg-[#E3E3E3] p-2 px-3 rounded-md flex justify-center items-center">
+          <ShoppingCartOutlined className="text-xl font-bold"/>
+        </div>
           {/* </Link> */}
         </div>
         <Modal
@@ -479,14 +515,36 @@ const Products = () => {
                   }
                 />
               </Form.Item>
-              <Form.Item label="Category">
-                <Input
-                  value={editedData.category}
-                  onChange={(e) =>
-                    setEditedData({ ...editedData, category: e.target.value })
-                  }
-                />
-              </Form.Item>
+        
+              <Form.Item
+              
+                    label="Category"
+                    // name="category"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please select Category!",
+                      },
+                    ]}
+                  >
+                     <Select
+                      className="rounded-md border-none"
+                      placeholder="Select a option for Category"
+                      value={editedData.category}
+                    
+                      onChange={(value) =>
+                        setEditedData({ ...editedData, category:value })}
+
+                      
+                      allowClear
+                    >
+                      <Option value="VEGETABLES">VEGETABLES</Option>
+                      <Option value="LEAFY_VEGETABLES">LEAFY_VEGETABLES</Option>
+                      <Option value="FRUITS">FRUITS</Option>
+                      <Option value="TESTING">TESTING</Option>
+                    </Select>
+                   
+                  </Form.Item>
               <Form.Item label="Price">
                 <Input
                   value={editedData.price}
@@ -495,18 +553,35 @@ const Products = () => {
                   }
                 />
               </Form.Item>
-              <Form.Item label="Unit">
-                <Input
-                  value={editedData.unit}
-                  onChange={(e) =>
-                    setEditedData({ ...editedData, unit: e.target.value })
-                  }
-                />
-              </Form.Item>
+
+              <Form.Item
+                    label="Unit"
+                    // name="unit"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please input Unit!",
+                      },
+                    ]}
+                  >
+                    <Select
+                      className="rounded-md border-none"
+                      placeholder="Select a option for UNIT"
+                      value={editedData.unit} 
+                      onChange={(value) =>
+                        setEditedData({ ...editedData, unit: value })
+                      }
+                      // name="unit"
+                      allowClear
+                    >
+                      <Option value="kg">KG</Option>
+                      <Option value="piece">PIECE</Option>
+                    </Select>
+                  </Form.Item>
             </Form>
           </div>
         </Modal>
-        <ShoppingCartOutlined />
+        
       </header>
       <br/>
       <div><button className="border-2 rounded-lg p-3">{selectedCount} Items Added to Cart</button></div>
@@ -520,6 +595,7 @@ const Products = () => {
       />
 
     </div>
+
 
       
 

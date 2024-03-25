@@ -6,9 +6,25 @@ import { BsFillBasketFill } from "react-icons/bs";
 import { MdAccountCircle } from "react-icons/md";
 import { GiHamburgerMenu } from "react-icons/gi";
 import Link from "next/link";
+import { Input, Space } from 'antd';
 
-const Header = () => {
+const { Search } = Input;
+const onSearch = (value, _e, info) => console.log(info?.source, value);
+
+const Header = ({ products }) => { // Update the prop name from `pro` to `products`
   const [isNavOpen, setIsNavOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  
+  // Function to handle changes in the search input
+  const handleSearchInputChange = (event) => {
+    setSearchQuery(event.target.value);
+  };
+  console.log(products)
+  
+  // Function to filter products based on search query
+  // const filteredProducts = products.filter(product =>
+  //   product.name.toLowerCase().includes(searchQuery.toLowerCase())
+  // );
 
   const HandleNav = () => {
     console.log("open or close");
@@ -30,8 +46,15 @@ const Header = () => {
         <input
           type="text"
           placeholder="search for products"
+          value={searchQuery}
+          onChange={handleSearchInputChange}
           className="w-[100%] p-2  px-6 rounded text-black outline-none border-black shadow hover:shadow-lg transition-shadow"
         />
+    {/* <ul>
+        {filteredProducts.map((product) => (
+          <li key={product.id}>{product.name}</li>
+        ))}
+      </ul> */}
       </div>
 
       <div
