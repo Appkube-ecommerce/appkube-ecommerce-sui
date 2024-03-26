@@ -12,10 +12,7 @@ export default function RootLayout({ children }) {
     "/buyer/login",
     "/buyer/register",
     "/buyer/login/account",
-    "/buyer/orders",
-    "/buyer/Checkout/DeliveryAddress",
-    "/buyer/Checkout/DeliveryOption",
-    "/buyer/Checkout/PaymentOption",
+    
   ];
 
   // Function to check if the current pathname requires the timeline header
@@ -35,6 +32,7 @@ export default function RootLayout({ children }) {
       {shouldIncludeTimeline(pathname) && <Timeline />}
       {children}
       {shouldRenderFooter() && <Footer />}
+      {/* {shouldRenderHeader() && <Header />} */}
     </div>
   );
 }

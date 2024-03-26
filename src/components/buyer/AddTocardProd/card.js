@@ -35,7 +35,7 @@ let [count, setCount]=useState(0);
 
           <div className="flex flex-col justify-center med:text-lg med:py-12 med:pl-14 small:text-xs small:p-4">
             <h2>Coccinia</h2>
-            <b>₹36.00</b> &nbsp;<p className='line-through inline-block text-[#909090]'>₹40</p>
+            <b>₹36.00</b> &nbsp;<h5 className='line-through inline-block text-[#909090]'>₹40</h5>
           </div>
         </div>
 
@@ -85,7 +85,7 @@ let [count, setCount]=useState(0);
 
           <div className="flex flex-col justify-center med:text-lg med:py-12 med:pl-14 small:text-xs small:p-4">
             <h2>Coccinia</h2>
-            <><b>₹36.00</b> &nbsp;<h5 className='line-through inline-block text-[#909090]'>₹40</h5></>
+            <p><b>₹36.00</b> &nbsp;<h5 className='line-through inline-block text-[#909090]'>₹40</h5></p>
           </div>
         </div>
 

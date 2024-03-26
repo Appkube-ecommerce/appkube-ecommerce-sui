@@ -90,9 +90,11 @@ const Products = () => {
   const handleSaveForEdit = () => {
     console.log("Saving edited data:", editedData);
     setEditingProduct(null);
-    setEditedData({});
+    setEditedData({});   
+    putting(editedData);//here putting
     setOpenEditModal(false);
   };
+  
   const handleCancelForEdit = () => {
     setOpenEditModal(false);
   };
