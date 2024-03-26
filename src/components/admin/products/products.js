@@ -47,7 +47,7 @@ const Products = () => {
     console.log("Editing product:", record);
     setEditingProduct(record);
     setEditedData(record);
-    setImageUrl(record.image);
+    setImageUrl(record.Image);
   };
 
   const handleSaveForEdit = () => {
@@ -484,7 +484,7 @@ const Products = () => {
         pagination={false}
         scroll={{ x: 800, y: 4000 }}
       />
-      <ProductList/>
+      
  </div>
   );
 };

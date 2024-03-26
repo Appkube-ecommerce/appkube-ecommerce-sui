@@ -3,7 +3,9 @@ import { DownOutlined } from '@ant-design/icons';
 import { Button, Dropdown, Space, Form, Modal, Input } from 'antd';
 import html2pdf from 'html2pdf.js';
 import { useRouter } from "next/navigation";
-//import { fetchCategories } from '@/Api/fetchingProducts'; 
+
+import { fetchProducts} from '@/Api/fetchingProducts'; 
+
 
 const ProductList = () => {
     const [products, setProducts] = useState([]);
@@ -18,7 +20,7 @@ const ProductList = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const result = await fetchCategories();
+                const result = await fetchProducts();
                 setProducts(result.data.listProducts.items);
             } catch (error) {
                 console.error("Error fetching products:", error);
@@ -135,22 +137,22 @@ const ProductList = () => {
 
   const items = [
     {
-        label: 'Print All Products',
+        label: 'All Products',
         key: '1',
         onClick: () => handlePrint(),
     },
     {
-        label: 'Print Fruits Products',
+        label: 'Fruits',
         key: '2',
         onClick: () => handlePrint('FRUITS'),
     },
     {
-        label: 'Print Leafy Vegetables',
+        label: 'Leafy Vegetables',
         key: '3',
         onClick: () => handlePrint('LEAFY_VEGETABLES'),
     },
     {
-        label: 'Print Vegetables Products',
+        label: 'Vegetables',
         key: '4',
         onClick: () => handlePrint('VEGETABLES'),
     },

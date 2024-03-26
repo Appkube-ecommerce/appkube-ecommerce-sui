@@ -17,7 +17,8 @@ import {
 
 const { Header, Sider, Content } = Layout;
 
-export default function Myorders() {
+export default function PaymentOption
+() {
   const [collapsed, setCollapsed] = useState(false);
   const [selectedMenuItem, setSelectedMenuItem] = useState("1"); // State to track selected menu item
 
@@ -33,7 +34,7 @@ export default function Myorders() {
   return (
     <>
     
-      <Layout>
+      <Layout className="h-screen">
         <Sider
           trigger={null}
           collapsible
@@ -69,23 +70,18 @@ export default function Myorders() {
               UPI
             </Menu.Item>
           </Menu>
-          <Header >
+          <Header className="w-full">
             <Button
               type="text"
               icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
               onClick={() => setCollapsed(!collapsed)}
-              style={{
-                fontSize: "16px",
-                width: "100%",
-                backgroundColor: "teal",
-               
-              }}
-            />
+             
+            />  
           </Header>
         </Sider>
         <Layout>
           <Content
-            className="w-[90%]"
+            className="w-full"
             style={{
               margin: "0px 0px 0px 18px",
               width: 500,
