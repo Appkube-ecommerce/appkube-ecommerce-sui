@@ -17,7 +17,8 @@ import {
 
 const { Header, Sider, Content } = Layout;
 
-export default function Myorders() {
+export default function PaymentOption
+() {
   const [collapsed, setCollapsed] = useState(false);
   const [selectedMenuItem, setSelectedMenuItem] = useState("1"); // State to track selected menu item
 

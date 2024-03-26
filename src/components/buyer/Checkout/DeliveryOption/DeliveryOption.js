@@ -3,7 +3,8 @@ import React, { useState } from 'react'
 import Link from  'next/link'
 
 
-const OrderSummary = () => {
+const DeliveryOption
+ = () => {
    // Generate an array of time slots starting from 10 am with 1-hour intervals
    const timeSlots = Array.from({ length: 12 }, (_, index) => {
     const startHour = (index + 10) % 12 || 12;
@@ -209,4 +210,4 @@ const OrderSummary = () => {
   )
 }
 
-export default OrderSummary
+export default DeliveryOption

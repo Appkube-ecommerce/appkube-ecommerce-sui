@@ -4,7 +4,7 @@ import Card from './card';
 const Comp = () => {
   const router = useRouter()
   function gotodelivery(){
-    router.push("/buyer/orders")
+    router.push("/buyer/Checkout/DeliveryAddress")
 
   }
   return (

@@ -15,19 +15,19 @@ const Timeline = () => {
             title: 'Delivery Address',
             description: 'Home - jhg134ggv ghc Siddiq Nagar, HITEC City',
             icon: <EnvironmentOutlined />,
-            onClick: () => router.push("/buyer/orders")
+            onClick: () => router.push("/buyer/Checkout/DeliveryAddress")
         },
         {
             title: 'Delivery Options',
             description: 'Choose your convenient date and time for delivery',
             icon: <TruckOutlined />,
-            onClick: () => router.push("/buyer/orders")
+            onClick: () => router.push("/buyer/Checkout/DeliveryOption")
         },
         {
             title: 'Payment Options',
             description: 'Pay Order amount by selecting any payment mode',
             icon: <WalletOutlined />,
-            onClick: () => router.push("/buyer/orders")
+            onClick: () => router.push("/buyer/Checkout/PaymentOption")
         }
     ];
 
