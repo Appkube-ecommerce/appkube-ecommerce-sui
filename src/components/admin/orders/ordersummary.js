@@ -1,5 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { ArrowLeftOutlined } from "@ant-design/icons";
+
+"use client"
+import React, { useState } from "react";
+import { Button, Input, message, Upload } from "antd";
+import { ArrowLeftOutlined, EditOutlined } from "@ant-design/icons";
 import { useRouter } from "next/navigation";
 import { useSelector, useDispatch } from "react-redux";
 import { useSearchParams } from "next/navigation";
@@ -45,6 +48,7 @@ const OrderInfo = () => {
 
   return (
     <>
+
       <div className="p-8">
         <header className="flex gap-5">
           <ArrowLeftOutlined
@@ -86,7 +90,6 @@ const OrderInfo = () => {
         <div className="ml-10">{data[0]?.createdAt}</div>
       </div>
       <div className='flex gap-5'>
-
 <div>
       <div className="border-2 shadow-md w-[37.5rem] h-72 bg-white rounded-xl p-4">
         <div></div>
