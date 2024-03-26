@@ -42,13 +42,11 @@ const DeliveryOption = () => {
   return (
     <div className='w-full'>
       <Card title="Select a Delivery Option" className='w-[70%]'>
-        <div className='w-[100%] mb-3'>
-          <Card type="inner">
-            <div className='flex'>
-              <Card className='w-[10%] h-[10%]'><Image alt="example" src={pro} /></Card>
-              <Card className='w-[10%] h-[10%]'><Image alt="example" src={pro} /></Card>
-              <Card className='w-[10%] h-[10%]'><Image alt="example" src={pro} /></Card>
-              
+        <div className='w-[100%]'>
+          <Card type="inner" title="">
+            <div className='flex mb-3'>
+             <div className='w-[10%] h-[10%] border rounded-md' ></div>
+              <Card className='w-[10%] h-[8%] text-center'>view</Card>
             </div>
           </Card>
           <Card>
