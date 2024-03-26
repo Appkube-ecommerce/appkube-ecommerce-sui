@@ -14,6 +14,7 @@
     "@ant-design/plots": "^2.1.13",
     "@antv/g-lite": "^1.2.22",
     "@antv/g-plugin-canvas-renderer": "^1.7.14",
+    "@next/bundle-analyzer": "^14.1.4",
     "@reduxjs/toolkit": "^2.2.1",
     "antd": "^5.15.2",
     "aws-amplify": "^6.0.19",

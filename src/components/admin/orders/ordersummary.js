@@ -153,7 +153,7 @@ const OrderInfo = (data) => {
 
       <div className="border-2 shadow-md w-80 h-36 bg-white p-2 rounded-xl mt-5">
         <p className='font-semibold text-slate-800'>Conversion summary</p>
-        <p className='text-slate-800 mt-4'>There aren't any conversion details available for this order.</p>
+        <p className='text-slate-800 mt-4'>There aren&apos;t any conversion details available for this order.</p>
         <div className="mt-4"><a className='text-sky-500 font-semibold'>Learn more</a></div>
       </div>
       <div className="border-2 shadow-md w-80 h-44 bg-white p-2 mt-5 rounded-xl font-semibold text-slate-800">Fraud analysis</div>
