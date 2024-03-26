@@ -1,6 +1,5 @@
 "use client";
 import React, { useRef, useState, useEffect } from "react";
-import Image from "next/image";
 import {
   SearchOutlined,
   EditOutlined,
@@ -83,9 +82,6 @@ const Products = () => {
     console.log("Editing product:", record);
     setEditingProduct(record);
     setEditedData(record);
-
-    setImageUrl(record.Image);
-
     setImageUrl(record.image);
     console.log(editedData.category)
 
@@ -315,11 +311,8 @@ const Products = () => {
       key: "image",
       width: "10%",
       render: (image) => (
-        <div style={{ width: '50%' }}>
-          <Image src={image} alt="Product" />
-        </div>
+        <img src={image} alt="Product" style={{ width: 50 }} />
       ),
-      
     },
     {
       title: "Product",
@@ -508,7 +501,7 @@ const Products = () => {
                   onChange={handleChange}
                 >
                   {imageUrl ? (
-                    <Image src={imageUrl} alt="image" style={{ width: "100%" }} />
+                    <img src={imageUrl} alt="image" style={{ width: "100%" }} />
                   ) : (
                     uploadButton
                   )}
@@ -601,9 +594,10 @@ const Products = () => {
         scroll={{ x: 800, y: 4000 }}
       />
 
-
     </div>
- </div>
+
+
+      
 
   );
 };
