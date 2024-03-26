@@ -4,6 +4,8 @@ import { MdOutlineDeliveryDining } from "react-icons/md";
 import { FaRegBookmark } from "react-icons/fa6";
 import { FaPlus } from "react-icons/fa6";
 import ImgsData from "./ImgsData";
+import { addToCart } from "@/redux/slices/CartSlice";
+
 
 const ProductPage = () => {
   return (

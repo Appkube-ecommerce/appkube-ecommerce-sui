@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import { useSelector } from 'react-redux';
 import { IoSearch } from "react-icons/io5";
 import { FaLocationArrow } from "react-icons/fa";
 import { BsFillBasketFill } from "react-icons/bs";
@@ -7,24 +8,32 @@ import { MdAccountCircle } from "react-icons/md";
 import { GiHamburgerMenu } from "react-icons/gi";
 import Link from "next/link";
 import { Input, Space } from 'antd';
+import { setAllProducts } from "@/redux/slices/products";
 
-const { Search } = Input;
-const onSearch = (value, _e, info) => console.log(info?.source, value);
 
-const Header = ({ products }) => { // Update the prop name from `pro` to `products`
+// const { Search } = Input;
+// const onSearch = (value, _e, info) => console.log(info?.source, value);
+
+const Header = () => { // Update the prop name from `pro` to `products`
   const [isNavOpen, setIsNavOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-  
-  // Function to handle changes in the search input
+
+  // // Function to handle changes in the search input
   const handleSearchInputChange = (event) => {
     setSearchQuery(event.target.value);
   };
-  console.log(products)
-  
+  // console.log(products)
+  const cartItems = useSelector(state => state.cartDetails.cart)
+  const products  = useSelector(state => state.allProducts.products)
+
+  // state=>state.<LHS name of the reducer in store >.initialstate in slice
+
+
   // Function to filter products based on search query
-  // const filteredProducts = products.filter(product =>
-  //   product.name.toLowerCase().includes(searchQuery.toLowerCase())
-  // );
+  const filteredProducts = products.filter(product =>
+    product.name.toLowerCase().includes(searchQuery.toLowerCase())
+    
+  );
 
   const HandleNav = () => {
     console.log("open or close");
@@ -50,11 +59,11 @@ const Header = ({ products }) => { // Update the prop name from `pro` to `produc
           onChange={handleSearchInputChange}
           className="w-[100%] p-2  px-6 rounded text-black outline-none border-black shadow hover:shadow-lg transition-shadow"
         />
-    {/* <ul>
+        <ul>
         {filteredProducts.map((product) => (
           <li key={product.id}>{product.name}</li>
         ))}
-      </ul> */}
+      </ul>
       </div>
 
       <div
@@ -86,8 +95,9 @@ const Header = ({ products }) => { // Update the prop name from `pro` to `produc
         <div className="relative ">
           <Link href="/buyer/orders">
             <button className="btn bg-red-200 rounded-md p-2 hover:bg-red-300 transition-colors">
-              <div className="rounded-full bg-red-600 p-1">
-                <BsFillBasketFill className="text-white" />
+              <div className="rounded-full flex bg-red-600 p-1">
+                <BsFillBasketFill className="text-white text-2xl h-4" />
+                <div className="bg-black text-white text-xs text-center font-semibold w-4 h-4 rounded-lg">{cartItems.length}</div>
               </div>
             </button>
           </Link>
