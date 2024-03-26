@@ -38,7 +38,7 @@ const Timeline = () => {
 
     return (
         <Steps
-            className="bg-[#71a31b] w-full"
+            className="bg-[#71a31b]"
             direction="horizontal"
             current={current}
             onChange={onChange}
