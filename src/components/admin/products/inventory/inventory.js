@@ -6,27 +6,26 @@ import Highlighter from "react-highlight-words";
 import { useRouter } from "next/navigation";
 import Link from "next/link"
 import { Radio } from 'antd';
+import {ArrowLeftOutlined} from "@ant-design/icons";
 import ImportButton from "../importButton";
 
-const inventory = () => {
+const Inventory = () => {
+  const [products, setProducts] = useState([]);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
 
-   const [products, setProducts] = useState([]);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
-  
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const result = await fetchCategories();
-  
-  //       console.log(result)
-  //       setProducts(result.data.listProducts.items);
-  //     } catch (error) {
-  //       console.error("Error fetching products:", error);
-  //     }
-  //   };
-  
-  //   fetchData();
-  // }, []);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const result = await fetchCategories();
 
+        console.log(result)
+        setProducts(result.data.listProducts.items);
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
   const router = useRouter();
   const [radio1, setradio1] = useState(1);
   const onChangeRadio1 = (e) => {
@@ -38,7 +37,7 @@ const inventory = () => {
     console.log('radio checked', e.target.value);
     setradio2(e.target.value);
   };
-  
+
  const Products = ()=>{
 
     router.push('/admin/products')
@@ -170,6 +169,20 @@ const inventory = () => {
 
   const columns = [
     {
+
+      title: "Image",
+      dataIndex: "image",
+      key: "image",
+      // width: "10%",
+
+      render: (image) => (
+        <img src={image} alt="Product" style={{ width: 50 }} />
+      ),
+
+      
+      render: (image) => <img src={image} alt="Product" style={{ width: 50 }} />,
+
+
       //title: "Image",
       dataIndex: "image",
       key: "image",
@@ -177,6 +190,7 @@ const inventory = () => {
       render: (image) => (
         <img src={image} alt="Product" style={{ width: 50 }} />
       ),
+
     },
     {
       title: "Product",
@@ -189,8 +203,12 @@ const inventory = () => {
       title: "SKU",
       dataIndex: "sku",
       key: "sku",
+
+      width: "20%",
+
       width: "16%",
       //render: (category) => `${category}`,
+
     },
     {
       title: "Unavailable",
@@ -218,16 +236,20 @@ const inventory = () => {
       dataIndex: "onhand",
       key: "onhand",
       width: "10%",
+
+      render: (unit) => `${unit}`,
+    },
+
       //render: (unit) => `${unit}`,
     },
    
-  ];
 
+  ];
   return (
-    <div>
+    <>
     <header className="flex justify-between mt-4 ">
-      <h1 className="font-bold text-2xl">Inventory</h1>
-    
+      <h1 className="font-bold text-2xl"><ArrowLeftOutlined onClick={Products}/>&nbsp;&nbsp;Inventory</h1>
+
       <div className="flex gap-3">
         <button
           style={{
@@ -236,7 +258,7 @@ const inventory = () => {
             padding: "8px 15px 8px 15px",
           }}
           onClick={showModal}
-          
+
         >
           Export
         </button>
@@ -244,10 +266,15 @@ const inventory = () => {
         {/* <Link href="/admin/products/addproduct"> */}
         <button
           key="link"
+
+
+          className="bg-black text-white rounded-md w-24 mr-2 h-10"
+
           style={{
           padding: "8px 15px 8px 15px",
           }}
           className="bg-black text-white rounded-md w-32 mr-3"
+
           loading={loading}
           onClick={Products}
         >
@@ -273,13 +300,13 @@ footer={[
     Export Products
   </Button>,
 ]}
->
+> 
 <hr></hr>
 <div className="mt-5 mb-5">
 <p>This CSV file can update all product information. To update just 
   inventory quantities use the <Link href="/" className="text-blue-500 underline" >
     CSV file for inventory.</Link></p>
-  
+
     <div className="m-5">
       <div className="mb-5">
         <Space direction="vertical">
@@ -303,7 +330,7 @@ footer={[
     <Space direction="vertical">
     <Radio value="E">CSV for Excel,Numbers,or other spreadsheet programs</Radio>
     <Radio value="F">Plain CSV file</Radio>
-   
+
 </Space>
 
   </Radio.Group>
@@ -318,6 +345,9 @@ footer={[
 
   </Modal>
       </header>
+
+      <Table
+
       
       <div className='bg-white p-2 rounded-lg mt-6 mr-3'>
       <div className='h-8 p-1'>
@@ -327,15 +357,19 @@ footer={[
       
       <Table
         className=" mr-3"
+
         columns={columns}
         dataSource={products}
         pagination={false}
         //scroll={{ x: 800, y: 4000 }}
       />
+
+      </>
+
       
       </div>
       </div>
-  );
+);
 };
 
-export default inventory;
+export default Inventory;

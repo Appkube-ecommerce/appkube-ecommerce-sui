@@ -2,7 +2,6 @@
 import { InboxOutlined } from '@ant-design/icons';
 import React, { useState,useEffect } from 'react';
 import { Table } from 'antd';
-import { FetchOrders } from '@/Api/fetchingOrders';
 import Link from 'next/link';
 import { Button, Modal, Radio } from 'antd';
 import { useDispatch,useSelector } from 'react-redux';
@@ -75,24 +74,22 @@ const Orders = () => {
   // Correct usage of useSelector
   const orders = useSelector((state) => state.ordersData.ordersList);
 
- const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-  const fetchData = async () => { 
-    try {
-      console.log('fetching')
-      const result = await FetchOrders();
-
-      console.log('result',result);
-      dispatch(saveOrdersList(result.data.listOrders.items)); 
-      // dispatch(saveSelectedOrderData(record));
-    } catch (error) {
-      console.error('Error fetching orders:', error);
-    }
-  };
   useEffect(() => {
+    const fetchData = async () => {
+      try {
+        console.log('fetching');
+        const result = await FetchOrders();
+        console.log('result', result);
+        dispatch(saveOrdersList(result.data.listOrders.items));
+      } catch (error) {
+        console.error('Error fetching orders:', error);
+      }
+    };
 
-    fetchData()
-  }, []);
+    fetchData(); // Call fetchData immediately after defining it
+  }, [dispatch]); // Include dispatch in the dependency array, since it's used inside useEffect
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -101,13 +98,10 @@ const Orders = () => {
   const handleCancel = () => {
     setIsModalOpen(false);
   };
-  
-const handleExportOptionChange = (e) => {
+
+  const handleExportOptionChange = (e) => {
     setExportOption(e.target.value);
   };
-
-  // const handleOrderClick = (record) => {
-    // };
   
   return (
     <>

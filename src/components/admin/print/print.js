@@ -4,7 +4,10 @@ import { Button, Dropdown, Space, Form, Modal, Input } from 'antd';
 import html2pdf from 'html2pdf.js';
 import { useRouter } from "next/navigation";
 
+
+
 import { fetchProducts} from '@/Api/fetchingProducts'; 
+
 
 
 const ProductList = () => {
@@ -17,6 +20,18 @@ const ProductList = () => {
     };
     const router = useRouter();
 
+    // useEffect(() => {
+    //     const fetchData = async () => {
+    //         try {
+    //             const result = await fetchProducts();
+    //             setProducts(result.data.listProducts.items);
+    //         } catch (error) {
+    //             console.error("Error fetching products:", error);
+    //         }
+    //     };
+
+    //     fetchData();
+    // }, []);
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -29,6 +44,7 @@ const ProductList = () => {
 
         fetchData();
     }, []);
+
 
     const handlePrint = (category) => {
         const filteredProducts = category ? products.filter((product) => product.category === category) : products;

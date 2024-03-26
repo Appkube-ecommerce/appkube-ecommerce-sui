@@ -34,7 +34,7 @@ export default function PaymentOption
   return (
     <>
     
-      <Layout>
+      <Layout className="h-screen">
         <Sider
           trigger={null}
           collapsible
@@ -76,7 +76,7 @@ export default function PaymentOption
               icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
               onClick={() => setCollapsed(!collapsed)}
              
-            />
+            />  
           </Header>
         </Sider>
         <Layout>

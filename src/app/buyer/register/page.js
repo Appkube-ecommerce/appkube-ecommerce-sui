@@ -1,5 +1,6 @@
 import Link from "next/link";
 import React from "react";
+import Image from "next/image"; 
 
 const page = () => {
   return (
@@ -7,10 +8,10 @@ const page = () => {
       <div className="xs:mt-0 sm:border sm:border-solid sm:border-gray-500 sm:mt-0 sm:rounded-none xs:w-[100%] xs:h-[100%] md:w-[450px] md:h-[103%] md:mt-7 rounded-lg p-[20px]  bg-white  mb-4">
         <div>
           {" "}
-          <img
+          <image
             src="https://shopify-assets.shopifycdn.com/accounts/production/theme_configuration/logo/oauth_provider/merchant/logo.svg?v=1631025778 "
             className="w-[100px]"
-          ></img>
+          />
         </div>
         <div>
           <h1 className=" xs:text-base text-xl font-bold mt-[1rem]  sm:text-bold xs:text-bold">
