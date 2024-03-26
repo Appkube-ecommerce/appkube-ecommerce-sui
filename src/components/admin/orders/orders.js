@@ -2,7 +2,6 @@
 import { InboxOutlined } from '@ant-design/icons';
 import React, { useState,useEffect } from 'react';
 import { Table } from 'antd';
-import { FetchOrders } from '@/Api/fetchingOrders';
 import Link from 'next/link';
 import { Button, Modal, Radio } from 'antd';
 import { useDispatch,useSelector } from 'react-redux';
