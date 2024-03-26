@@ -169,6 +169,7 @@ const Inventory = () => {
 
   const columns = [
     {
+
       title: "Image",
       dataIndex: "image",
       key: "image",
@@ -181,50 +182,68 @@ const Inventory = () => {
       
       render: (image) => <img src={image} alt="Product" style={{ width: 50 }} />,
 
+
+      //title: "Image",
+      dataIndex: "image",
+      key: "image",
+      width: "6%",
+      render: (image) => (
+        <img src={image} alt="Product" style={{ width: 50 }} />
+      ),
+
     },
     {
       title: "Product",
       dataIndex: "name",
       key: "name",
-      width: "20%",
+      width: "16%",
       ...getColumnSearchProps("name"),
     },
     {
       title: "SKU",
       dataIndex: "sku",
       key: "sku",
+
       width: "20%",
+
+      width: "16%",
+      //render: (category) => `${category}`,
+
     },
     {
       title: "Unavailable",
       dataIndex: "unavailable",
-      key: "unavailable",
-      width: "20%",
-      render: (category) => `${category}`,
+      key: "unavauilable",
+      width: "10%",
+      //render: (price) => `₹${price}`,
     },
     {
       title: "Committed",
       dataIndex: "committed",
       key: "committed",
-      width: "20%",
-      render: (price) => `₹${price}`,
+      width: "10%",
+      //render: (unit) => `${unit}`,
     },
     {
       title: "Available",
       dataIndex: "available",
-      key: "available",
-      width: "20%",
-      height:"10%",
-      render: (category) => `${category}`,
-      
+      key: "avauilable",
+      width: "10%",
+      //render: (price) => `₹${price}`,
     },
     {
       title: "Onhand",
       dataIndex: "onhand",
       key: "onhand",
       width: "10%",
+
       render: (unit) => `${unit}`,
     },
+
+      //render: (unit) => `${unit}`,
+    },
+   
+
   ];
   return (
     <>
@@ -248,7 +267,14 @@ const Inventory = () => {
         <button
           key="link"
 
+
           className="bg-black text-white rounded-md w-24 mr-2 h-10"
+
+          style={{
+          padding: "8px 15px 8px 15px",
+          }}
+          className="bg-black text-white rounded-md w-32 mr-3"
+
           loading={loading}
           onClick={Products}
         >
@@ -319,15 +345,31 @@ footer={[
 
   </Modal>
       </header>
+
       <Table
-        className="mt-5"
+
+      
+      <div className='bg-white p-2 rounded-lg mt-6 mr-3'>
+      <div className='h-8 p-1'>
+        <button className="rounded-lg w-10 font-semibold text-xs hover:bg-gray-100">All</button>
+        <button className="rounded-lg w-6 font-semibold hover:bg-gray-100">+</button>
+      </div>
+      
+      <Table
+        className=" mr-3"
+
         columns={columns}
         dataSource={products}
         pagination={false}
-        scroll={{ x: 800, y: 4000 }}
+        //scroll={{ x: 800, y: 4000 }}
       />
+
       </>
-  );
+
+      
+      </div>
+      </div>
+);
 };
 
 export default Inventory;

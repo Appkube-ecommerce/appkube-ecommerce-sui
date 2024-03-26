@@ -7,8 +7,10 @@ import { BsFillBasketFill } from "react-icons/bs";
 import { MdAccountCircle } from "react-icons/md";
 import { GiHamburgerMenu } from "react-icons/gi";
 import Link from "next/link";
+
 import { Input, Space } from 'antd';
 import { setAllProducts } from "@/redux/slices/products";
+import { useRouter } from "next/navigation";
 
 
 // const { Search } = Input;
@@ -36,6 +38,10 @@ const Header = () => { // Update the prop name from `pro` to `products`
   );
 
   const HandleNav = () => {
+    // const router=useRouter
+    // function addtocart(){
+    //    router.push("/buyer/AddTocardProd")
+    // }
     console.log("open or close");
     setIsNavOpen(!isNavOpen);
   };
@@ -98,6 +104,10 @@ const Header = () => { // Update the prop name from `pro` to `products`
               <div className="rounded-full flex bg-red-600 p-1">
                 <BsFillBasketFill className="text-white text-2xl h-4" />
                 <div className="bg-black text-white text-xs text-center font-semibold w-4 h-4 rounded-lg">{cartItems.length}</div>
+          <Link href="/buyer/AddTocardProd">
+            <button className="btn bg-red-200 rounded-md p-2 hover:bg-red-300 transition-colors ">
+              <div className="rounded-full bg-red-600 p-1">
+                <BsFillBasketFill className="text-white" />
               </div>
             </button>
           </Link>

@@ -7,27 +7,16 @@ import ImportButton from "./importButton";
 import { useRouter } from "next/navigation";
 import Link from "next/link"
 import { Radio } from 'antd';
+
 // import { fetchcustomer } from "@/Api/fetchingcustomers";
+
+import useFetchCustomers from "@/components/customHooks/useFetchCustomers";
+
 // import Addproduct from "./addproduct";
 
 
 const Customer = () => {
-  const [customer, setcustomer] = useState([]);
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const result = await fetchcustomer(); // Assuming fetchCategories returns a list of products
-
-        console.log(result)
-        setcustomer(result.data.listCustomers.items);
-      } catch (error) {
-        console.error("Error fetching customers:", error);
-      }
-    };
-
-    fetchData();
-  }, []);
-
+  const { customers, loadings, error } = useFetchCustomers();
   const [radio1, setradio1] = useState(1);
   const onChangeRadio1 = (e) => {
     console.log('radio checked', e.target.value);
@@ -38,151 +27,7 @@ const Customer = () => {
     console.log('radio checked', e.target.value);
     setradio2(e.target.value);
   };
-  // const [data,setData]=useState([ {
-  //   key: "12",
-  //   customer: "John pink",
-  //   tags: (
-  //     <Tag bordered={false} color="success">
-  //       subscribe
-  //     </Tag>
-  //   ),
-  //   Location: "india",
-  //   orders: "2 orders",
-  //   Amountspent: "43.00",
-  // },
-  // {
-  //   key: "1",
-  //   customer: "John pink",
-  //   tags: (
-  //     <Tag bordered={false} color="success">
-  //       subscribe
-  //     </Tag>
-  //   ),
-  //   Location: "india",
-  //   orders: "2 orders",
-  //   Amountspent: "43.00",
-  // },
-  // {
-  //   key: "2",
-  //   customer: "John pink",
-  //   tags: (
-  //     <Tag bordered={false} color="success">
-  //       subscribe
-  //     </Tag>
-  //   ),
-  //   Location: "india",
-  //   orders: "2 orders",
-  //   Amountspent: "43.00",
-  // },
-  // {
-  //   key: "3",
-  //   customer: "John pink",
-  //   tags: (
-  //     <Tag bordered={false} color="success">
-  //       subscribe
-  //     </Tag>
-  //   ),
-  //   Location: "india",
-  //   orders: "2 orders",
-  //   Amountspent: "43.00",
-  // },
-  // {
-  //   key: "4",
-  //   customer: "John pink",
-  //   tags: (
-  //     <Tag bordered={false} color="success">
-  //       subscribe
-  //     </Tag>
-  //   ),
-  //   Location: "india",
-  //   orders: "2 orders",
-  //   Amountspent: "43.00",
-  // },
-  // {
-  //   key: "5",
-  //   customer: "John pink",
-  //   tags: (
-  //     <Tag bordered={false} style={{ color: 'gray', backgroundColor: '#f5f5f5', }}>
-  //     Not subscribe
-  //    </Tag>
-  //   ),
-  //   Location: "india",
-  //   orders: "2 orders",
-  //   Amountspent: "43.00",
-  // },
-  // {
-  //   key: "6",
-  //   customer: "John pink",
-  //   tags: (
-  //     <Tag bordered={false} style={{ color: 'gray', backgroundColor: '#f5f5f5', }}>
-  //     Not subscribe
-  //    </Tag>
-  //   ),
-  //   Location: "india",
-  //   orders: "2 orders",
-  //   Amountspent: "43.00",
-  // },
-  // {
-  //   key: "7",
-  //   customer: "John pink",
-  //   tags: (
-  //     <Tag bordered={false} style={{ color: 'gray', backgroundColor: '#f5f5f5', }}>
-  //     Not subscribe
-  //    </Tag>
-  //   ),
-  //   Location: "india",
-  //   orders: "2 orders",
-  //   Amountspent: "43.00",
-  // },
-  // {
-  //   key: "8",
-  //   customer: "John pink",
-  //   tags: (
-  //     <Tag bordered={false} style={{ color: 'gray', backgroundColor: '#f5f5f5', }}>
-  //     Not subscribe
-  //    </Tag>
-  //   ),
-  //   Location: "india",
-  //   orders: "2 orders",
-  //   Amountspent: "43.00",
-  // },
-  // {
-  //   key: "9",
-  //   customer: "John pink",
-  //   tags: (
-  //     <Tag bordered={false} style={{ color: 'gray', backgroundColor: '#f5f5f5', }}>
-  //      Not subscribe
-  //     </Tag>
-  //   ),
-  //   Location: "india",
-  //   orders: "2 orders",
-  //   Amountspent: "43.00",
-  // },
-  // {
-  //   key: "10",
-  //   customer: "John pink",
-  //   tags: (
-  //     <Tag bordered={false} style={{ color: 'gray', backgroundColor: '#f5f5f5', }}>
-  //     Not subscribe
-  //    </Tag>
-  //   ),
-  //   Location: "india",
-  //   orders: "2 orders",
-  //   Amountspent: "43.00",
-  // },
-  // {
-  //   key: "11",
-  //   customer: "John pink",
-  //   tags: (
-  //     <Tag bordered={false} style={{ color: 'gray', backgroundColor: '#f5f5f5', }}>
-  //      Not subscribe
-  //     </Tag>
-  //   ),
-  //   Location: "india",
-  //   orders: "2 orders",
-  //   Amountspent: "43.00",
-  // },]);
- 
+  
 
   const router = useRouter();
   const AddCustomers = ()=>{
@@ -339,26 +184,6 @@ const columns = [
     width: 50, // Adjust the width as needed
     render: (id) => `₹${id}`,
   },
-
-  
-    // {
-    //   title: "Location",
-    //   dataIndex: "Location",
-    //   key: "Location",
-    //   // ...getColumnSearchProps("Location"),
-    // },
-    // {
-    //   title: "Orders",
-    //   dataIndex: "orders",
-    //   key: "Orders",
-    //   // ...getColumnSearchProps("Orders"),
-    // },
-    // {
-    //   title: "Amount spent",
-    //   dataIndex: "Amountspent",
-    //   key: "Amountspent",
-    //   // ...getColumnSearchProps("Amountspent"),
-    // },
   ];
  
   
@@ -478,7 +303,7 @@ const columns = [
         // }}
         
         columns={columns}
-        dataSource={customer}
+        dataSource={customers}
         pagination={false}
         scroll={{ x: 1000, y: 900 }}
          className="mt-5 mr-3"

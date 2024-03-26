@@ -17,9 +17,13 @@ const Page = () => {
   })
   console.log('filter value',data)
   return (
-     <OrderInfo data={data}/>
+     <OrderInfo/>
     
   );
 };
 
 export default Page;
+
+
+Page.js
+  

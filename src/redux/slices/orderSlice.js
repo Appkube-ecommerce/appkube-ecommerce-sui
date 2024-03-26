@@ -12,6 +12,7 @@ const orderSlice = createSlice({
     // },
     saveOrdersList: (state, action) => {
       state.ordersList = action.payload;
+      
     },
   },
 });

@@ -19,6 +19,7 @@
     "aws-amplify": "^6.0.19",
     "axios": "^1.6.8",
     "d3-color": "^3.1.0",
+    "fs": "^0.0.1-security",
     "html2canvas": "^1.4.1",
     "html2pdf.js": "^0.10.1",
     "jspdf": "^2.5.1",
