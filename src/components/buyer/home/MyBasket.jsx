@@ -1,17 +1,35 @@
-// "use client";
+"use client";
 import Link from "next/link";
+import React, { useEffect ,useState} from "react";
 import ProductCards from "./ProductCards";
 import { FaChevronLeft } from "react-icons/fa";
 import { FaChevronRight } from "react-icons/fa";
-// import { useState } from "react";
+import axios from "@/Api/axios";
+import Header from "./Header";
+import { useDispatch } from "react-redux";
+import { setAllProducts } from "@/redux/slices/products";
+const MyBasket = () => {
+  const [products, setProducts] = useState([]);
+const dispatch = useDispatch()
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const result = await axios.get("/product");
+        console.log("prods",result);
+        setProducts(result.data);
+        dispatch(setAllProducts(result.data));
+        // console.log("set products",products)
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      }
+    };
 
+    fetchData();
+  }, []);
 
-const MyBasket = async () => {
-  const res = await fetch("https://dummyjson.com/products");
-  const data = await res.json();
-  // const [dataSet , SetDataSet] = useState();
-  // SetDataSet(FetchCards);
   return (
+    <>
+    {/* <Header products={products}/> */}
     <main className="container-fluid w-[90%] min-h-[100vh] bg-[#E8E8E8] rounded shadow flex flex-col  justify-start gap-6 ">
       {/* {console.log(dataSet)} */}
       <div className="flex justify-between p-3 items-center">
@@ -29,21 +47,14 @@ const MyBasket = async () => {
         </div>
       </div>
       <div className="container-fluid flex justify-evenly items-center gap-3  flex-wrap mb-3">
-        {/* fetch('https://dummyjson.com/products') */}
-         {data.products.map((val) => 
-          <ProductCards key={val.id} data={val} />
+      
+        {products.map((product) => 
+          <ProductCards key={product.id} data={product} 
+          />
         )}
-        {/* // console.log('basket ',data.id)  */}
-        {/* <ProductCards />
-        <ProductCards />
-        <ProductCards />
-        <ProductCards />
-        <ProductCards />
-        <ProductCards />
-        <ProductCards />
-        <ProductCards /> */}
       </div>
     </main>
+    </>
   );
 };
 
