@@ -8,8 +8,15 @@ import { MdAccountCircle } from "react-icons/md";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { RxCross1 } from "react-icons/rx";
 import Link from "next/link";
+import { setAllProducts } from "@/redux/slices/products";
 
-const Header = () => {
+const Header = ({ onSearch }) => {
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value);
+    onSearch(e.target.value);
+  };
   const [isNavOpen, setIsNavOpen] = useState(false);
   const cartItems = useSelector(state => state.cartDetails.cart);
   // const products = useSelector(state => state.allProducts.products);
@@ -17,6 +24,8 @@ const Header = () => {
   const HandleNav = () => {
     setIsNavOpen(!isNavOpen);
   };
+  const allProducts=useSelector(state=>state.allProducts.products);
+  console.log(allProducts);
 
   return (
     <header className="container-fluid flex justify-between items-center px-[5%] w-full h-[12vh] border-t-green-500 border-t-4">
@@ -31,10 +40,12 @@ const Header = () => {
       <div className="searchbar container-fluid w-[60%] sm:w-[55%] md:w-[45%] lg:w-[40%] relative shadow">
         <IoSearch className="text-green-500 absolute top-3 left-1 text-lg" />
         <input
-          type="text"
-          placeholder="search for products"
-          className="w-[100%] p-2 px-6 rounded text-black outline-none border-black shadow hover:shadow-lg transition-shadow"
-        />
+        type="text"
+        placeholder="Search for products"
+        value={searchQuery}
+        onChange={handleSearchChange}
+        className="search-input"
+      />
       </div>        
 
 
