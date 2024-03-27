@@ -14,6 +14,8 @@ import {
   DatePicker,
   
 } from "antd";
+import OrderSummary from "../DeliveryOption/OrderSummary";
+import { gray } from "d3-color";
 
 const { Header, Sider, Content } = Layout;
 
@@ -33,14 +35,14 @@ export default function PaymentOption
 
   return (
     <>
-    
-      <Layout className="h-screen">
+    <div className="h-screen flex gap-16 pt-10">
+      <Layout className="bg-white">
         <Sider
           trigger={null}
           collapsible
           collapsed={collapsed}
           
-          style={{ display: "flex", flexDirection: "column" ,height:"42vh"}}
+          style={{ display: "flex", flexDirection: "column" ,height:"45%"}}
         >
           <div className="demo-logo-vertical" />
           <Menu
@@ -69,6 +71,14 @@ export default function PaymentOption
             >
               UPI
             </Menu.Item>
+            <Menu.Item
+              key="3"
+              label="Cash On Delivery"
+              className="w-10vh"
+              style={selectedMenuItem === "2" ? { backgroundColor: "white", color: "black" ,borderRadius:"none"} : {}}
+            >
+              Cash On Delivery
+            </Menu.Item>
           </Menu>
           <Header className="w-full">
             <Button
@@ -79,14 +89,15 @@ export default function PaymentOption
             />  
           </Header>
         </Sider>
-        <Layout>
+        
           <Content
-            className="w-full"
+            className="bg-gray-100"
             style={{
               margin: "0px 0px 0px 18px",
               width: 500,
               height: 300,
               borderRadius: borderRadiusLG,
+              backgroundColor: gray,
             }}
           >
             {/* Render content based on selected menu item */}
@@ -184,9 +195,32 @@ export default function PaymentOption
                     <hr/>
                     <p className="mt-3">A payment request will  be sent to this UPI ID</p>
                   </Form.Item></Form></div>}
+
+                  {selectedMenuItem === "3" && (
+                     <div>
+                      <div className="justify-between m-5 p-5 h-[100%] w-[90%] border flex flex-col gap-3">
+                        <h1 className="text-lg font-semibold">Cash On Delivery</h1>
+                        <p>Tip:To ensure countless Delivery.We recommend You to use online payment method</p>
+
+
+                    <Checkbox>
+                      Make This as My Default Payment Option
+                    </Checkbox>
+                  
+                  <Form.Item>
+                    <Button htmlType="submit" className="bg-red-500 text-white w-full h-[5vh]">Place order & Pay</Button>
+                  </Form.Item>
+                  </div>
+               
+              </div>
+            )}
+                 
           </Content>
-        </Layout>
+      
+      
       </Layout>
+      <OrderSummary/>
+      </div>
     </>
   );
 }
