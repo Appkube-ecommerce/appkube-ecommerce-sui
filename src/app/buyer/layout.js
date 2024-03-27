@@ -13,7 +13,8 @@ export default function RootLayout({ children }) {
     "/buyer/login",
     "/buyer/register",
     "/buyer/login/account",
-  ];
+
+      ];
 
   // Function to check if the current pathname requires the timeline header
   const shouldIncludeTimeline = (path) => {
@@ -32,6 +33,7 @@ export default function RootLayout({ children }) {
       {shouldIncludeTimeline(pathname) && <Timeline />}
       {children}
       {shouldRenderFooter() && <Footer />}
+      {/* {shouldRenderHeader() && <Header />} */}
     </div>
   );
 }
