@@ -39,7 +39,9 @@ const Timeline = () => {
     return (
         <div className='bg-[#71a31b] w-full flex justify-center'>
         <Steps
+
             className="w-[60%] text-sm"
+
             direction="horizontal"
             current={current}
             onChange={onChange}

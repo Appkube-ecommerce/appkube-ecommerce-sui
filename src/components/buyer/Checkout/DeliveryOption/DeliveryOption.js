@@ -8,13 +8,7 @@ import pro from "../../../../components/admin/images/product.svg";
 const { Step } = Steps;
 
 const DeliveryOption = () => {
-  const dates = [];
-  const currentDate = new Date();
-  for (let i = 0; i < 5; i++) {
-    const nextDate = new Date(currentDate);
-    nextDate.setDate(currentDate.getDate() + i);
-    dates.push(nextDate.toISOString().slice(0, 10));
-  }
+ 
   const [selectedDate, setSelectedDate] = useState('');
   const [selectedSlot, setSelectedSlot] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
@@ -25,6 +19,23 @@ const DeliveryOption = () => {
     { id: 3, name: 'Item 3', image: pro },
     // Add more items as needed
   ]);
+  const dates = [];
+  const currentDate = new Date();
+  for (let i = 0; i < 5; i++) {
+    const nextDate = new Date(currentDate);
+    nextDate.setDate(currentDate.getDate() + i);
+    dates.push(nextDate.toISOString().slice(0, 10));
+  }
+
+  const slotTimings = {
+    allSlots: 'Any Time',
+    eveningSlots: '6pm - 8pm',
+    morningSlots: '9am - 11am',
+    afternoonSlots: '1pm - 3pm'
+  };
+  const handleSlotSelect = (slot) => {
+    setSelectedSlot(slot);
+  };
 
   const handleDateSelect = (date) => {
     setSelectedDate(date);
@@ -48,14 +59,14 @@ const DeliveryOption = () => {
   };
 
   return (
-    <div className='w-full grid grid-cols-2 gap-10 mr-36 ml-36'>
-      <div>
+    <div className='w-[100vw] h-[100vh] flex gap-10 justify-center m-0 bg-slate-100'>
+      <div >
       <Card title="Select a Delivery Option">
         <div className='w-[100%]'>
           <Card type="inner" title="">
             <div className='flex mb-3 gap-2'>
-              <div className='w-[10%] h-[45%] border rounded-md'><Image src={pro}></Image></div>
-              <div className='w-[10%] h-[45%] border rounded-md'><Image src={pro}></Image></div>
+              <div className='w-[10%] h-[45%] border rounded-md'><Image src={pro} alt='products'></Image></div>
+              <div className='w-[10%] h-[45%] border rounded-md'><Image src={pro} alt='products'></Image></div>
               <div className='w-[10%] h-[40%] border rounded-md text-center cursor-pointer hover:bg-slate-200' onClick={handleViewItems}>View items</div>
             </div>
           </Card>
@@ -63,10 +74,38 @@ const DeliveryOption = () => {
             <div className='grid grid-cols-3'>
               <p> Delivery Slot</p>
               <div className='w-[1px] h-full bg-gray-200'></div>
+             {/* Modal for selecting date and slot */}
+      <Modal
+        title="Select Date and Slot"
+        visible={modalVisible}
+        onCancel={handleCloseModal}
+        footer={[
+          <Button key="cancel" onClick={handleCloseModal}>Cancel</Button>,
+          <Button key="submit" type="primary" onClick={handleCloseModal}>Submit</Button>
+        ]}
+        width={600}
+        headerBg
+      >
+        <div>
+          <p>Select Date:</p>
+          <div className='flex gap-2'>
+            {dates.map(date => (
+              <Button  key={date} onClick={() => handleDateSelect(date)}>{date}</Button>
+            ))}
+          </div>
+        </div>
+        <div className='gap-3 '>
+          <p>Select Slot:</p>
+          <Radio.Group value={selectedSlot} onChange={(e) => handleSlotSelect(e.target.value)}>
+            {Object.entries(slotTimings).map(([slot, timing]) => (
+              <Radio key={slot} value={slot}>{timing}</Radio>
+            ))}
+          </Radio.Group>
+        </div>
+      </Modal>
               <div>
                 <p onClick={() => handleDateSelect(selectedDate || dates[0])} className='cursor-pointer'>Select Date: {selectedDate || dates[0]}</p>
-                <p>Select Slot: {selectedSlot}</p>
-              </div>
+                <p>Selected Slot: {selectedSlot && slotTimings[selectedSlot]}</p></div>
             </div>
           </Card>
           <Button type="primary" danger className='float-end mt-3'>Proceed To pay</Button>
@@ -76,7 +115,7 @@ const DeliveryOption = () => {
       {/* Modal for viewing items */}
       <Modal
         title="Items"
-        visible={itemsModalVisible}
+        open={itemsModalVisible}
         onCancel={handleCloseItemsModal}
         footer={[
           <Button key="close" onClick={handleCloseItemsModal}>Close</Button>
