@@ -7,7 +7,10 @@ import ImgsData from "./ImgsData";
 import { addToCart } from "@/redux/slices/CartSlice";
 
 
+
 const ProductPage = () => {
+
+
   return (
     <div className="xl:px-36 sm:p-6  ">
       <div className="flex md:flex-row flex-col sm:justify-center justify-between gap-2 border-b-[2px] border-dashed border-gray-400  sm:h-[100%] sm:w-[100%] ">
