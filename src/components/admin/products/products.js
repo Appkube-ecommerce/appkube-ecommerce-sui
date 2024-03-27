@@ -17,7 +17,7 @@ import { Radio } from "antd";
 import ProductList from "../print/print";
 import { useDispatch } from "react-redux";
 import axios from "@/Api/axios";
-
+//page for product
 const Products = () => {
   const dispatch = useDispatch()
   const [imageUrl, setImageUrl] = useState(); // Define imageUrl state variable
