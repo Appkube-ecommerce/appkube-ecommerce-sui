@@ -4,6 +4,7 @@ import { Card, Button, Modal, Radio, Steps, Popconfirm , Alert, Space} from 'ant
 import { DeleteOutlined } from '@ant-design/icons';
 import Image from "next/image"
 import pro from "../../../../components/admin/images/product.svg";
+import OrderSummary from './OrderSummary';
 
 const { Step } = Steps;
 
@@ -59,7 +60,7 @@ const DeliveryOption = () => {
   };
 
   return (
-    <div className='w-[100vw] h-[100vh] flex gap-10 justify-center m-0 bg-slate-100'>
+    <div className='w-[100vw] h-[100vh] flex gap-10 justify-center m-0 bg-slate-100 pt-10'>
       <div >
       <Card title="Select a Delivery Option">
         <div className='w-[100%]'>
@@ -140,31 +141,8 @@ const DeliveryOption = () => {
         ))}
       </Modal>
     </div>
-     <div className=''>
-     <Card
-     title="Order Summary"
-     bordered={false}
-     style={{
-       width: 300,
-     }}
-   >
-      <Space direction="vertical" style={{ width: '100%' }}>
-     <p>Total Amount Payable 345</p>
-     <Alert
-      message="Success Text"
-      description="Success Description "
-      type="success"
-    />
-     <Alert
-      
-      description="Select your address and delivery slot to know accurate delivery charges. You can save more by applying a voucher!"
-      type="warning"
-      showIcon
-    
-    />
-    
-     </Space>
-   </Card>
+     <div>
+     <OrderSummary/>
    
    </div>
    </div>
