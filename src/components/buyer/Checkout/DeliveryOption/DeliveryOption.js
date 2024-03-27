@@ -1,14 +1,20 @@
 'use client'
 import React, { useState } from 'react';
-import { Card, Button, Modal, Radio, Steps, Popconfirm , Alert, Space} from 'antd';
-import { DeleteOutlined } from '@ant-design/icons';
+import { Card, Button, Modal, Radio, Steps, Popconfirm } from 'antd';
+import { DeleteOutlined,DashboardFilled } from '@ant-design/icons';
 import Image from "next/image"
 import pro from "../../../../components/admin/images/product.svg";
 import OrderSummary from './OrderSummary';
+import { useRouter } from 'next/navigation';
 
 const { Step } = Steps;
 
 const DeliveryOption = () => {
+  const router =useRouter()
+
+  function GotoPayment(){
+    router.push("/buyer/Checkout/PaymentOption");
+  }
  
   const [selectedDate, setSelectedDate] = useState('');
   const [selectedSlot, setSelectedSlot] = useState('');
@@ -64,13 +70,18 @@ const DeliveryOption = () => {
       <div >
       <Card title="Select a Delivery Option">
         <div className='w-[100%]'>
-          <Card type="inner" title="">
-            <div className='flex mb-3 gap-2'>
-              <div className='w-[10%] h-[45%] border rounded-md'><Image src={pro} alt='products'></Image></div>
-              <div className='w-[10%] h-[45%] border rounded-md'><Image src={pro} alt='products'></Image></div>
-              <div className='w-[10%] h-[40%] border rounded-md text-center cursor-pointer hover:bg-slate-200' onClick={handleViewItems}>View items</div>
+         
+          <div className='flex mb-3 gap-2'>
+                {items.map(item => (
+                  <div key={item.id} className='w-[10%] h-[45%] border rounded-md'>
+                    <Image src={item.image} alt={item.name} />
+                  </div>
+                ))}
+             
+              <div className='w-[10%] h-[55px] border rounded-md text-center cursor-pointer
+               hover:bg-slate-200' onClick={handleViewItems}>View 3 items</div>
             </div>
-          </Card>
+        
           <Card>
             <div className='grid grid-cols-3'>
               <p> Delivery Slot</p>
@@ -87,7 +98,8 @@ const DeliveryOption = () => {
         width={600}
         headerBg
       >
-        <div>
+        <div className='flex gap-x-8'>
+        <DashboardFilled />
           <p>Select Date:</p>
           <div className='flex gap-2'>
             {dates.map(date => (
@@ -109,7 +121,7 @@ const DeliveryOption = () => {
                 <p>Selected Slot: {selectedSlot && slotTimings[selectedSlot]}</p></div>
             </div>
           </Card>
-          <Button type="primary" danger className='float-end mt-3'>Proceed To pay</Button>
+          <Button type="primary" danger className='float-end mt-3' onClick={GotoPayment}>Proceed To pay</Button>
         </div>
       </Card>
 
