@@ -8,7 +8,7 @@ const Comp = () => {
 
   }
   return (
-      <div className=' flex flex-col gap-3 justify-center px-[15%]'>
+      <div className=' flex flex-col gap-3 justify-center'>
     <section className='bg-black med:flex justify-between items-center p-[2%] rounded-md '>
         <right className='xsmall:text-xs small:text-sm med:text-md lgr:text-lg'>
        <h1 className="text-white ">Subtotal (1 item) : 9.00</h1>

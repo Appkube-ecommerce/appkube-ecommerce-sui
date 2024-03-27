@@ -2,6 +2,7 @@
 import { Inter } from "next/font/google";
 import Timeline from "@/components/buyer/Checkout/timeline";
 import Footer from "@/components/buyer/home/Footer";
+import Header from "@/components/buyer/home/Header";
 import { usePathname } from "next/navigation";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -12,8 +13,8 @@ export default function RootLayout({ children }) {
     "/buyer/login",
     "/buyer/register",
     "/buyer/login/account",
-    
-  ];
+
+      ];
 
   // Function to check if the current pathname requires the timeline header
   const shouldIncludeTimeline = (path) => {
@@ -28,7 +29,7 @@ export default function RootLayout({ children }) {
   const shouldRenderFooter = () => !exclude.includes(pathname);
 
   return (
-    <div className="container-fluid flex flex-col justify-center items-center w-[100%] min-h-[100vh] gap-[5vh]">
+    <div className="container-fluid flex flex-col justify-center items-center w-[100%] min-h-[100vh]">
       {shouldIncludeTimeline(pathname) && <Timeline />}
       {children}
       {shouldRenderFooter() && <Footer />}

@@ -10,13 +10,16 @@ import {
 import { Button, Input, Form, Upload, Space, Table,Checkbox, Modal ,Select} from "antd";
 import Highlighter from "react-highlight-words";
 import ImportButton from "./importButton";
+import { addToAdminCart } from "@/redux/slices/admincartSlice";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Radio } from "antd";
 import ProductList from "../print/print";
+import { useDispatch } from "react-redux";
 import axios from "@/Api/axios";
 
 const Products = () => {
+  const dispatch = useDispatch()
   const [imageUrl, setImageUrl] = useState(); // Define imageUrl state variable
   const [openExportModal, setOpenExportModal] = useState(false);
   const [editingProduct, setEditingProduct] = useState(null);
@@ -40,10 +43,14 @@ const Products = () => {
 
     fetchData();
   }, []);
-  useEffect(() => {
+
+
+    useEffect(() => {
     const updatedCart = products.filter(product => product.selected);
     setCart(updatedCart);
     setSelectedCount(updatedCart.length);
+    console.log(updatedCart)
+    dispatch(addToAdminCart(updatedCart))
     console.log("cart items",cart)
     console.log("count of cart",selectedCount)
   }, [products]);
