@@ -1,13 +1,11 @@
 import Link from 'next/link';
 const DeliveryAddress= () => {
     return (
-        <>
-        
-            <div className=' h-screen'>
-                <div>
+        <div className=' h-screen bg-slate-200'>
+                <div className=''>
 
                 <h1 className="text-2xl"><b>Select your address</b></h1>
-                <div className='bg-white shadow-lg flex rounded-lg h-[30%] w-[40%] p-4'>
+                <div className='bg-white shadow-lg flex rounded-lg h-[30%] w-[40%] p-4 mt-[1%]'>
                 <Link href="/" className='border-dashed border-2 border-red-500 rounded-md items-center justify-center'>
                         <div><img class="h-[10%] w-[16%]" src='https://png.pngtree.com/png-vector/20230106/ourmid/pngtree-flat-red-location-sign-png-image_6553065.png'></img></div>
                         <div className='text-red-600 text-sm'><b>+ Add New Address</b></div>
@@ -28,7 +26,7 @@ const DeliveryAddress= () => {
                 </div>
                 </div>
             </div>
-        </>
+        
     )
 }
 
