@@ -25,7 +25,7 @@ const handleLogin = () => {
   }
 };
   return (
-    <main className=" h-[100%] flex justify-center items-center bg-gradient-to-r from-indigo-900 via-indigo-700 to-cyan-400 md:w-[100vw]  md:h-screen md:-mb-10">
+    <main className=" h-full flex justify-center items-center bg-gradient-to-r from-indigo-600 via-indigo-400 to-cyan-400 md:w-[100vw]  md:h-screen md:-mb-10">
       <div className=" sm:p-5 xs:w-[100vw]  md:h-[70vh] md:w-[414px]  xs:h-[100%] sm:w-[100vw] rounded-lg p-[30px] sm:shadow-lg bg-white  md:mt-6 sm:h-[90%] xs:rounded-none md:m-5 md:border-none md:rounded-xl">
         <div>
           <Link href="/buyer/home">
