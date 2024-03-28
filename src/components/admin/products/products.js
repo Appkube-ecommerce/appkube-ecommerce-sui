@@ -17,7 +17,7 @@ import { Radio } from "antd";
 import ProductList from "../print/print";
 import { useDispatch } from "react-redux";
 import axios from "@/Api/axios";
-//page for product
+
 const Products = () => {
   const dispatch = useDispatch()
   const [imageUrl, setImageUrl] = useState(); // Define imageUrl state variable
@@ -29,12 +29,13 @@ const Products = () => {
   const [products, setProducts] = useState([]);
   const [selectedCount, setSelectedCount] = useState(0);
   const [cart,setCart] = useState([])
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         const result = await axios.get("/product");
         console.log('products',result);
-        // setProducts(result.data);
+        setProducts(result.data);
         // console.log(result.data)
       } catch (error) {
         console.error("Error fetching products:", error);

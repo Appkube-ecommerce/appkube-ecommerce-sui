@@ -1,4 +1,3 @@
-import { fetchcustomer } from '@/Api/fetchingcustomers';
 import { useState, useEffect } from 'react';
 
 const useFetchCustomers = () => {
