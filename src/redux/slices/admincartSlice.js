@@ -7,9 +7,9 @@ const initialState = {
     initialState,
     reducers: {
       addToAdminCart: (state, action) => {
-        console.log('dispatching cart items',action.payload)
+        // console.log('dispatching cart items',action.payload)
         state.adminCart.push(action.payload);
-        console.log('payload',action.payload) 
+        // console.log('payload',action.payload) 
           },
     },
   });

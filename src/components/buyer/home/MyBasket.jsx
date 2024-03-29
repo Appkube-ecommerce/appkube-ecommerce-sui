@@ -9,11 +9,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { setAllProducts } from "@/redux/slices/products";
 
 const MyBasket = () => {
-  const [products, setProducts] = useState([]);
+const [products, setProducts] = useState([]);
+const dispatch = useDispatch()
   const [filteredProducts, setFilteredProducts] = useState([]);
 
   const allProducts = useSelector(state => state.allProducts.products);
-  const dispatch = useDispatch();
 
   useEffect(() => {
     const fetchData = async () => {
