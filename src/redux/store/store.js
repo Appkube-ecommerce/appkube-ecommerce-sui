@@ -5,16 +5,18 @@ import customerSlice from '../slices/addCustomerSlice';
 import orderSlice from "../slices/orderSlice"; 
 import allProducts from "../slices/products"; 
 import cartDetails from "../slices/CartSlice"
-import adminCartDetails from "../slices/admincartSlice"
+import adminCartDetails from "../slices/admincartSlice";
+import saveSlice from "../slices/saveForLaterSlice"
 
 const store = configureStore({
   reducer: {
     productData: productSlice,
-    customerSlice: customerSlice, 
+    // customerSlice: customerSlice, 
     ordersData: orderSlice,
     allProducts :allProducts,
     cartDetails:cartDetails,
-    adminCartDetails:adminCartDetails
+    adminCartDetails:adminCartDetails,
+    saveForLaterSlice: saveSlice
   },
 });
 

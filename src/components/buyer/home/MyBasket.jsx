@@ -8,9 +8,11 @@ import axios from "@/Api/axios";
 import Header from "./Header";
 import { useDispatch } from "react-redux";
 import { setAllProducts } from "@/redux/slices/products";
+
 const MyBasket = () => {
-  const [products, setProducts] = useState([]);
+const [products, setProducts] = useState([]);
 const dispatch = useDispatch()
+
   useEffect(() => {
     const fetchData = async () => {
       try {

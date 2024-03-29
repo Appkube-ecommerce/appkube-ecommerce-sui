@@ -12,7 +12,6 @@ const ImgsData = () => {
   ];
 
   const [selectImg, setselectImg] = useState(imagesData[0]);
-
   const handleImgChange = (clickedImg) => {
     if (selectImg !== clickedImg) {
       setselectImg(clickedImg);

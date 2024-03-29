@@ -5,21 +5,22 @@ import {
   EditOutlined,
   LoadingOutlined,
   PlusOutlined,
-  ShoppingCartOutlined
+  ShoppingCartOutlined,
 } from "@ant-design/icons";
-import { Button, Input, Form, Upload, Space, Table,Checkbox, Modal ,Select} from "antd";
+import {Button,Input,Form,Upload,Space,Table,Checkbox,Modal,Select,} from "antd";
 import Highlighter from "react-highlight-words";
 import ImportButton from "./importButton";
 import { addToAdminCart } from "@/redux/slices/admincartSlice";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Radio } from "antd";
+import { setAllProducts } from "@/redux/slices/products";
 import ProductList from "../print/print";
 import { useDispatch } from "react-redux";
 import axios from "@/Api/axios";
 
 const Products = () => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const [imageUrl, setImageUrl] = useState(); // Define imageUrl state variable
   const [openExportModal, setOpenExportModal] = useState(false);
   const [editingProduct, setEditingProduct] = useState(null);
@@ -28,14 +29,15 @@ const Products = () => {
   const [openEditModal, setOpenEditModal] = useState(false);
   const [products, setProducts] = useState([]);
   const [selectedCount, setSelectedCount] = useState(0);
-  const [cart,setCart] = useState([])
+  const [cart, setCart] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const result = await axios.get("/product");
-        console.log('products',result);
+        console.log("products", result);
         setProducts(result.data);
+        dispatch(setAllProducts(result.data));
         // console.log(result.data)
       } catch (error) {
         console.error("Error fetching products:", error);
@@ -45,17 +47,14 @@ const Products = () => {
     fetchData();
   }, []);
 
-
-    useEffect(() => {
-    const updatedCart = products.filter(product => product.selected);
+  useEffect(() => {
+    const updatedCart = products.filter((product) => product.selected);
     setCart(updatedCart);
     setSelectedCount(updatedCart.length);
-    console.log(updatedCart)
-    dispatch(addToAdminCart(updatedCart))
-    console.log("cart items",cart)
-    console.log("count of cart",selectedCount)
+    console.log(updatedCart);
+    console.log("cart items", cart);
+    console.log("count of cart", selectedCount);
   }, [products]);
-  
 
   // useEffect(() => {
   //   const count = products.reduce((acc, curr,record) => {
@@ -71,15 +70,15 @@ const Products = () => {
   //     //   const itemIndex = cart.findIndex(
   //     //     (item) => item.id === curr.id,
   //     //     );
-          
-  //     //     const newCart = cart.splice(itemIndex, 1); 
+
+  //     //     const newCart = cart.splice(itemIndex, 1);
   //     //   // setCart(newCart)
   //     //  {(newCart.length > 0) ? (console.log('new Cart',newCart)) : ("")}
-        
+
   //     // }
   //     else{
   //       return acc
-      
+
   //     }
   //   }, 0);
   //   setSelectedCount(count);
@@ -91,18 +90,36 @@ const Products = () => {
     setEditingProduct(record);
     setEditedData(record);
     setImageUrl(record.image);
-    console.log(editedData.category)
-
   };
-
   const handleSaveForEdit = () => {
     console.log("Saving edited data:", editedData);
     setEditingProduct(null);
-    setEditedData({});   
-    putting(editedData);//here putting
+    setEditedData({});
+    putRequest(editedData); //here put api is hitting
     setOpenEditModal(false);
   };
-  
+  const putRequest = async (values) => {
+    let data = {
+      id: values.id,
+      name: values.name,
+      price: values.price,
+      image: values.image,
+      description: values.description,
+      category: values.category,
+      availability: values.availability,
+      brand: values.brand,
+      unit: values.unit,
+      currency: values.currency,
+    };
+    try {
+      console.log("stored data", data);
+      const response = await axios.put("/product", data);
+      console.log("success", response);
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
+
   const handleCancelForEdit = () => {
     setOpenEditModal(false);
   };
@@ -130,7 +147,7 @@ const Products = () => {
   const searchInput = useRef(null);
   const showModal = () => {
     setOpen(true);
-    setOpenExportModal(true)
+    setOpenExportModal(true);
   };
   const handleOk = () => {
     setLoading(true);
@@ -257,27 +274,57 @@ const Products = () => {
         text
       ),
   });
+  const handleCheckboxChange = (record, checked) => {
+    const updatedProducts = products.map((product) =>
+      product === record ? { ...product, selected: checked } : product
+    );
+    setProducts(updatedProducts); // Update products state with the selected record
+
+    if (checked) {
+      dispatch(addToAdminCart(record)); // Dispatch the selected record to admincart
+    } else {
+      // Remove the record from admincart
+      const updatedCart = cart.filter((item) => item !== record);
+      dispatch(setAllProducts(updatedCart)); // Update the state of admincart
+    }
+  };
+
   // upload imag code for edit modal
-  const beforeUpload = (file) => {
-    const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png";
-    if (!isJpgOrPng) {
-      message.error("You can only upload JPG/PNG file!");
-    }
-    return isJpgOrPng;
-  };
+  // const beforeUpload = (file) => {
+  //   const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png";
+  //   if (!isJpgOrPng) {
+  //     message.error("You can only upload JPG/PNG file!");
+  //   }
+  //   return isJpgOrPng;
+  // };
 
+  // const handleChange = (info) => {
+  //   // if (info.file.status === "uploading") {
+  //   //   return;
+  //   // }
+  //   // if (info.file.status === "done") {
+  //     // Get this url from response in real world.
+  //     const newImageUrl = info.file.response.url;
+  //     console.log("image url new",newImageUrl)
+  //     setEditedData({ ...editedData, image: newImageUrl }); // Update editedData with new image URL
+  //     setImageUrl(newImageUrl); // Update imageUrl state with new image URL
+    
+  // };
   const handleChange = (info) => {
-    if (info.file.status === "uploading") {
-      return;
-    }
-    if (info.file.status === "done") {
-      // Get this url from response in real world.
-      const newImageUrl = info.file.response.url;
-      setEditedData({ ...editedData, image: newImageUrl }); // Update editedData with new image URL
-      setImageUrl(newImageUrl); // Update imageUrl state with new image URL
+    if (info.file.status === 'done') {
+      const reader = new FileReader();
+      reader.onload = () => {
+        // The base64 code of the image is in the 'result' property of the FileReader object
+        const base64Code = reader.result;
+        // Update the editedData and imageUrl state with the new base64 code
+        setEditedData({ ...editedData, image: base64Code });
+        setImageUrl(base64Code);
+      };
+      // Read the file as a data URL
+      reader.readAsDataURL(info.file.originFileObj);
+      console.log(base64Code)
     }
   };
-
   const uploadButton = (
     <div>
       {loading ? <LoadingOutlined /> : <PlusOutlined />}
@@ -289,13 +336,18 @@ const Products = () => {
       title: () => (
         <Checkbox
           onChange={(e) => {
-            // Logic to handle select all
             const checked = e.target.checked;
             const updatedProducts = products.map((product) => ({
               ...product,
               selected: checked,
             }));
             setProducts(updatedProducts);
+
+            if (checked) {
+              dispatch(addToAdminCart(updatedProducts)); // Dispatch all selected products to admincart
+            } else {
+              dispatch(setAllProducts([])); // Clear the admincart if all checkboxes are unchecked
+            }
           }}
           checked={products.every((product) => product.selected)}
         />
@@ -304,14 +356,7 @@ const Products = () => {
       render: (_, record) => (
         <Checkbox
           checked={record.selected}
-          onChange={(e) => {
-            // Logic to handle individual row selection
-            const checked = e.target.checked;
-            const updatedProducts = products.map((product) =>
-              product === record ? { ...product, selected: checked } : product
-            );
-            setProducts(updatedProducts);
-          }}
+          onChange={(e) => handleCheckboxChange(record, e.target.checked)}
         />
       ),
     },
@@ -397,8 +442,8 @@ const Products = () => {
             Add Product
           </button>
           <div className="bg-[#E3E3E3] p-2 px-3 rounded-md flex justify-center items-center">
-          <ShoppingCartOutlined className="text-xl font-bold"/>
-        </div>
+            <ShoppingCartOutlined className="text-xl font-bold" />
+          </div>
           {/* </Link> */}
         </div>
         <Modal
@@ -507,7 +552,7 @@ const Products = () => {
                   className="avatar-uploader"
                   showUploadList={false}
                   action="/uploadURL"
-                  beforeUpload={beforeUpload}
+                  // beforeUpload={beforeUpload}
                   onChange={handleChange}
                 >
                   {imageUrl ? (
@@ -525,36 +570,32 @@ const Products = () => {
                   }
                 />
               </Form.Item>
-        
-              <Form.Item
-              
-                    label="Category"
-                    // name="category"
-                    rules={[
-                      {
-                        required: true,
-                        message: "Please select Category!",
-                      },
-                    ]}
-                  >
-                     <Select
-                      className="rounded-md border-none"
-                      placeholder="Select a option for Category"
-                      value={editedData.category}
-                    
-                      onChange={(value) =>
-                        setEditedData({ ...editedData, category:value })}
 
-                      
-                      allowClear
-                    >
-                      <Option value="VEGETABLES">VEGETABLES</Option>
-                      <Option value="LEAFY_VEGETABLES">LEAFY_VEGETABLES</Option>
-                      <Option value="FRUITS">FRUITS</Option>
-                      <Option value="TESTING">TESTING</Option>
-                    </Select>
-                   
-                  </Form.Item>
+              <Form.Item
+                label="Category"
+                // name="category"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please select Category!",
+                  },
+                ]}
+              >
+                <Select
+                  className="rounded-md border-none"
+                  placeholder="Select a option for Category"
+                  value={editedData.category}
+                  onChange={(value) =>
+                    setEditedData({ ...editedData, category: value })
+                  }
+                  allowClear
+                >
+                  <Option value="VEGETABLES">VEGETABLES</Option>
+                  <Option value="LEAFY_VEGETABLES">LEAFY_VEGETABLES</Option>
+                  <Option value="FRUITS">FRUITS</Option>
+                  <Option value="TESTING">TESTING</Option>
+                </Select>
+              </Form.Item>
               <Form.Item label="Price">
                 <Input
                   value={editedData.price}
@@ -565,50 +606,47 @@ const Products = () => {
               </Form.Item>
 
               <Form.Item
-                    label="Unit"
-                    // name="unit"
-                    rules={[
-                      {
-                        required: true,
-                        message: "Please input Unit!",
-                      },
-                    ]}
-                  >
-                    <Select
-                      className="rounded-md border-none"
-                      placeholder="Select a option for UNIT"
-                      value={editedData.unit} 
-                      onChange={(value) =>
-                        setEditedData({ ...editedData, unit: value })
-                      }
-                      // name="unit"
-                      allowClear
-                    >
-                      <Option value="kg">KG</Option>
-                      <Option value="piece">PIECE</Option>
-                    </Select>
-                  </Form.Item>
+                label="Unit"
+                // name="unit"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please input Unit!",
+                  },
+                ]}
+              >
+                <Select
+                  className="rounded-md border-none"
+                  placeholder="Select a option for UNIT"
+                  value={editedData.unit}
+                  onChange={(value) =>
+                    setEditedData({ ...editedData, unit: value })
+                  }
+                  // name="unit"
+                  allowClear
+                >
+                  <Option value="kg">KG</Option>
+                  <Option value="piece">PIECE</Option>
+                </Select>
+              </Form.Item>
             </Form>
           </div>
         </Modal>
-        
       </header>
-      <br/>
-      <div><button className="border-2 rounded-lg p-3">{selectedCount} Items Added to Cart</button></div>
+      <br />
+      <div>
+        <button className="border-2 rounded-lg p-3">
+          {selectedCount} Items Added to Cart
+        </button>
+      </div>
       <Table
-      
         className="mt-5 mr-3"
         columns={columns}
         dataSource={products}
         pagination={false}
         scroll={{ x: 800, y: 4000 }}
       />
-
     </div>
-
-
-      
-
   );
 };
 
