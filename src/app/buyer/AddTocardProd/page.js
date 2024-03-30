@@ -1,8 +1,13 @@
-import Comp from '../../../components/buyer/AddTocartProd/index';
-export default function Home() {
+import Comp from '@/components/buyer/AddTocartProd';
+import React from 'react';
+
+const page = () => {
+  // Your component logic here
   return (
-    <>
-    <Comp />
-     </>
+    <div>
+      <Comp/>
+    </div>
   );
-}
+};
+
+export default page;
