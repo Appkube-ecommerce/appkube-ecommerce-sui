@@ -26,6 +26,7 @@ import ImgsData from "./ImgsData";
 import {useSelector} from "react-redux"
 import { useDispatch } from "react-redux";
 import { addToCart } from "@/redux/slices/CartSlice";
+// import { addToSaveForLater } from "@/redux/slices/saveForLaterSlice";
 
 
 const ProductPage = () => {
@@ -44,6 +45,12 @@ const ProductPage = () => {
   let product = products.filter((item) => item.id === id);
   console.log("filter value", product);
   product = product[0]
+  //   const saveForLater = (data) => {
+  //   dispatch(addToSaveForLater(data))
+  //   notification.success({
+  //     message: 'Product Saved For Later Successfully!',
+  //   });
+  // }
   return (
     <div className="xl:px-36 sm:p-6  ">
       <div className="flex md:flex-row flex-col sm:justify-center justify-between gap-2 border-b-[2px] border-dashed border-gray-400  sm:h-[100%] sm:w-[100%] ">
