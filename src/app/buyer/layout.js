@@ -26,7 +26,7 @@ export default function RootLayout({ children, includeHeader = true }) {
   };
 
   // Function to determine whether to render the footer
-  const shouldRenderFooter = () => !exclude.includes(pathname);
+  const shouldRenderFooter = () => !exclude. includes(pathname);
 
   return (
     <div className="container-fluid flex flex-col justify-center items-center w-[100%] min-h-[100vh]">

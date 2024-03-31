@@ -6,7 +6,7 @@ import Image from "next/image";
 export default function Home() {
   return (
     <div className="container-fluid flex flex-col justify-center items-center w-[100%] min-h-[100vh]">
-      <Header />
+      {/* <Header /> */}
       <MyBasket />
       <Footer />
     </div>

@@ -208,7 +208,7 @@ export default function PaymentOption
                     </Checkbox>
                   
                   <Form.Item>
-                    <Button htmlType="submit" className="bg-red-500 text-white w-full h-[5vh]">Place order & Pay</Button>
+                    <Button htmlType="submit" className="bg-[#CC0000] text-white w-full h-[5vh]">Place order & Pay</Button>
                   </Form.Item>
                   </div>
                
