@@ -37,6 +37,7 @@ const Timeline = () => {
     };
 
     return (
+<<<<<<< HEAD
         <div className='bg-[#71a31b] w-full flex justify-center'> 
             <Steps
                 className="w-7/12 text-sm mt-4 mb-4"
@@ -54,6 +55,27 @@ const Timeline = () => {
                     />
                 ))}
             </Steps>
+=======
+        <div className='bg-[#71a31b] w-full flex justify-center'>
+        <Steps
+
+            className="w-[60%] text-sm"
+
+            direction="horizontal"
+            current={current}
+            onChange={onChange}
+        >
+            {steps.map((step, index) => (
+                <Step
+                    key={index}
+                    title={<span style={{ color: 'white'}}>{step.title}</span>}
+                    description={<span style={{ color: 'white' }}>{step.description}</span>}
+                    icon={step.icon}
+                    onClick={step.onClick}
+                />
+            ))}
+        </Steps>
+>>>>>>> 3af37bdd17c23252ed8e7ea26a50d7badb34cae5
         </div>
     );
 };
