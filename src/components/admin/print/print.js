@@ -3,12 +3,7 @@ import { DownOutlined } from '@ant-design/icons';
 import { Button, Dropdown, Space, Form, Modal, Input } from 'antd';
 import html2pdf from 'html2pdf.js';
 import { useRouter } from "next/navigation";
-
-
-
-import { fetchProducts} from '@/Api/fetchingProducts'; 
-
-
+import axios from "@/Api/axios";
 
 const ProductList = () => {
     const [products, setProducts] = useState([]);
@@ -35,7 +30,7 @@ const ProductList = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const result = await fetchProducts();
+              const result = await axios.get("/product");
                 setProducts(result.data.listProducts.items);
             } catch (error) {
                 console.error("Error fetching products:", error);

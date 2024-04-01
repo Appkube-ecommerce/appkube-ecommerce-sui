@@ -1,4 +1,3 @@
-import { fetchcustomer } from '@/Api/fetchingcustomers';
 import { useState, useEffect } from 'react';
 
 const useFetchCustomers = () => {
@@ -10,7 +9,6 @@ const useFetchCustomers = () => {
     const fetchData = async () => {
       try {
         const result = await fetchcustomer(); // Assuming fetchProducts is your API call function
-
         setcustomer(result.data.listCustomers.items);
         setLoading(false);
       } catch (error) {
@@ -21,8 +19,8 @@ const useFetchCustomers = () => {
 
     fetchData();
 
-  }, []); // Empty dependency array ensures this effect runs only once
-
+  }, []);
+  
   return { customers, loading, error };
 };
 

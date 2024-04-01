@@ -6,8 +6,12 @@ import React from 'react'
 const page = () => {
   return (
     <div className='container-fluid flex flex-col w-[100%] min-h-[100vh]'>
-    
-    <MyBasket/>
+    <RootLayout includeHeader={false}>
+  {/* Content goes here */}
+  <MyBasket/>
+</RootLayout>
+
+   
 
     </div>
   )

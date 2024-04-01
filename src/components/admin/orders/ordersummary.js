@@ -12,7 +12,8 @@ import { FetchOrders } from "@/Api/fetchingOrders";
 import { EditOutlined } from "@ant-design/icons";
 
 
-const OrderInfo = () => {
+const 
+OrderInfo = () => {
   const [comment, setComment] = useState("");
   const router = useRouter();
   const dispatch = useDispatch();
@@ -22,7 +23,7 @@ const OrderInfo = () => {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const response = await FetchOrders(); // Implement this function to fetch orders from your API
+        const response = await FetchOrders(); 
         dispatch(saveOrdersList(response.data.listOrders.items));
       } catch (error) {
         console.error("Error fetching orders:", error);

@@ -1,13 +1,56 @@
-// import React from "react";
+"use client"
+
+//   // Fetch product details based on the product ID
+//   // useEffect(() => {
+//     // Check if the product ID is available
+//     // if (productId) {
+//       // Fetch product details using the product ID
+//       //     const fetchProduct = async () => {
+//   //       try {
+//     //         const response = await axios.get(`/product/${id}`); // Example API endpoint to fetch product details
+//     //         setProduct(response.data); // Set the product details in the state
+//     //       } catch (error) {
+//       //         console.error("Error fetching product details:", error);
+//       //       }
+//   //     };
+//   //     fetchProduct(); // Call the fetchProduct function
+//   //   }
+//   // }, [productId]); // Trigger the effect when the product ID changes
+
 import Image from "next/image";
 import { MdOutlineDeliveryDining } from "react-icons/md";
 import { FaRegBookmark } from "react-icons/fa6";
 import { FaPlus } from "react-icons/fa6";
+import { useSearchParams } from 'next/navigation'
 import ImgsData from "./ImgsData";
+import {useSelector} from "react-redux"
+import { useDispatch } from "react-redux";
 import { addToCart } from "@/redux/slices/CartSlice";
+// import { addToSaveForLater } from "@/redux/slices/saveForLaterSlice";
 
 
 const ProductPage = () => {
+  const searchParams = useSearchParams();
+  const id = searchParams.get("id");
+  console.log(
+    'id',id
+    )
+    const cartAdd = (product) => {
+      dispatch(addToCart(product))
+    }
+    const dispatch = useDispatch()
+  
+  const products = useSelector((state) => state.allProducts.products);
+  console.log(products, "coming from redux");
+  let product = products.filter((item) => item.id === id);
+  console.log("filter value", product);
+  product = product[0]
+  //   const saveForLater = (data) => {
+  //   dispatch(addToSaveForLater(data))
+  //   notification.success({
+  //     message: 'Product Saved For Later Successfully!',
+  //   });
+  // }
   return (
     <div className="xl:px-36 sm:p-6  ">
       <div className="flex md:flex-row flex-col sm:justify-center justify-between gap-2 border-b-[2px] border-dashed border-gray-400  sm:h-[100%] sm:w-[100%] ">
@@ -30,7 +73,7 @@ const ProductPage = () => {
 
           <div className="mb-7">
             <h3 className="font-semibold text-xl mb-2 ">
-              Fresho Capsicum - Green (Loose), 1 kg
+             {product.name}
             </h3>
             <h3 className="text-gray-400 mb-2">MRP:₹92</h3>
             <h3 className="font-medium text-lg mb-2">
@@ -48,7 +91,7 @@ const ProductPage = () => {
               Add to basket
             </button> */}
             <div className="bg-[#cc0000] hover:bg-red-700 cursor-pointer text-white  lg:h-14 rounded-md md:pl-12 md:pr-12 xs:pl-4 xs:pr-4 p-4 px-10 md:font-medium text-xs md:text-base m-2">
-              <span>Add to basket</span>
+              <span onClick={() => cartAdd(product)}>Add to basket</span>
             </div>
 
             <div className="border border-gray-400 hover:bg-slate-100 cursor-pointer  lg:h-14 rounded-md md:pl-12 md:pr-12 xs:pl-4 xs:pr-4 p-4 flex items-center gap-2 md:font-medium text-xs md:text-base m-2 ">
@@ -272,7 +315,7 @@ const ProductPage = () => {
 
             <div className="mb-7">
               <h3 className="font-semibold text-xl mb-2 m-6">
-                Fresho Capsicum - Green (Loose), 1 kg
+                {product.name}- {product.category} (Loose), 1 kg
               </h3>
             </div>
           </div>
@@ -293,7 +336,7 @@ const ProductPage = () => {
           </div>
           {/* <h3 className="text-green-700 text-sm mb-1 M-2">You Save:48% OFF</h3> */}
 
-          <button className="bg-[#cc0000] hover:bg-red-700 text-white font-bold rounded-md md:pl-24 md:pr-24 sm:pl-14 sm:pr-14 pl-6 pr-6 p-4 h-16">
+          <button onClick={() => cartAdd(product)} className="bg-[#cc0000] hover:bg-red-700 text-white font-bold rounded-md md:pl-24 md:pr-24 sm:pl-14 sm:pr-14 pl-6 pr-6 p-4 h-16">
             Add to basket
           </button>
         </div>
