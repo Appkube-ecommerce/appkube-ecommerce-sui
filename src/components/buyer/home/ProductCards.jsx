@@ -12,12 +12,7 @@ import { notification } from 'antd';
 
 
 const ProductCards = ({ data,searchQuery}) => {
-    const allProducts = useSelector((state) => state.allProducts.products);
-
-  // console.log("products in page",product)
-  // const filteredProducts = allProducts.filter((product) =>
-  //   product.name && typeof product.name === 'string' && product.name.toLowerCase().includes(searchQuery)
-  // );
+    // const allProducts = useSelector((state) => state.allProducts.products);
   
   const cartAdd = (data) => {
     dispatch(addToCart(data))
