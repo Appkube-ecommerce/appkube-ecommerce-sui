@@ -6,6 +6,7 @@ import Image from "next/image"
 import pro from "../../../../components/admin/images/product.svg";
 import OrderSummary from './OrderSummary';
 import { useRouter } from 'next/navigation';
+import { useSelector } from "react-redux";
 
 const { Step } = Steps;
 
@@ -64,11 +65,11 @@ const DeliveryOption = () => {
   const handleDeleteItem = (id) => {
     setItems(items.filter(item => item.id !== id));
   };
+  const AddProductsintocart = useSelector(state => state.cartDetails.cart);
 
   return (
 
-    <div className='w-full grid grid-cols-2 gap-10 mr-36 ml-36 bg-slate-50'>
-      <div>
+  
 
     <div className='w-[100vw] h-[100vh] flex gap-10 justify-center m-0 bg-slate-100 pt-10'>
       <div >
@@ -76,14 +77,15 @@ const DeliveryOption = () => {
         <div className='w-[100%]'>
          
           <div className='flex mb-3 gap-2'>
-                {items.map(item => (
-                  <div key={item.id} className='w-[10%] h-[45%] border rounded-md'>
-                    <Image src={item.image} alt={item.name} />
+                {AddProductsintocart.map(item => (
+                  <div key={item.id} className='w-[10%] h-[45%] border rounded-md flex-wrap'>
+                    <Image src={item.image} alt={item.name} width={50}
+                    height={50}/>
                   </div>
                 ))}
              
               <div className='w-[10%] h-[55px] border rounded-md text-center cursor-pointer
-               hover:bg-slate-200' onClick={handleViewItems}>View 3 items</div>
+               hover:bg-slate-200' onClick={handleViewItems}>View {AddProductsintocart.length} items</div>
             </div>
         
           <Card>
@@ -138,7 +140,7 @@ const DeliveryOption = () => {
           <Button key="close" onClick={handleCloseItemsModal}>Close</Button>
         ]}
       >
-        {items.map(item => (
+        {AddProductsintocart.map(item => (
           <div key={item.id} className="flex items-center justify-between py-2">
             <div className="flex items-center">
               <Image src={item.image} alt={item.name} height={100} width={100}/>
