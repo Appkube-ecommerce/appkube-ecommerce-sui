@@ -7,7 +7,7 @@ import { usePathname } from "next/navigation";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export default function RootLayout({ children, includeHeader = true }) {
+export default function RootLayout({ children, includeHeader = false }) {
   const pathname = usePathname();
   const exclude = [
     "/",
@@ -32,7 +32,7 @@ export default function RootLayout({ children, includeHeader = true }) {
     <div className="container-fluid flex flex-col justify-center items-center w-[100%] min-h-[100vh]">
       {shouldIncludeTimeline(pathname) && <Timeline />}
       {children}
-      {includeHeader && <Header />}
+      {/* {includeHeader && <Header />} */}
       {shouldRenderFooter() && <Footer />}
     </div>
   );
