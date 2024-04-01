@@ -308,7 +308,6 @@ const Products = () => {
   //     console.log("image url new",newImageUrl)
   //     setEditedData({ ...editedData, image: newImageUrl }); // Update editedData with new image URL
   //     setImageUrl(newImageUrl); // Update imageUrl state with new image URL
-    
   // };
   const handleChange = (info) => {
     if (info.file.status === 'done') {

@@ -28,6 +28,7 @@ const Header = ({ onSearch }) => {
   console.log(allProducts);
 
   return (
+
     <header className="container-fluid flex justify-between items-center px-[5%] w-full h-[12vh] border-t-green-500 border-t-4">
       <div className="logo w-[20%] sm:w-[16%] lg:w-[10%]">
         <Link href="/buyer/home">
@@ -37,17 +38,17 @@ const Header = ({ onSearch }) => {
           />
         </Link>
       </div>
-      <div className="searchbar container-fluid w-[60%] sm:w-[55%] md:w-[45%] lg:w-[40%] relative shadow">
-        <IoSearch className="text-green-500 absolute top-3 left-1 text-lg" />
+      <div className="searchbar container-fluid w-[60%] sm:w-[55%] md:w-[45%] lg:w-[40%] relative flex shadow">
+        {/* <IoSearch className="text-green-500 absolute top-3 left-1 flex text-lg " /> */}
         <input
         type="text"
         placeholder="Search for products"
         value={searchQuery}
         onChange={handleSearchChange}
-        className="search-input"
+        className="search-input w-full"
+        
       />
       </div>        
-
 
       <div className={`burger md:hidden p-1 cursor-pointer ${isNavOpen ? <RxCross1 /> :<GiHamburgerMenu/> }`} onClick={HandleNav} >
       {isNavOpen ? <RxCross1 className="font-extrabold text-xl" /> : <GiHamburgerMenu className="font-extrabold text-xl flex flex-col" />}

@@ -1,10 +1,10 @@
 'use client'
 import React, { useEffect, useState } from "react";
-import ProductCards from "./ProductCards";
+import ProductCards from "../home/ProductCards";
 import { FaChevronLeft } from "react-icons/fa";
 import { FaChevronRight } from "react-icons/fa";
 
-import Header from "./Header";
+// import Header from "./Header";
 import { useDispatch, useSelector } from "react-redux";
 
 
@@ -27,7 +27,7 @@ const dispatch = useDispatch()
 
   return (
     <>
-      <Header onSearch={handleSearch} />
+      {/* <Header onSearch={handleSearch} /> */}
 
       <main className="container-fluid w-[90%] min-h-[100vh] bg-[#E8E8E8] rounded shadow flex flex-col justify-start gap-6 ">
         <div className="flex justify-between p-3 items-center">

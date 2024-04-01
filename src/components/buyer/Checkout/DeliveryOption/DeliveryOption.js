@@ -148,7 +148,7 @@ const DeliveryOption = () => {
             >
               <DeleteOutlined style={{ color: 'red', cursor: 'pointer' }} />
             </Popconfirm>
-            <Button className="ml-2" >Save for later</Button>
+            <Button  className="ml-2" >Save for later</Button>
           </div>
         ))}
       </Modal>
