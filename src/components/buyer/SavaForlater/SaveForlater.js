@@ -1,34 +1,34 @@
-
-
-
 'use client'
 import React, { useEffect, useState } from "react";
-
-import { useSelector } from "react-redux";
+import { remove } from "@/redux/slices/saveForLaterSlice";
+import { useSelector,useDispatch } from "react-redux";
 import Header from "../home/Header";
 const SaveForlater = () => {
 
-
-  const [savedProducts, setSavedProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
-
+  // const [savedProducts, setSavedProducts] = useState([]);
+  // const [loading, setLoading] = useState(true);
+  const dispatch = useDispatch();
+  // Get saved products from Redux
+  const removeToCart = (id)=>{
+    dispatch(remove(id));
+  }
 //   // Get the Redux data
   const saveForLater = useSelector(state => state.saveForLaterSlice.saveForLater);
 
 //   // Load saved products from local storage on component mount
-  useEffect(() => {
-    const savedProductsFromStorage = JSON.parse(localStorage.getItem('savedProducts'));
-    if (savedProductsFromStorage) {
-      setSavedProducts(savedProductsFromStorage);
-    }
-    setLoading(false); // Set loading to false once data is loaded
-  }, []); // Empty dependency array to run only once on component mount
+  // useEffect(() => {
+  //   const savedProductsFromStorage = JSON.parse(localStorage.getItem('savedProducts'));
+  //   if (savedProductsFromStorage) {
+  //     setSavedProducts(savedProductsFromStorage);
+  //   }
+  //   setLoading(false); // Set loading to false once data is loaded
+  // }, []); // Empty dependency array to run only once on component mount
 
   // Store Redux data in local storage
-  useEffect(() => {
-    localStorage.setItem('savedProducts', JSON.stringify(saveForLater));
-  }, [saveForLater]); // Update local storage when saveForLater changes
-  const cards = savedProducts.map((product) => (
+  // useEffect(() => {
+  //   localStorage.setItem('savedProducts', JSON.stringify(saveForLater));
+  // }, [saveForLater]); // Update local storage when saveForLater changes
+  const cards = saveForLater.map((product) => (
     <div className="m-10 flex justify-center gap-7 w-[1000px]">
       <div
         className="bg-white shadow-lg rounded-lg flex justify-evenly  "

@@ -241,9 +241,8 @@ const Inventory = () => {
     },
 
       //render: (unit) => `${unit}`,
-    },
+    
    
-
   ];
   return (
     <>
@@ -273,7 +272,7 @@ const Inventory = () => {
           style={{
           padding: "8px 15px 8px 15px",
           }}
-          className="bg-black text-white rounded-md w-32 mr-3"
+          // className="bg-black text-white rounded-md w-32 mr-3"
 
           loading={loading}
           onClick={Products}
@@ -346,7 +345,7 @@ footer={[
   </Modal>
       </header>
 
-      <Table
+      {/* <Table */}
 
       
       <div className='bg-white p-2 rounded-lg mt-6 mr-3'>
@@ -364,11 +363,9 @@ footer={[
         //scroll={{ x: 800, y: 4000 }}
       />
 
-      </>
-
+      </div>
       
-      </div>
-      </div>
+      </>
 );
 };
 
