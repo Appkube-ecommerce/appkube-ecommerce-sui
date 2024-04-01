@@ -5,13 +5,22 @@ import pro from "../../admin/images/product.svg";
 import { useSelector } from "react-redux";
 
 const Card = () => {
-  const [count, setCount] = useState(0);
+  // Initialize count state for each card
   const AddProductsintocart = useSelector(state => state.cartDetails.cart);
+  const [counts, setCounts] = useState(Array(AddProductsintocart.length).fill(1));
+ 
+
+  // Function to update count for a specific card
+  const updateCount = (index, value) => {
+    const newCounts = [...counts]; // Copy the current counts array
+    newCounts[index] = value; // Update the count for the specified index
+    setCounts(newCounts); // Update the state
+  };
 
   return (
     <>
       <div className='flex w-[95%] justify-between text-[#909090] font-semibold mt-3'>
-        <div>Items (3 item)</div>
+        <div>Items ({AddProductsintocart.length})</div>
         <div className='flex w-[30%] justify-between'>
           <h3>Quantity</h3>
           <h3>Sub-total</h3>
@@ -23,13 +32,13 @@ const Card = () => {
         <div className="w-10 border border-orange-500 bg-orange-500 mt-2"></div>
         
         {AddProductsintocart.length > 0 ? (
-            AddProductsintocart.map((product, index) => (
-        <div className="border border-1 border-[rgba(173,213,102)] rounded-md mt-5 mb-4">
-          <h1 className="bg-gradient-to-r from-[rgba(255,255,255)] to-[rgba(173,213,102)] text-[#476F00] h-10 p-2">
-            Har Din Sasta!
-          </h1>
+          AddProductsintocart.map((product, index) => (
+            <div key={index} className="border border-1 border-[rgba(173,213,102)] rounded-md mt-5 mb-4">
+              <h1 className="bg-gradient-to-r from-[rgba(255,255,255)] to-[rgba(173,213,102)] text-[#476F00] h-10 p-2">
+                Har Din Sasta!
+              </h1>
 
-              <div key={index} className="med:flex mt-2 mx-10 gap-[22%]">
+              <div className="med:flex mt-2 mx-10 gap-[22%]">
                 <div className="flex">
                   <Image
                     src={product.image}
@@ -47,9 +56,9 @@ const Card = () => {
                 <section className="flex med:w-[100%] med:gap-14 med:pt-[10px] small:w-[50%]">
                   <div className="med:py-14 med:pl-14 med:pr-0 small:p-0 ">
                     <div className="flex hover:shadow-xl shadow-black border border-stone-400 hover:border-2 med:gap-10 med:w-[100%] px-3 rounded-md small:w-[90%] ">
-                      <button className='hover:bg-red-500 w-10 h-7 mt-1.5 rounded-md' onClick={() => setCount(count - 1)}>-</button>
-                      <h2 className="m-2">{count}</h2>
-                      <button className='hover:bg-red-500 w-10 h-7 mt-1.5 rounded-md' onClick={() => setCount(count + 1)}>+</button>
+                      <button className='hover:bg-red-500 w-10 h-7 mt-1.5 rounded-md' onClick={() => updateCount(index, counts[index] - 1)}>-</button>
+                      <h2 className="m-2">{counts[index]}</h2>
+                      <button className='hover:bg-red-500 w-10 h-7 mt-1.5 rounded-md' onClick={() => updateCount(index, counts[index] + 1)}>+</button>
                     </div>
                     <div className='med:mt-2 med:text-xs text-center text-stone-500 small:text-[8px]'>
                       <button>Delete |&nbsp;</button>
@@ -63,16 +72,12 @@ const Card = () => {
                   </div>
                 </section>
               </div>
-        </div>
-            )))
-            : (
-              <p>No items</p>
-            )}
+            </div>
+          ))
+        ) : (
+          <p>No items</p>
+        )}
       </div>
-
-
-      
-    
     </>
   );
 };

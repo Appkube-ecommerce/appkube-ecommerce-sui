@@ -33,6 +33,7 @@ const Header = ({ onSearch }) => {
   };
   const allProducts=useSelector(state=>state.allProducts.products);
   console.log(allProducts);
+  const AddProductsintocart = useSelector(state => state.saveForLaterSlice.saveForLater);
 
   return (
 
@@ -90,6 +91,7 @@ const Header = ({ onSearch }) => {
         </div>
         <button className="p-2 md:p-3 border-2 rounded-md">
           <FaBookmark className="font-bold text-lg   md:text-lg " onClick={saveForLater}/>
+          <div className="bg-black text-white text-xs text-center font-semibold w-4 h-4 rounded-lg">{AddProductsintocart.length}</div>
         </button>
       </div>
     </header>
