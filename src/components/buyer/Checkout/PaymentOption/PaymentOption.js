@@ -35,6 +35,10 @@ export default function PaymentOption
 
   return (
     <>
+<<<<<<< HEAD
+=======
+      <Layout className="h-screen bg-slate-50 w-full">
+>>>>>>> 907fd1a5570cda0f04c7a0a5cd5565c90f6c1db1
     <div className="h-screen flex gap-16 pt-10">
       <Layout className="bg-white">
         <Sider

@@ -1,8 +1,7 @@
-'use client'
 import React, { useState } from 'react';
 import { Steps } from 'antd';
 import { EnvironmentOutlined, TruckOutlined, WalletOutlined } from '@ant-design/icons';
-import { useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation'; // Changed from 'next/navigation'
 
 const { Step } = Steps;
 
@@ -37,6 +36,7 @@ const Timeline = () => {
     };
 
     return (
+<<<<<<< HEAD
         <div className='bg-[#71a31b] w-full flex justify-center'>
         <Steps
 
@@ -57,6 +57,26 @@ const Timeline = () => {
             ))}
         </Steps>
         </div>
+=======
+        <div className='bg-[#71a31b] w-full flex justify-center'> 
+            <Steps
+                className="w-7/12 text-sm mt-4 mb-4"
+                direction="horizontal"
+                current={current}
+                onChange={onChange}
+            >
+                {steps.map((step, index) => (
+                    <Step
+                        key={index}
+                        title={<span style={{ color: 'white'}}>{step.title}</span>}
+                        description={<div style={{ color: 'white' }}>{step.description}</div>} // Set whiteSpace to 'pre-line' to allow line breaks
+                        icon={step.icon}
+                        onClick={step.onClick}
+                    />
+                ))}
+            </Steps>
+        </div> // Removed unnecessary div
+>>>>>>> 907fd1a5570cda0f04c7a0a5cd5565c90f6c1db1
     );
 };
 

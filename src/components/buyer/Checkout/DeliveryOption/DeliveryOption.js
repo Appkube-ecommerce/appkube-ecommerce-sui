@@ -6,6 +6,7 @@ import Image from "next/image"
 import pro from "../../../../components/admin/images/product.svg";
 import OrderSummary from './OrderSummary';
 import { useRouter } from 'next/navigation';
+import { useSelector } from "react-redux";
 
 const { Step } = Steps;
 
@@ -64,22 +65,30 @@ const DeliveryOption = () => {
   const handleDeleteItem = (id) => {
     setItems(items.filter(item => item.id !== id));
   };
+  const AddProductsintocart = useSelector(state => state.cartDetails.cart);
 
   return (
+<<<<<<< HEAD
+=======
+
+  
+
+>>>>>>> 907fd1a5570cda0f04c7a0a5cd5565c90f6c1db1
     <div className='w-[100vw] h-[100vh] flex gap-10 justify-center m-0 bg-slate-100 pt-10'>
       <div >
       <Card title="Select a Delivery Option">
         <div className='w-[100%]'>
          
           <div className='flex mb-3 gap-2'>
-                {items.map(item => (
-                  <div key={item.id} className='w-[10%] h-[45%] border rounded-md'>
-                    <Image src={item.image} alt={item.name} />
+                {AddProductsintocart.map(item => (
+                  <div key={item.id} className='w-[10%] h-[45%] border rounded-md flex-wrap'>
+                    <Image src={item.image} alt={item.name} width={50}
+                    height={50}/>
                   </div>
                 ))}
              
               <div className='w-[10%] h-[55px] border rounded-md text-center cursor-pointer
-               hover:bg-slate-200' onClick={handleViewItems}>View 3 items</div>
+               hover:bg-slate-200' onClick={handleViewItems}>View {AddProductsintocart.length} items</div>
             </div>
         
           <Card>
@@ -134,7 +143,7 @@ const DeliveryOption = () => {
           <Button key="close" onClick={handleCloseItemsModal}>Close</Button>
         ]}
       >
-        {items.map(item => (
+        {AddProductsintocart.map(item => (
           <div key={item.id} className="flex items-center justify-between py-2">
             <div className="flex items-center">
               <Image src={item.image} alt={item.name} height={100} width={100}/>
@@ -148,7 +157,7 @@ const DeliveryOption = () => {
             >
               <DeleteOutlined style={{ color: 'red', cursor: 'pointer' }} />
             </Popconfirm>
-            <Button className="ml-2" >Save for later</Button>
+            <Button  className="ml-2" >Save for later</Button>
           </div>
         ))}
       </Modal>

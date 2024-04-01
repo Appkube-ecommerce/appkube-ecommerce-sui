@@ -9,7 +9,13 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { RxCross1 } from "react-icons/rx";
 import Link from "next/link";
 import { setAllProducts } from "@/redux/slices/products";
+<<<<<<< HEAD
 import Image from "next/image"; 
+=======
+ import { useRouter } from "next/navigation";
+ import { FaBookmark } from "react-icons/fa6";
+
+>>>>>>> 907fd1a5570cda0f04c7a0a5cd5565c90f6c1db1
 
 const Header = ({ onSearch }) => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -18,6 +24,10 @@ const Header = ({ onSearch }) => {
     setSearchQuery(e.target.value);
     onSearch(e.target.value);
   };
+  const router =useRouter()
+  const saveForLater = () => {
+ router.push("/buyer/SaveForlater")
+  }
   const [isNavOpen, setIsNavOpen] = useState(false);
   const cartItems = useSelector(state => state.cartDetails.cart);
   // const products = useSelector(state => state.allProducts.products);
@@ -27,6 +37,7 @@ const Header = ({ onSearch }) => {
   };
   const allProducts=useSelector(state=>state.allProducts.products);
   console.log(allProducts);
+  const AddProductsintocart = useSelector(state => state.saveForLaterSlice.saveForLater);
 
   return (
 
@@ -85,6 +96,10 @@ const Header = ({ onSearch }) => {
             </button>
           </Link>
         </div>
+        <button className="p-2 md:p-3 border-2 rounded-md">
+          <FaBookmark className="font-bold text-lg   md:text-lg " onClick={saveForLater}/>
+          <div className="bg-black text-white text-xs text-center font-semibold w-4 h-4 rounded-lg">{AddProductsintocart.length}</div>
+        </button>
       </div>
     </header>
   );
