@@ -7,32 +7,30 @@ import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/navigation"
  
-const page = () => {
+
+const Page = () => {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
-const router = useRouter();
+  const router = useRouter();
 
-const handleLogin = () => {
-  if (password === "1234" && email==="fatima@gmail.com") {
-    router.push("../../admin");
-
-    // Password is correct, you can navigate or perform other actions here.
-    alert("Login successful!");
-  } else {
-    // Password is incorrect, display an error message.
-    alert("wrong  password or username");
-    
-  }
-};
+  const handleLogin = () => {
+    if (password === "1234" && email === "fatima@gmail.com") {
+      router.push("../../admin");
+      alert("Login successful!");
+    } else {
+      alert("Wrong password or username");
+    }
+  };
   return (
     <main className=" h-full flex justify-center items-center bg-gradient-to-r from-indigo-600 via-indigo-400 to-cyan-400 md:w-[100vw]  md:h-screen md:-mb-10">
       <div className=" sm:p-5 xs:w-[100vw]  md:h-[70vh] md:w-[414px]  xs:h-[100%] sm:w-[100vw] rounded-lg p-[30px] sm:shadow-lg bg-white  md:mt-6 sm:h-[90%] xs:rounded-none md:m-5 md:border-none md:rounded-xl">
         <div>
           <Link href="/buyer/home">
-            <img
+            <Image
               src="https://shopify-assets.shopifycdn.com/accounts/production/theme_configuration/logo/oauth_provider/merchant/logo.svg?v=1631025778  "
               className="w-[100px] cursor-pointer"
-            ></img>
+              alt=""
+           />
           </Link>
         </div>
         <div>

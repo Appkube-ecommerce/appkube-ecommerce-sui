@@ -35,13 +35,8 @@ export default function PaymentOption
 
   return (
     <>
-<<<<<<< HEAD
-    
-      <Layout className="h-screen bg-slate-50 w-full">
-=======
     <div className="h-screen flex gap-16 pt-10">
       <Layout className="bg-white">
->>>>>>> 3af37bdd17c23252ed8e7ea26a50d7badb34cae5
         <Sider
           trigger={null}
           collapsible

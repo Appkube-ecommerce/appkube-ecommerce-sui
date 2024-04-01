@@ -18,9 +18,12 @@ import { setAllProducts } from "@/redux/slices/products";
 import ProductList from "../print/print";
 import { useDispatch } from "react-redux";
 import axios from "@/Api/axios";
+import Image from 'next/image';
+
 
 const Products = () => {
   const dispatch = useDispatch();
+  const { Option } = Select;
   const [imageUrl, setImageUrl] = useState(); // Define imageUrl state variable
   const [openExportModal, setOpenExportModal] = useState(false);
   const [editingProduct, setEditingProduct] = useState(null);
@@ -45,16 +48,26 @@ const Products = () => {
     };
 
     fetchData();
-  }, []);
+  }, [dispatch]);
+
+  // useEffect(() => {
+  //   const updatedCart = products.filter((product) => product.selected);
+  //   setCart(updatedCart);
+  //   setSelectedCount(updatedCart.length);
+  //   console.log(updatedCart);
+  //   console.log("cart items", cart);
+  //   console.log("count of cart", selectedCount);
+  // }, [products]);
 
   useEffect(() => {
     const updatedCart = products.filter((product) => product.selected);
     setCart(updatedCart);
-    setSelectedCount(updatedCart.length);
-    console.log(updatedCart);
-    console.log("cart items", cart);
-    console.log("count of cart", selectedCount);
-  }, [products]);
+}, [products]); // Only include products in the dependency array
+
+useEffect(() => {
+    setSelectedCount(cart.length);
+}, [cart]); // Only include cart in the dependency array
+
 
   // useEffect(() => {
   //   const count = products.reduce((acc, curr,record) => {
@@ -365,9 +378,10 @@ const Products = () => {
       key: "image",
       width: "10%",
       render: (image) => (
-        <img src={image} alt="Product" style={{ width: 50 }} />
+        <Image src={image} alt="Product" width={50} height={50} />
       ),
     },
+    
     {
       title: "Product",
       dataIndex: "name",
@@ -555,7 +569,7 @@ const Products = () => {
                   onChange={handleChange}
                 >
                   {imageUrl ? (
-                    <img src={imageUrl} alt="image" style={{ width: "100%" }} />
+                    <Image src={imageUrl} alt="image" style={{ width: "100%" }} />
                   ) : (
                     uploadButton
                   )}
