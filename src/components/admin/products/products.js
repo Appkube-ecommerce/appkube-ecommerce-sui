@@ -440,10 +440,11 @@ const Products = () => {
           >
             Add Product
           </button>
+          <Link href="/admin/products/adminCart">
           <div className="bg-[#E3E3E3] p-2 px-3 rounded-md flex justify-center items-center">
             <ShoppingCartOutlined className="text-xl font-bold" />
           </div>
-          {/* </Link> */}
+          </Link>
         </div>
         <Modal
           open={openExportModal}
