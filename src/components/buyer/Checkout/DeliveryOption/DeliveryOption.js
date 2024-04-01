@@ -48,7 +48,7 @@ const DeliveryOption = () => {
   };
 
   return (
-    <div className='w-full grid grid-cols-2 gap-10 mr-36 ml-36'>
+    <div className='w-full grid grid-cols-2 gap-10 mr-36 ml-36 bg-slate-50'>
       <div>
       <Card title="Select a Delivery Option">
         <div className='w-[100%]'>

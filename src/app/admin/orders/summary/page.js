@@ -25,5 +25,4 @@ const Page = () => {
 export default Page;
 
 
-Page.js
   

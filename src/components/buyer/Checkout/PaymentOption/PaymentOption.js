@@ -34,7 +34,7 @@ export default function PaymentOption
   return (
     <>
     
-      <Layout className="h-screen">
+      <Layout className="h-screen bg-slate-50 w-full">
         <Sider
           trigger={null}
           collapsible
