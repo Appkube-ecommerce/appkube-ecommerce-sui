@@ -30,6 +30,7 @@ export default function PaymentOption() {
 
   return (
     <>
+
       <Layout className="h-screen bg-slate-50 w-full">
         <div className="h-screen flex gap-16 pt-10">
           <Layout className="bg-white">
@@ -38,6 +39,31 @@ export default function PaymentOption() {
               collapsible
               collapsed={collapsed}
               style={{ display: "flex", flexDirection: "column", height: "45%" }}
+    <div className="h-screen flex gap-16 pt-10">
+      <Layout className="bg-white">
+        <Sider
+          trigger={null}
+          collapsible
+          collapsed={collapsed}
+          
+          style={{ display: "flex", flexDirection: "column" ,height:"45%"}}
+        >
+          <div className="demo-logo-vertical" />
+          <Menu
+            style={{ backgroundColor: siderBg,  }}
+            className="bg-[#d4d0c9]"
+            defaultSelectedKeys={["1"]}
+            selectedKeys={[selectedMenuItem]}
+            theme="light"
+            onClick={({ key }) => handleMenuItemClick(key)}
+          >
+    
+          <Menu.Item
+              key="1"
+              label="Credit/Debit Card"
+              
+              style={selectedMenuItem === "1" ? { backgroundColor: "white", height: "10%",color: "black" ,borderRadius:"none"} : {}}
+              // Set height for Credit/Debit Card item
             >
               <div className="demo-logo-vertical" />
               <Menu

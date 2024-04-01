@@ -4,6 +4,8 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { createProducts } from "../../../../redux/slices/addProductSlice";
 import { useDispatch } from "react-redux";
+import Image from 'next/image';
+
 import {
   Form,
   Input,
@@ -246,7 +248,7 @@ const Addproduct = () => {
                 onChange={handleChange}
               >
                 {imageUrl ? (
-                  <img
+                  <Image
                     src={imageUrl}
                     alt="avatar"
                     style={{

@@ -30,7 +30,7 @@ const dispatch = useDispatch()
     };
 
     fetchData();
-  }, []);
+  }, [dispatch]);
 
   const handleSearch = (query) => {
     // Filter products based on search query
