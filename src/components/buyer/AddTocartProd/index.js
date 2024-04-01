@@ -7,6 +7,7 @@ const Comp = () => {
     router.push("/buyer/Checkout/DeliveryAddress")
 
   }
+ 
   return (
       <div className=' flex flex-col gap-3 justify-center'>
     <section className='bg-black med:flex justify-between items-center p-[2%] rounded-md '>
@@ -24,6 +25,7 @@ const Comp = () => {
     </section>
 
     <section>
+      
       <Card/>
     </section>
     </div >
