@@ -220,10 +220,44 @@ const Inventory = () => {
       width: "10%",
       render: (unit) => `${unit}`,
     },
+
+      //render: (unit) => `${unit}`,
+    
+   
   ];
 
   return (
     <>
+    <header className="flex justify-between mt-4 ">
+      <h1 className="font-bold text-2xl"><ArrowLeftOutlined onClick={Products}/>&nbsp;&nbsp;Inventory</h1>
+
+      <div className="flex gap-3">
+        <button
+          style={{
+            backgroundColor: "#E3E3E3",
+            borderRadius: "5px",
+            padding: "8px 15px 8px 15px",
+          }}
+          onClick={showModal}
+
+        >
+          Export
+        </button>
+        <ImportButton />
+        {/* <Link href="/admin/products/addproduct"> */}
+        <button
+          key="link"
+
+
+          className="bg-black text-white rounded-md w-24 mr-2 h-10"
+
+          style={{
+          padding: "8px 15px 8px 15px",
+          }}
+          // className="bg-black text-white rounded-md w-32 mr-3"
+
+          loading={loading}
+          onClick={Products}
       <header className="flex justify-between mt-4 ">
         <h1 className="font-bold text-2xl"><ArrowLeftOutlined onClick={Products} />&nbsp;&nbsp;Inventory</h1>
         <div className="flex gap-3">
@@ -301,6 +335,28 @@ const Inventory = () => {
         </Modal>
       </header>
 
+      {/* <Table */}
+
+      
+      <div className='bg-white p-2 rounded-lg mt-6 mr-3'>
+      <div className='h-8 p-1'>
+        <button className="rounded-lg w-10 font-semibold text-xs hover:bg-gray-100">All</button>
+        <button className="rounded-lg w-6 font-semibold hover:bg-gray-100">+</button>
+      </div>
+      
+      <Table
+        className=" mr-3"
+
+        columns={columns}
+        dataSource={products}
+        pagination={false}
+        //scroll={{ x: 800, y: 4000 }}
+      />
+
+      </div>
+      
+      </>
+);
       <div className='bg-white p-2 rounded-lg mt-6 mr-3'>
         <div className='h-8 p-1'>
           <button className="rounded-lg w-10 font-semibold text-xs hover:bg-gray-100">All</button>

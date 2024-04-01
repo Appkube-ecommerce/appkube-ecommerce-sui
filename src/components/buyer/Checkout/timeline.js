@@ -36,7 +36,6 @@ const Timeline = () => {
     };
 
     return (
-<<<<<<< HEAD
         <div className='bg-[#71a31b] w-full flex justify-center'>
         <Steps
 
@@ -57,7 +56,6 @@ const Timeline = () => {
             ))}
         </Steps>
         </div>
-=======
         <div className='bg-[#71a31b] w-full flex justify-center'> 
             <Steps
                 className="w-7/12 text-sm mt-4 mb-4"
@@ -76,7 +74,6 @@ const Timeline = () => {
                 ))}
             </Steps>
         </div> // Removed unnecessary div
->>>>>>> 907fd1a5570cda0f04c7a0a5cd5565c90f6c1db1
     );
 };
 
