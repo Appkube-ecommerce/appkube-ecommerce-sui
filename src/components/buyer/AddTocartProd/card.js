@@ -85,7 +85,7 @@ const Card = () => {
 'use client'
 import { useState } from 'react';
 import Image from "next/image";
-import pro from "../../admin/images/product.svg";
+
 import { useSelector } from "react-redux";
 
 const Card = () => {
