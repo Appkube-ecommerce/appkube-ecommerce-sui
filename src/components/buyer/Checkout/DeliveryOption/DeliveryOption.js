@@ -68,9 +68,12 @@ const DeliveryOption = () => {
   const AddProductsintocart = useSelector(state => state.cartDetails.cart);
 
   return (
+<<<<<<< HEAD
+=======
 
   
 
+>>>>>>> 907fd1a5570cda0f04c7a0a5cd5565c90f6c1db1
     <div className='w-[100vw] h-[100vh] flex gap-10 justify-center m-0 bg-slate-100 pt-10'>
       <div >
       <Card title="Select a Delivery Option">

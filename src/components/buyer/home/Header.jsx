@@ -9,9 +9,13 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { RxCross1 } from "react-icons/rx";
 import Link from "next/link";
 import { setAllProducts } from "@/redux/slices/products";
+<<<<<<< HEAD
+import Image from "next/image"; 
+=======
  import { useRouter } from "next/navigation";
  import { FaBookmark } from "react-icons/fa6";
 
+>>>>>>> 907fd1a5570cda0f04c7a0a5cd5565c90f6c1db1
 
 const Header = ({ onSearch }) => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -40,10 +44,13 @@ const Header = ({ onSearch }) => {
     <header className="container-fluid flex justify-between items-center px-[5%] w-full h-[12vh] border-t-green-500 border-t-4">
       <div className="logo w-[20%] sm:w-[16%] lg:w-[10%]">
         <Link href="/buyer/home">
-          <img
-            src="https://asset.brandfetch.io/idIM18oaEt/idnUr2C08_.svg"
-            className="w-full h-full"
-          />
+        <Image
+  src="https://asset.brandfetch.io/idIM18oaEt/idnUr2C08_.svg"
+  alt="Logo"
+  width={100}
+  height={100}
+/>
+
         </Link>
       </div>
       <div className="searchbar container-fluid w-[60%] sm:w-[55%] md:w-[45%] lg:w-[40%] relative flex shadow">
