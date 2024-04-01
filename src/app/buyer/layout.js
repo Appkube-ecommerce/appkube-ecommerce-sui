@@ -7,7 +7,7 @@ import { usePathname } from "next/navigation";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export default function RootLayout({ children, includeHeader = true }) {
+export default function RootLayout({ children, includeHeader = false }) {
   const pathname = usePathname();
   const exclude = [
     "/",
