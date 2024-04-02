@@ -7,7 +7,17 @@ import {
   PlusOutlined,
   ShoppingCartOutlined,
 } from "@ant-design/icons";
-import {Button,Input,Form,Upload,Space,Table,Checkbox,Modal,Select,} from "antd";
+import {
+  Button,
+  Input,
+  Form,
+  Upload,
+  Space,
+  Table,
+  Checkbox,
+  Modal,
+  Select,
+} from "antd";
 import Highlighter from "react-highlight-words";
 import ImportButton from "./importButton";
 import { addToAdminCart } from "@/redux/slices/admincartSlice";
@@ -18,8 +28,7 @@ import { setAllProducts } from "@/redux/slices/products";
 import ProductList from "../print/print";
 import { useDispatch } from "react-redux";
 import axios from "@/Api/axios";
-import Image from 'next/image';
-
+import Image from "next/image";
 
 const Products = () => {
   const dispatch = useDispatch();
@@ -62,12 +71,11 @@ const Products = () => {
   useEffect(() => {
     const updatedCart = products.filter((product) => product.selected);
     setCart(updatedCart);
-}, [products]); // Only include products in the dependency array
+  }, [products]); // Only include products in the dependency array
 
-useEffect(() => {
+  useEffect(() => {
     setSelectedCount(cart.length);
-}, [cart]); // Only include cart in the dependency array
-
+  }, [cart]); // Only include cart in the dependency array
 
   // useEffect(() => {
   //   const count = products.reduce((acc, curr,record) => {
@@ -323,7 +331,7 @@ useEffect(() => {
   //     setImageUrl(newImageUrl); // Update imageUrl state with new image URL
   // };
   const handleChange = (info) => {
-    if (info.file.status === 'done') {
+    if (info.file.status === "done") {
       const reader = new FileReader();
       reader.onload = () => {
         // The base64 code of the image is in the 'result' property of the FileReader object
@@ -334,7 +342,7 @@ useEffect(() => {
       };
       // Read the file as a data URL
       reader.readAsDataURL(info.file.originFileObj);
-      console.log(base64Code)
+      console.log(base64Code);
     }
   };
   const uploadButton = (
@@ -381,7 +389,7 @@ useEffect(() => {
         <Image src={image} alt="Product" width={50} height={50} />
       ),
     },
-    
+
     {
       title: "Product",
       dataIndex: "name",
@@ -455,9 +463,9 @@ useEffect(() => {
             Add Product
           </button>
           <Link href="/admin/products/adminCart">
-          <div className="bg-[#E3E3E3] p-2 px-3 rounded-md flex justify-center items-center">
-            <ShoppingCartOutlined className="text-xl font-bold" />
-          </div>
+            <div className="bg-[#E3E3E3] p-2 px-3 rounded-md flex justify-center items-center">
+              <ShoppingCartOutlined className="text-xl font-bold" />
+            </div>
           </Link>
         </div>
         <Modal
@@ -570,7 +578,11 @@ useEffect(() => {
                   onChange={handleChange}
                 >
                   {imageUrl ? (
-                    <Image src={imageUrl} alt="image" style={{ width: "100%" }} />
+                    <Image
+                      src={imageUrl}
+                      alt="image"
+                      style={{ width: "100%" }}
+                    />
                   ) : (
                     uploadButton
                   )}
