@@ -37,26 +37,8 @@ const Timeline = () => {
     };
 
     return (
-        <div className='bg-[#71a31b] w-full flex justify-center'>
-        <Steps
-
-            className="w-[60%] text-sm"
-
-            direction="horizontal"
-            current={current}
-            onChange={onChange}
-        >
-            {steps.map((step, index) => (
-                <Step
-                    key={index}
-                    title={<span style={{ color: 'white'}}>{step.title}</span>}
-                    description={<span style={{ color: 'white' }}>{step.description}</span>}
-                    icon={step.icon}
-                    onClick={step.onClick}
-                />
-            ))}
-        </Steps>
-        </div>
+        <>
+       
         <div className='bg-[#71a31b] w-full flex justify-center'> 
             <Steps
                 className="w-7/12 text-sm mt-4 mb-4"
@@ -74,7 +56,8 @@ const Timeline = () => {
                     />
                 ))}
             </Steps>
-        </div> // Removed unnecessary div
+        </div> 
+        </>
     );
 };
 

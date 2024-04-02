@@ -4,7 +4,7 @@ import { Card, Button, Modal, Radio } from "antd";
 import { DeleteOutlined, DashboardFilled } from "@ant-design/icons";
 import Image from "next/image";
 import pro from "../../../../components/admin/images/product.svg";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import OrderSummary from "./OrderSummary";
 import { useSelector } from "react-redux";
 

@@ -55,7 +55,7 @@ const ProductPage = () => {
     <div className="xl:px-36 sm:p-6  ">
       <div className="flex md:flex-row flex-col sm:justify-center justify-between gap-2 border-b-[2px] border-dashed border-gray-400  sm:h-[100%] sm:w-[100%] ">
         {/* product image */}
-        <ImgsData />
+        {/* <ImgsData /> */}
 
         {/* product details */}
         {/* className="h-[700px] w-[580px] " */}
