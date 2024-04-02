@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { remove } from "@/redux/slices/saveForLaterSlice";
 import { useSelector,useDispatch } from "react-redux";
 import Header from "../home/Header";
+import { addToCart } from "@/redux/slices/CartSlice";
 const SaveForlater = () => {
 
   // const [savedProducts, setSavedProducts] = useState([]);
@@ -11,6 +12,9 @@ const SaveForlater = () => {
   // Get saved products from Redux
   const removeToCart = (id)=>{
     dispatch(remove(id));
+  }
+  const cartAdd = (data) => {
+    dispatch(addToCart(data))
   }
 //   // Get the Redux data
   const saveForLater = useSelector(state => state.saveForLaterSlice.saveForLater);
@@ -29,16 +33,16 @@ const SaveForlater = () => {
   //   localStorage.setItem('savedProducts', JSON.stringify(saveForLater));
   // }, [saveForLater]); // Update local storage when saveForLater changes
   const cards = saveForLater.map((product) => (
-    <div className="m-10 flex justify-center gap-7 w-[1000px]">
+    <div className="m-10 flex justify-center gap-7 w-[100%]">
       <div
         className="bg-white shadow-lg rounded-lg flex justify-evenly  "
-        style={{ width: "60%" }}
+        style={{ width: "100%" }}
       >
         <figure className="flex-shrink-0 p-5 rounded-lg pl-10">
           <img
             src={product.image}
             className="w-[100%] h-48 object-cover p-3"
-            alt="Shoes"
+            alt="product"
           />
         </figure>
         <div className="p-6 flex flex-col justify-between">
@@ -50,7 +54,7 @@ const SaveForlater = () => {
           </div>
           <div className="mt-4 flex justify-end items-end">
             <button className="btn bg-red-600 text-white font-semibold p-3 rounded-lg w-[95%]" onClick={()=>removeToCart(product.id)}>Remove</button>
-            <button className="btn bg-green-400 text-white font-semibold p-3 rounded-lg w-[95%]" onClick={()=>AddToCart(product.id)}>Add To Cart</button>
+            <button className="btn bg-green-500 text-white font-semibold p-3 rounded-lg w-[100%]" onClick={()=>cartAdd(product)}>Add To Cart</button>
           </div>
         </div>
       </div>

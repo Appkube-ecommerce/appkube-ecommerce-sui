@@ -1,13 +1,11 @@
 "use client";
 import React, { useState } from "react";
-import { Card, Button, Modal, Radio,Steps } from "antd";
+import { Card, Button, Modal, Radio, Steps, Popconfirm } from "antd"; // Added Popconfirm import
 import { DeleteOutlined, DashboardFilled } from "@ant-design/icons";
 import Image from "next/image";
 import pro from "../../../../components/admin/images/product.svg";
 import OrderSummary from "./OrderSummary";
-import { useRouter } from "next/navigation";
-import OrderSummary from './OrderSummary';
-import { useRouter } from 'next/navigation';
+import { useRouter } from "next/navigation"; // Fixed import path
 import { useSelector } from "react-redux";
 
 const { Step } = Steps;
@@ -43,6 +41,7 @@ const DeliveryOption = () => {
     morningSlots: "9am - 11am",
     afternoonSlots: "1pm - 3pm",
   };
+
   const handleSlotSelect = (slot) => {
     setSelectedSlot(slot);
   };
@@ -67,6 +66,7 @@ const DeliveryOption = () => {
   const handleDeleteItem = (id) => {
     setItems(items.filter((item) => item.id !== id));
   };
+  
   const AddProductsintocart = useSelector(state => state.cartDetails.cart);
 
   return (
@@ -149,114 +149,36 @@ const DeliveryOption = () => {
             {/* Modal for viewing items */}
             <Modal
               title="Items"
-              open={itemsModalVisible}
+              visible={itemsModalVisible}
               onCancel={handleCloseItemsModal}
               footer={[
                 <Button key="close" onClick={handleCloseItemsModal}>
                   Close
                 </Button>,
               ]}
-
-
-  
-
-    <div className='w-[100vw] h-[100vh] flex gap-10 justify-center m-0 bg-slate-100 pt-10'>
-      <div >
-      <Card title="Select a Delivery Option">
-        <div className='w-[100%]'>
-         
-          <div className='flex mb-3 gap-2'>
-                {AddProductsintocart.map(item => (
-                  <div key={item.id} className='w-[10%] h-[45%] border rounded-md flex-wrap'>
-                    <Image src={item.image} alt={item.name} width={50}
-                    height={50}/>
-                  </div>
-                ))}
-             
-              <div className='w-[10%] h-[55px] border rounded-md text-center cursor-pointer
-               hover:bg-slate-200' onClick={handleViewItems}>View {AddProductsintocart.length} items</div>
-            </div>
-        
-          <Card>
-            <div className='grid grid-cols-3'>
-              <p> Delivery Slot</p>
-              <div className='w-[1px] h-full bg-gray-200'></div>
-             {/* Modal for selecting date and slot */}
-      <Modal
-        title="Select Date and Slot"
-        visible={modalVisible}
-        onCancel={handleCloseModal}
-        footer={[
-          <Button key="cancel" onClick={handleCloseModal}>Cancel</Button>,
-          <Button key="submit" type="primary" onClick={handleCloseModal}>Submit</Button>
-        ]}
-        width={600}
-        headerBg
-      >
-        <div className='flex gap-x-8'>
-        <DashboardFilled />
-          <p>Select Date:</p>
-          <div className='flex gap-2'>
-            {dates.map(date => (
-              <Button  key={date} onClick={() => handleDateSelect(date)}>{date}</Button>
-            ))}
-          </div>
-        </div>
-        <div className='gap-3 '>
-          <p>Select Slot:</p>
-          <Radio.Group value={selectedSlot} onChange={(e) => handleSlotSelect(e.target.value)}>
-            {Object.entries(slotTimings).map(([slot, timing]) => (
-              <Radio key={slot} value={slot}>{timing}</Radio>
-            ))}
-          </Radio.Group>
-        </div>
-      </Modal>
-              <div>
-                <p onClick={() => handleDateSelect(selectedDate || dates[0])} className='cursor-pointer'>Select Date: {selectedDate || dates[0]}</p>
-                <p>Selected Slot: {selectedSlot && slotTimings[selectedSlot]}</p></div>
-            </div>
-          </Card>
-          <Button type="primary" danger className='float-end mt-3' onClick={GotoPayment}>Proceed To pay</Button>
-        </div>
-      </Card>
-
-      {/* Modal for viewing items */}
-      <Modal
-        title="Items"
-        open={itemsModalVisible}
-        onCancel={handleCloseItemsModal}
-        footer={[
-          <Button key="close" onClick={handleCloseItemsModal}>Close</Button>
-        ]}
-      >
-        {AddProductsintocart.map(item => (
-          <div key={item.id} className="flex items-center justify-between py-2">
-            <div className="flex items-center">
-              <Image src={item.image} alt={item.name} height={100} width={100}/>
-              <span className="ml-2">{item.name}</span>
-            </div>
-            <Popconfirm
-              title="Are you sure to delete this item?"
-              onConfirm={() => handleDeleteItem(item.id)}
-              okText="Yes"
-              cancelText="No"
             >
-              {items.map((item) => (
+              {AddProductsintocart.map((item) => (
                 <div key={item.id} className="flex items-center justify-between py-2">
                   <div className="flex items-center">
                     <Image src={item.image} alt={item.name} height={100} width={100} />
                     <span className="ml-2">{item.name}</span>
                   </div>
-                  <DeleteOutlined style={{ color: "red", cursor: "pointer" }} onClick={() => handleDeleteItem(item.id)} />
-                  <Button className="ml-2">Save for later</Button>
+                  <Popconfirm
+                    title="Are you sure to delete this item?"
+                    onConfirm={() => handleDeleteItem(item.id)}
+                    okText="Yes"
+                    cancelText="No"
+                  >
+                    <DeleteOutlined style={{ color: "red", cursor: "pointer" }} />
+                  </Popconfirm>
                 </div>
               ))}
             </Modal>
           </div>
         </div>
-        <div>
-          <OrderSummary />
-        </div>
+      </div>
+      <div>
+        <OrderSummary />
       </div>
     </div>
   );

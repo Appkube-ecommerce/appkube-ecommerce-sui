@@ -1,16 +1,7 @@
-"use client";
+"use client"
 import { useState } from "react";
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
-import {
-  Layout,
-  Menu,
-  Button,
-  theme,
-  Checkbox,
-  Form,
-  Input,
-  DatePicker,
-} from "antd";
+import { Layout, Menu, Button, theme, Checkbox, Form, Input, DatePicker } from "antd";
 import OrderSummary from "../DeliveryOption/OrderSummary";
 
 const { Header, Sider, Content } = Layout;
@@ -30,7 +21,6 @@ export default function PaymentOption() {
 
   return (
     <>
-
       <Layout className="h-screen bg-slate-50 w-full">
         <div className="h-screen flex gap-16 pt-10">
           <Layout className="bg-white">
@@ -39,31 +29,6 @@ export default function PaymentOption() {
               collapsible
               collapsed={collapsed}
               style={{ display: "flex", flexDirection: "column", height: "45%" }}
-    <div className="h-screen flex gap-16 pt-10">
-      <Layout className="bg-white">
-        <Sider
-          trigger={null}
-          collapsible
-          collapsed={collapsed}
-          
-          style={{ display: "flex", flexDirection: "column" ,height:"45%"}}
-        >
-          <div className="demo-logo-vertical" />
-          <Menu
-            style={{ backgroundColor: siderBg,  }}
-            className="bg-[#d4d0c9]"
-            defaultSelectedKeys={["1"]}
-            selectedKeys={[selectedMenuItem]}
-            theme="light"
-            onClick={({ key }) => handleMenuItemClick(key)}
-          >
-    
-          <Menu.Item
-              key="1"
-              label="Credit/Debit Card"
-              
-              style={selectedMenuItem === "1" ? { backgroundColor: "white", height: "10%",color: "black" ,borderRadius:"none"} : {}}
-              // Set height for Credit/Debit Card item
             >
               <div className="demo-logo-vertical" />
               <Menu
@@ -77,11 +42,7 @@ export default function PaymentOption() {
                 <Menu.Item
                   key="1"
                   label="Credit/Debit Card"
-                  style={
-                    selectedMenuItem === "1"
-                      ? { backgroundColor: "white", height: "10%", color: "black", borderRadius: "none" }
-                      : {}
-                  }
+                  style={selectedMenuItem === "1" ? { backgroundColor: "white", height: "10%", color: "black", borderRadius: "none" } : {}}
                 >
                   Credit/Debit Card
                 </Menu.Item>
@@ -127,7 +88,7 @@ export default function PaymentOption() {
                     layout="vertical"
                     labelCol={{ span: 8 }}
                     initialValues={{ remember: true }}
-                    className="font-semibold border border-[#a8eb33] pl-5 pt-5 pr-5 h-[41vh] rounded-lg "
+                    className="font-semibold border border-[#a8eb33] pl-5 pt-5 pr-5 h-[41vh] rounded-lg"
                   >
                     <Form.Item
                       label="Card Number"
@@ -169,7 +130,7 @@ export default function PaymentOption() {
                     layout="vertical"
                     labelCol={{ span: 8 }}
                     initialValues={{ remember: true }}
-                    className="border border-[#a8eb33] pl-5 pt-5 h-[41vh] rounded-lg "
+                    className="border border-[#a8eb33] pl-5 pt-5 h-[41vh] rounded-lg"
                   >
                     <h1 className="font-semibold">Add a UPI</h1>
                     <Form.Item
