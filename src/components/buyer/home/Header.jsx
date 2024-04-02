@@ -9,13 +9,12 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { RxCross1 } from "react-icons/rx";
 import Link from "next/link";
 import { setAllProducts } from "@/redux/slices/products";
-<<<<<<< HEAD
+
 import Image from "next/image"; 
-=======
+
  import { useRouter } from "next/navigation";
  import { FaBookmark } from "react-icons/fa6";
 
->>>>>>> 907fd1a5570cda0f04c7a0a5cd5565c90f6c1db1
 
 const Header = ({ onSearch }) => {
   const [searchQuery, setSearchQuery] = useState('');
