@@ -9,9 +9,7 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { RxCross1 } from "react-icons/rx";
 import Link from "next/link";
 import { setAllProducts } from "@/redux/slices/products";
-
 import Image from "next/image"; 
-
  import { useRouter } from "next/navigation";
  import { FaBookmark } from "react-icons/fa6";
 

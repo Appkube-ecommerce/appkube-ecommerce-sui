@@ -1,28 +1,54 @@
-"use client";
 import { useState } from "react";
 import Image from "next/image";
 import { useSelector, useDispatch } from "react-redux";
 import { remove } from "@/redux/slices/CartSlice";
 import { addToSaveForLater } from "@/redux/slices/saveForLaterSlice";
 import { notification } from 'antd';
+import { ShoppingCartOutlined } from '@ant-design/icons'; // Import the Ant Design icon
 
 const Card = () => {
-  const [count, setCount] = useState(0); // State for quantity
   const dispatch = useDispatch();
 
   // Accessing cart items from Redux store
   const items = useSelector((state) => state.cartDetails.cart);
 
-  const removeToCart = (id)=>{
+  // State to store the quantity for each product item
+  const [productCounts, setProductCounts] = useState({});
+
+  const updateCount = (id, newCount) => {
+    // Ensure newCount is not less than 0
+    if (newCount < 0) {
+      newCount = 0;
+    }
+    setProductCounts((prevCounts) => ({
+      ...prevCounts,
+      [id]: newCount
+    }));
+  };
+  
+
+  const removeToCart = (id) => {
     dispatch(remove(id));
-  }
+  };
+
   const saveForLater = (data) => {
-    dispatch(addToSaveForLater(data))
+    dispatch(addToSaveForLater(data));
     dispatch(remove(data.id));
     notification.success({
       message: 'Product Saved For Later Successfully!',
     });
+  };
+
+  // Render icon and text when cart is empty
+  if (items.length === 0) {
+    return (
+      <div className="empty-cart">
+        <ShoppingCartOutlined style={{ fontSize: '500px', color: '#ccc' }} />
+        <p>Add some items into the cart</p>
+      </div>
+    );
   }
+
   // Mapping through cart items to render cards
   const cards = items.map((product) => (
     <div key={product.id} className="card1 mt-4">
@@ -39,7 +65,7 @@ const Card = () => {
             <div className="flex flex-col justify-center text-lg py-12 pl-14">
               <h2>{product.name}</h2>
               <b>₹{product.price}</b> &nbsp;
-              <p className="line-through inline-block text-[#909090]">₹{product.price*2}</p>
+              <p className="line-through inline-block text-[#909090]">₹{product.price * 2}</p>
             </div>
           </div>
 
@@ -48,20 +74,20 @@ const Card = () => {
               <div className="flex hover:shadow-xl shadow-black border border-stone-400 hover:border-2 gap-10 w-[100%] px-3 rounded-md">
                 <button
                   className="hover:bg-red-500 w-10 h-7 mt-1.5 rounded-md"
-                  onClick={() => setCount(count - 1)}
+                  onClick={() => updateCount(product.id, (productCounts[product.id] || 0) - 1)}
                 >
                   -
                 </button>
-                <h2 className="m-2">{count}</h2>
+                <h2 className="m-2">{productCounts[product.id] || 0}</h2>
                 <button
                   className="hover:bg-red-500 w-10 h-7 mt-1.5 rounded-md"
-                  onClick={() => setCount(count + 1)}
+                  onClick={() => updateCount(product.id, (productCounts[product.id] || 0) + 1)}
                 >
                   +
                 </button>
               </div>
               <div className="mt-2 text-xs text-center text-stone-500">
-                <button onClick={()=>removeToCart(product.id)} >Delete |&nbsp;</button>
+                <button onClick={() => removeToCart(product.id)}>Delete |&nbsp;</button>
                 <button onClick={() => saveForLater(product)}> Save for Later</button>
               </div>
             </div>
@@ -77,9 +103,10 @@ const Card = () => {
       </div>
     </div>
   ));
-  return <div>{cards}</div>;// Returning the list of cards
-  
-}
+
+  return <div>{cards}</div>;
+};
+
 export default Card;
 
 // 'use client'
@@ -149,3 +176,4 @@ export default Card;
 //                       <button> Save for Later</button>
 //                     </div>
 //                   </div>
+

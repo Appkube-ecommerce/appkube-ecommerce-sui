@@ -246,14 +246,46 @@ const Inventory = () => {
         </div>
       </header>
 
+<<<<<<< HEAD
       <div className="bg-white p-2 rounded-lg mt-6 mr-3">
         <div className="h-8 p-1">
+=======
+      {/* <Table */}
+
+      
+      <div className='bg-white p-2 rounded-lg mt-6 mr-3'>
+      <div className='h-8 p-1'>
+        <button className="rounded-lg w-10 font-semibold text-xs hover:bg-gray-100">All</button>
+        <button className="rounded-lg w-6 font-semibold hover:bg-gray-100">+</button>
+      </div>
+      
+      <Table
+        className=" mr-3"
+
+        columns={columns}
+        dataSource={products}
+        pagination={false}
+        //scroll={{ x: 800, y: 4000 }}
+      />
+<<<<<<< HEAD
+      
+
+=======
+
+      </div>
+      
+      </>
+);
+      <div className='bg-white p-2 rounded-lg mt-6 mr-3'>
+        <div className='h-8 p-1'>
+>>>>>>> 72035884b09f9532e99f4517ae55ecc01c8a572a
           <button className="rounded-lg w-10 font-semibold text-xs hover:bg-gray-100">All</button>
           <button className="rounded-lg w-6 font-semibold hover:bg-gray-100">+</button>
         </div>
 
         <Table className=" mr-3" columns={columns} dataSource={products} pagination={false} />
       </div>
+<<<<<<< HEAD
       <Modal
         open={open}
         title="Export products"
@@ -316,6 +348,9 @@ const Inventory = () => {
         </div>
         <hr />
       </Modal>
+=======
+>>>>>>> 3b9d90444aa09f786814295b58c631600f85ef37
+>>>>>>> 72035884b09f9532e99f4517ae55ecc01c8a572a
     </>
   );
 };
