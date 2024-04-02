@@ -2,7 +2,7 @@
 import ProductList from '@/components/admin/print/print'
 import React from 'react'
 
-const page = () => {
+const Page = () => {
   return (
     <div>
         <ProductList/>
@@ -10,4 +10,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page
