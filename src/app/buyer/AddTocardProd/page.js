@@ -1,6 +1,7 @@
 'use client';
 import { useRouter } from 'next/navigation'; // Corrected import path
 import Card from '@/components/buyer/AddTocartProd/card';
+import {useSelector} from 'react-redux'
 
 const Comp = () => {
   const router = useRouter();
@@ -8,8 +9,10 @@ const Comp = () => {
   function gotodelivery() {
     router.push("/buyer/Checkout/DeliveryAddress");
   }
+  const items = useSelector((state) => state.cartDetails.cart);
  
   return (
+    {items && (
     <div className='flex flex-col gap-3 justify-center'>
       <section className='bg-black med:flex justify-between items-center p-[2%] rounded-md '>
         <right className='xsmall:text-xs small:text-sm med:text-md lgr:text-lg'>
@@ -27,6 +30,7 @@ const Comp = () => {
         <Card />
       </section>
     </div>
+    )}
   );
 };
 

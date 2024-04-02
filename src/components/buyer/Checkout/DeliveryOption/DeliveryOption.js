@@ -70,14 +70,14 @@ const DeliveryOption = () => {
   const AddProductsintocart = useSelector(state => state.cartDetails.cart);
 
   return (
-    <div className="w-full grid grid-cols-2 gap-10 mr-36 ml-36 bg-slate-50">
-      <div>
+    // <div className="w-full grid grid-cols-2 gap-10 mr-36 ml-36 bg-slate-50">
+    //   <div>
         <div className="w-[100vw] h-[100vh] flex gap-10 justify-center m-0 bg-slate-100 pt-10">
           <div>
             <Card title="Select a Delivery Option">
               <div className="w-[100%]">
                 <div className="flex mb-3 gap-2">
-                  {items.map((item) => (
+                  {AddProductsintocart.map((item) => (
                     <div key={item.id} className="w-[10%] h-[45%] border rounded-md">
                       <Image src={item.image} alt={item.name} />
                     </div>
@@ -86,7 +86,7 @@ const DeliveryOption = () => {
                     className="w-[10%] h-[55px] border rounded-md text-center cursor-pointer hover:bg-slate-200"
                     onClick={handleViewItems}
                   >
-                    View {items.length} items
+                    View {AddProductsintocart.length} items
                   </div>
                 </div>
 
@@ -175,8 +175,8 @@ const DeliveryOption = () => {
               ))}
             </Modal>
           </div>
-        </div>
-      </div>
+        {/* </div>
+      </div> */}
       <div>
         <OrderSummary />
       </div>
