@@ -1,37 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import { DownOutlined } from '@ant-design/icons';
 import { Button, Dropdown, Space, Form, Modal, Input } from 'antd';
-import html2pdf from 'html2pdf.js';
 import { useRouter } from "next/navigation";
 import axios from "@/Api/axios";
 
 const ProductList = () => {
     const [products, setProducts] = useState([]);
    
-    const [form] = Form.useForm();    const [searchValue, setSearchValue] = useState('');
+    const [form] = Form.useForm();   
+     const [searchValue, setSearchValue] = useState('');
 
     const handleShare = () => {
       router.push("/admin/Share");
     };
     const router = useRouter();
-
-    // useEffect(() => {
-    //     const fetchData = async () => {
-    //         try {
-    //             const result = await fetchProducts();
-    //             setProducts(result.data.listProducts.items);
-    //         } catch (error) {
-    //             console.error("Error fetching products:", error);
-    //         }
-    //     };
-
-    //     fetchData();
-    // }, []);
     useEffect(() => {
         const fetchData = async () => {
             try {
               const result = await axios.get("/product");
-                setProducts(result.data.listProducts.items);
+                setProducts(result.data);
             } catch (error) {
                 console.error("Error fetching products:", error);
             }

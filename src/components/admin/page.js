@@ -41,7 +41,7 @@ const Home = () => {
              <Image src={pro} alt="product" height={100} width={100} />
             </div> 
             <div className="hover:cursor-pointer mt-3">
-        <ImportButton />
+        {/* <ImportButton /> */}
       </div>          
             </div>
             <div><p className="hover:bg-gray-100 hover:w-full hover:h-[30%] hover:rounded-lg hover:cursor-pointer p-2">Customize Your online store</p></div>

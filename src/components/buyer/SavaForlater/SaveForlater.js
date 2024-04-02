@@ -50,7 +50,7 @@ const SaveForlater = () => {
           </div>
           <div className="mt-4 flex justify-end items-end">
             <button className="btn bg-red-600 text-white font-semibold p-3 rounded-lg w-[95%]" onClick={()=>removeToCart(product.id)}>Remove</button>
-            <button className="btn bg-green-400 text-white font-semibold p-3 rounded-lg w-[95%]" onClick={()=>AddToCart(product.id)}>Add To Cart</button>
+            {/* <button className="btn bg-green-400 text-white font-semibold p-3 rounded-lg w-[95%]" onClick={()=>AddToCart(product.id)}>Add To Cart</button> */}
           </div>
         </div>
       </div>

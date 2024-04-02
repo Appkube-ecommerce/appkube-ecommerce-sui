@@ -238,10 +238,9 @@ const Inventory = () => {
       width: "10%",
 
       render: (unit) => `${unit}`,
-    },
+    }
 
       //render: (unit) => `${unit}`,
-    },
    
 
   ];
@@ -346,7 +345,6 @@ footer={[
   </Modal>
       </header>
 
-      <Table
 
       
       <div className='bg-white p-2 rounded-lg mt-6 mr-3'>
@@ -354,6 +352,8 @@ footer={[
         <button className="rounded-lg w-10 font-semibold text-xs hover:bg-gray-100">All</button>
         <button className="rounded-lg w-6 font-semibold hover:bg-gray-100">+</button>
       </div>
+      </div>
+  
       
       <Table
         className=" mr-3"
@@ -363,12 +363,12 @@ footer={[
         pagination={false}
         //scroll={{ x: 800, y: 4000 }}
       />
+         
+      
 
       </>
 
-      
-      </div>
-      </div>
+   
 );
 };
 

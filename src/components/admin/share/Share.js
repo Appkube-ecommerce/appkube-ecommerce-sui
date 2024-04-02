@@ -10,7 +10,7 @@ import { Radio } from 'antd';
 // import { fetchcustomer } from "@/Api/fetchingcustomers";
 // import { fetchProducts } from "@/Api/fetchingProducts";
 
-import { fetchProducts } from "@/Api/fetchingProducts";
+// import { fetchProducts } from "@/Api/fetchingProducts";
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import { notification } from "antd";
