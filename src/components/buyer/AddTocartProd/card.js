@@ -1,10 +1,10 @@
-"use client"
 import { useState } from "react";
 import Image from "next/image";
 import { useSelector, useDispatch } from "react-redux";
 import { remove } from "@/redux/slices/CartSlice";
 import { addToSaveForLater } from "@/redux/slices/saveForLaterSlice";
 import { notification } from 'antd';
+import { ShoppingCartOutlined } from '@ant-design/icons'; // Import the Ant Design icon
 
 const Card = () => {
   const dispatch = useDispatch();
@@ -38,6 +38,16 @@ const Card = () => {
       message: 'Product Saved For Later Successfully!',
     });
   };
+
+  // Render icon and text when cart is empty
+  if (items.length === 0) {
+    return (
+      <div className="empty-cart">
+        <ShoppingCartOutlined style={{ fontSize: '500px', color: '#ccc' }} />
+        <p>Add some items into the cart</p>
+      </div>
+    );
+  }
 
   // Mapping through cart items to render cards
   const cards = items.map((product) => (
