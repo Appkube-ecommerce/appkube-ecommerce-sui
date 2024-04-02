@@ -11,6 +11,10 @@ import { Radio } from 'antd';
 // import { fetchProducts } from "@/Api/fetchingProducts";
 
 // import { fetchProducts } from "@/Api/fetchingProducts";
+<<<<<<< HEAD
+=======
+//import { fetchProducts } from "@/Api/fetchingProducts";
+>>>>>>> 3df339a9b6b7eced655b142e045b770a60c87e27
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import { notification } from "antd";

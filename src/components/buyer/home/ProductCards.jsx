@@ -1,5 +1,3 @@
-
-
 // export default ProductCards;
 import { CiBookmark } from "react-icons/ci";
 import { FaRupeeSign } from "react-icons/fa";
@@ -12,12 +10,7 @@ import { notification } from 'antd';
 
 
 const ProductCards = ({ data,searchQuery}) => {
-    const allProducts = useSelector((state) => state.allProducts.products);
-
-  // console.log("products in page",product)
-  // const filteredProducts = allProducts.filter((product) =>
-  //   product.name && typeof product.name === 'string' && product.name.toLowerCase().includes(searchQuery)
-  // );
+    // const allProducts = useSelector((state) => state.allProducts.products);
   
   const cartAdd = (data) => {
     dispatch(addToCart(data))
@@ -33,7 +26,7 @@ const ProductCards = ({ data,searchQuery}) => {
     <div
       className="w-[90%] h-[38vh] sm:w-[45%] sm:h-[55vh] md:w-[30%] md:h-[65vh] lg:w-[23%] lg:h-[70vh]"
     >
-      <div className="container-fluid w-full h-full bg-white rounded-lg p-3 flex flex-col justify-between flex-wrap items-center gap-1 sm:gap-3 shadow-lg">
+      <div className="container-fluid  bg-white rounded-lg p-3 flex flex-col justify-between flex-wrap items-center gap-1 sm:gap-3 shadow-lg">
         <div className=" rounded-md w-[100%] h-[40%] md:h-[30vh] border p-2  ">
            <Link
             href={{
@@ -46,7 +39,7 @@ const ProductCards = ({ data,searchQuery}) => {
               width={100}
               height={100}
               alt={data.category}
-              // priority={true}
+              unoptimized 
               className="w-[100%] h-[100%] rounded-md"
             />
           </Link>

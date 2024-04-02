@@ -73,7 +73,7 @@ const ProductPage = () => {
 
           <div className="mb-7">
             <h3 className="font-semibold text-xl mb-2 ">
-             {product.name}
+              {product.name}
             </h3>
             <h3 className="text-gray-400 mb-2">MRP:₹92</h3>
             <h3 className="font-medium text-lg mb-2">
@@ -125,7 +125,7 @@ const ProductPage = () => {
                     </span>
                   </p>
                 </div>
-                <img src="" alt="" />
+                <Image src="/bottle-svgrepo-com.svg" alt="" width={50} height={50} />
               </div>
 
               <div className="flex justify-between border border-gray-400 rounded-md p-2 mb-3  hover:bg-slate-100 cursor-pointer">
@@ -144,7 +144,7 @@ const ProductPage = () => {
                     </span>
                   </p>
                 </div>
-                <img src="" alt="" />
+                <Image src="/bottle-svgrepo-com.svg" alt="" width={50} height={50} />
               </div>
 
               <div className="flex justify-between border border-gray-400 rounded-md p-2 mb-3  hover:bg-slate-100 cursor-pointer">
@@ -163,7 +163,7 @@ const ProductPage = () => {
                     </span>
                   </p>
                 </div>
-                <img src="" alt="" />
+                <Image src="/bottle-svgrepo-com.svg" alt="" width={50} height={50} />
               </div>
             </div>
           </div>
@@ -180,7 +180,7 @@ const ProductPage = () => {
         <div className="flex gap-6 justify-center sm:flex-wrap lg:flex-nowrap flex-wrap">
           <div className="bg-gray-100 w-72 h-40 p-4 text-center rounded-md flex flex-col items-center ">
             <div className="w-16 h-16 rounded-full p-3 bg-white mb-3">
-              <img src="/bottle-svgrepo-com.svg" alt="" />
+              <Image src="/bottle-svgrepo-com.svg" alt="" width={50} height={50} />
             </div>
 
             <p className="font-medium">Quality</p>
@@ -189,7 +189,7 @@ const ProductPage = () => {
 
           <div className="bg-gray-100 w-72 h-40 p-4 text-center rounded-md flex flex-col items-center">
             <div className="w-16 h-16 rounded-full p-3 bg-white mb-3">
-              <img src="/bottle-svgrepo-com.svg" alt="" />
+              <Image src="/bottle-svgrepo-com.svg" alt="" width={50} height={50} />
             </div>
 
             <p className="font-medium">Quality</p>
@@ -198,7 +198,7 @@ const ProductPage = () => {
 
           <div className="bg-gray-100 w-72 h-40 p-4 text-center rounded-md flex flex-col items-center">
             <div className="w-16 h-16 rounded-full p-3 bg-white mb-3">
-              <img src="/bottle-svgrepo-com.svg" alt="" />
+              <Image src="/bottle-svgrepo-com.svg" alt="" width={50} height={50} />
             </div>
 
             <p className="font-medium">Quality</p>
@@ -207,7 +207,7 @@ const ProductPage = () => {
 
           <div className="bg-gray-100 w-72 h-40 p-4 text-center rounded-md flex flex-col items-center">
             <div className="w-16 h-16 rounded-full p-3 bg-white mb-3">
-              <img src="/bottle-svgrepo-com.svg" alt="" />
+              <Image src="/bottle-svgrepo-com.svg" alt="" width={50} height={50} />
             </div>
 
             <p className="font-medium">Quality</p>
@@ -225,7 +225,7 @@ const ProductPage = () => {
         <div className="border-b-[1px]  border-gray-300 p-4">
           <div className="flex justify-between items-center">
             <p className="font-medium">About the Product</p>
-            <FaPlus className=" hover:rotate-45 transition-transform cursor-pointer"/>
+            <FaPlus className=" hover:rotate-45 transition-transform cursor-pointer" />
           </div>
 
           <ul
@@ -245,7 +245,7 @@ const ProductPage = () => {
         <div className="border-b-[1px]  border-gray-300 p-4">
           <div className="flex justify-between items-center">
             <p className="font-medium">Benefits</p>
-            <FaPlus className=" hover:rotate-45 transition-transform cursor-pointer"/>
+            <FaPlus className=" hover:rotate-45 transition-transform cursor-pointer" />
           </div>
 
           <ul
@@ -285,7 +285,7 @@ const ProductPage = () => {
         <div className=" p-4">
           <div className="flex justify-between items-center">
             <p className="font-medium">Other Product Info</p>
-            <FaPlus className=" hover:rotate-45 transition-transform cursor-pointer"/>
+            <FaPlus className=" hover:rotate-45 transition-transform cursor-pointer" />
           </div>
 
           <div className="font-light text-sm w-[90%]">
@@ -305,7 +305,7 @@ const ProductPage = () => {
 
         <div className="flex justify-between items-center gap-5 mb-4">
           <div className="h-24 w-24 overflow-hidden rounded-md">
-            <img src="/img.jpeg" alt="" />
+            <Image src="/img.jpeg" alt="" width={100} height={100} />
           </div>
 
           <div>

@@ -11,9 +11,12 @@ const initialState = {
         state.cart.push(action.payload);
         console.log('payload',action.payload) 
           },
+          remove: (state, action) => {
+            state.cart = state.cart.filter(item => item.id !== action.payload);
+          }
     },
   });
   
-  export const { addToCart } = cartDetails.actions;
+  export const { addToCart,remove } = cartDetails.actions;
   export default cartDetails.reducer;
   
