@@ -13,6 +13,7 @@ const Comp = () => {
   const items = useSelector((state) => state.cartDetails.cart);
 
   return (
+
     <div className='flex flex-col gap-3 justify-center'>
       {items.length > 0 && (
         <section className='bg-black med:flex justify-between items-center p-[2%] rounded-md '>
@@ -31,6 +32,7 @@ const Comp = () => {
       <section>
          <Card />
       </section>
+
     </div>
   );
 };
