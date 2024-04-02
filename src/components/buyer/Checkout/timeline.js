@@ -37,6 +37,7 @@ const Timeline = () => {
 
     return (
 <>
+
         <div className='bg-[#71a31b] w-full flex justify-center'>
         <Steps
 
@@ -57,7 +58,6 @@ const Timeline = () => {
             ))}
         </Steps>
         </div>
-
         <div className='bg-[#71a31b] w-full flex justify-center'> 
             <Steps
                 className="w-7/12 text-sm mt-4 mb-4"
@@ -77,6 +77,7 @@ const Timeline = () => {
             </Steps>
         </div> 
         </>
+
     );
 };
 

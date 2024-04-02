@@ -95,8 +95,8 @@ const Header = ({ onSearch }) => {
             </button>
           </Link>
         </div>
-        <button className="p-2 md:p-3 border-2 rounded-md">
-          <FaBookmark className="font-bold text-lg   md:text-lg " onClick={saveForLater}/>
+        <button className="p-2 md:p-3 border-2 rounded-md flex">
+          <FaBookmark className="font-bold text-lg  flex md:text-lg " onClick={saveForLater}/>
           <div className="bg-black text-white text-xs text-center font-semibold w-4 h-4 rounded-lg">{AddProductsintocart.length}</div>
         </button>
       </div>
