@@ -228,36 +228,6 @@ const Inventory = () => {
 
   return (
     <>
-    <header className="flex justify-between mt-4 ">
-      <h1 className="font-bold text-2xl"><ArrowLeftOutlined onClick={Products}/>&nbsp;&nbsp;Inventory</h1>
-
-      <div className="flex gap-3">
-        <button
-          style={{
-            backgroundColor: "#E3E3E3",
-            borderRadius: "5px",
-            padding: "8px 15px 8px 15px",
-          }}
-          onClick={showModal}
-
-        >
-          Export
-        </button>
-        <ImportButton />
-        {/* <Link href="/admin/products/addproduct"> */}
-        <button
-          key="link"
-
-
-          className="bg-black text-white rounded-md w-24 mr-2 h-10"
-
-          style={{
-          padding: "8px 15px 8px 15px",
-          }}
-          // className="bg-black text-white rounded-md w-32 mr-3"
-
-          loading={loading}
-          onClick={Products}
       <header className="flex justify-between mt-4 ">
         <h1 className="font-bold text-2xl"><ArrowLeftOutlined onClick={Products} />&nbsp;&nbsp;Inventory</h1>
         <div className="flex gap-3">
@@ -352,6 +322,10 @@ const Inventory = () => {
         pagination={false}
         //scroll={{ x: 800, y: 4000 }}
       />
+<<<<<<< HEAD
+      
+
+=======
 
       </div>
       
@@ -370,6 +344,7 @@ const Inventory = () => {
           pagination={false}
         />
       </div>
+>>>>>>> 3b9d90444aa09f786814295b58c631600f85ef37
     </>
   );
 };
