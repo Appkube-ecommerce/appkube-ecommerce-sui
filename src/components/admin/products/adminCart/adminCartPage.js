@@ -30,7 +30,7 @@ const AdminCartPage = () => {
             <h2 className="text-xl font-lg mb-2"><b>Unit available :</b> {product.unit}</h2>
           </div>
           <div className="mt-4 flex justify-end items-end">
-            <button className="btn bg-red-600 text-white font-semibold p-3 rounded-lg w-[95%]" onClick={()=>removeToCart(product.id)}>Remove Item</button>
+            <button className="btn bg-red-600 text-white font-semibold p-3 rounded-lg w-auto" onClick={()=>removeToCart(product.id)}>Remove Item</button>
           </div>
         </div>
       </div>

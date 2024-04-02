@@ -52,9 +52,9 @@ const SaveForlater = () => {
             <h2 className="text-xl font-lg mb-2"><b>Category :</b> {product.category}</h2>
             <h2 className="text-xl font-lg mb-2"><b>Unit available :</b> {product.unit}</h2>
           </div>
-          <div className="mt-4 flex justify-end items-end">
-            <button className="btn bg-red-600 text-white font-semibold p-3 rounded-lg w-[95%]" onClick={()=>removeToCart(product.id)}>Remove</button>
-            <button className="btn bg-green-500 text-white font-semibold p-3 rounded-lg w-[100%]" onClick={()=>cartAdd(product)}>Add To Cart</button>
+          <div className="mt-4 flex justify-end  gap-4 items-end">
+            <button className="btn bg-red-600 text-white font-semibold p-3 rounded-lg" onClick={()=>removeToCart(product.id)}>Remove</button>
+            <button className="btn bg-green-500 text-white font-semibold p-3 rounded-lg" onClick={()=>cartAdd(product)}>Add To Cart</button>
           </div>
         </div>
       </div>
@@ -62,7 +62,7 @@ const SaveForlater = () => {
   ));
   return(
     <>
-  <Header/>
+
    {cards}
    </>
   )
