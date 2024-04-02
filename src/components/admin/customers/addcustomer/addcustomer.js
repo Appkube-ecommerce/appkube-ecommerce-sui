@@ -4,7 +4,7 @@ import { ArrowLeftOutlined } from "@ant-design/icons";
 import { useRouter } from "next/navigation";
 import { Form, Input,Button} from "antd";
 import { useDispatch, useSelector } from 'react-redux';
-// import { addCustomer,createCustomer } from "../../../../redux/slices/addCustomerSlice";
+import { addCustomer,createCustomer } from "../../../../redux/slices/addCustomerSlice";
 import { notification } from 'antd';
 import { usePathname } from "next/navigation";
 
@@ -13,8 +13,8 @@ import { usePathname } from "next/navigation";
 const AddCustomer = () => {
   const [form] = Form.useForm();
 
-  // const customers = useSelector((state)=> state.customerSlice.customers)
-  // console.log(customers);
+  const customers = useSelector((state)=> state.customerSlice.customers)
+  console.log(customers);
   //  console.log(customers);
   const dispatch = useDispatch();
   
@@ -35,7 +35,7 @@ const AddCustomer = () => {
     setLoading(true);
     try {
       await dispatch(createCustomer(values));
-            // dispatch(addCustomer(values));
+            dispatch(addCustomer(values));
       notification.success({
         message: 'Customer created successfully!',
       });

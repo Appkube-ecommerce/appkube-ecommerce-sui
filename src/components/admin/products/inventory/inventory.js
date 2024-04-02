@@ -219,7 +219,7 @@ const Inventory = () => {
       key: "onhand",
       width: "10%",
       render: (unit) => `${unit}`,
-    }
+    },
 
       //render: (unit) => `${unit}`,
     
@@ -313,8 +313,6 @@ const Inventory = () => {
         <button className="rounded-lg w-10 font-semibold text-xs hover:bg-gray-100">All</button>
         <button className="rounded-lg w-6 font-semibold hover:bg-gray-100">+</button>
       </div>
-      </div>
-  
       
       <Table
         className=" mr-3"
@@ -324,8 +322,29 @@ const Inventory = () => {
         pagination={false}
         //scroll={{ x: 800, y: 4000 }}
       />
+<<<<<<< HEAD
       
 
+=======
+
+      </div>
+      
+      </>
+);
+      <div className='bg-white p-2 rounded-lg mt-6 mr-3'>
+        <div className='h-8 p-1'>
+          <button className="rounded-lg w-10 font-semibold text-xs hover:bg-gray-100">All</button>
+          <button className="rounded-lg w-6 font-semibold hover:bg-gray-100">+</button>
+        </div>
+        
+        <Table
+          className="mr-3"
+          columns={columns}
+          dataSource={products}
+          pagination={false}
+        />
+      </div>
+>>>>>>> 3b9d90444aa09f786814295b58c631600f85ef37
     </>
   );
 };
