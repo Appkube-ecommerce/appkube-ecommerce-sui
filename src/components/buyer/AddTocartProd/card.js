@@ -3,8 +3,10 @@ import Image from "next/image";
 import { useSelector, useDispatch } from "react-redux";
 import { remove } from "@/redux/slices/CartSlice";
 import { addToSaveForLater } from "@/redux/slices/saveForLaterSlice";
-import { notification } from 'antd';
-import { ShoppingCartOutlined } from '@ant-design/icons'; // Import the Ant Design icon
+import { notification,Button } from 'antd';
+import { ShoppingCartOutlined,HomeOutlined } from '@ant-design/icons'; // Import the Ant Design icon
+import empty from "../../admin/images/empty.jpg"
+import Link from "next/link"
 
 const Card = () => {
   const dispatch = useDispatch();
@@ -43,8 +45,20 @@ const Card = () => {
   if (items.length === 0) {
     return (
       <div className="empty-cart">
-        <ShoppingCartOutlined style={{ fontSize: '500px', color: '#ccc' }} />
-        <p>Add some items into the cart</p>
+        {/* <ShoppingCartOutlined style={{ fontSize: '500px', color: '#ccc' }} /> */}
+        <Image src={empty} height={500} width={500} ></Image>
+        <div className="flex gap-5">
+        <h1 className="text-lg font-bold">Add some items into the cart</h1>
+        <Link href="/">
+            <Button
+              
+              style={{ marginTop: '16px', height: '40px', borderRadius: '20px' }}
+              icon={<HomeOutlined />}
+            >
+              Back Home
+            </Button>
+          </Link>
+          </div>
       </div>
     );
   }
