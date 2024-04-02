@@ -10,7 +10,7 @@ const inter = Inter({ subsets: ["latin"] });
 export default function RootLayout({ children, includeHeader = false }) {
   const pathname = usePathname();
   const exclude = [
-    "/",
+    "/buyer/myAccount/logout",
     "/buyer/login",
     "/buyer/register",
     "/buyer/login/account",

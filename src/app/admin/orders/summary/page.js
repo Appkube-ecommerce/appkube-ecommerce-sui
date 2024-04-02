@@ -2,7 +2,7 @@
 import OrderInfo from '@/components/admin/orders/ordersummary';
 import React from 'react';
 import { useSearchParams } from 'next/navigation'
-import { data } from 'autoprefixer';
+// import { data } from 'autoprefixer';
 import {useSelector} from 'react-redux'
 
 const Page = () => {

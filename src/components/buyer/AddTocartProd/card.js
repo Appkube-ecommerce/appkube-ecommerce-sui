@@ -44,7 +44,7 @@ const Card = () => {
   // Render icon and text when cart is empty
   if (items.length === 0) {
     return (
-      <div className="empty-cart">
+      <div className="empty-cart mt-5 mb-5">
         {/* <ShoppingCartOutlined style={{ fontSize: '500px', color: '#ccc' }} /> */}
         <Image src={empty} height={500} width={500} ></Image>
         <div className="flex gap-5">
@@ -122,6 +122,5 @@ const Card = () => {
 };
 
 export default Card;
-
 
 

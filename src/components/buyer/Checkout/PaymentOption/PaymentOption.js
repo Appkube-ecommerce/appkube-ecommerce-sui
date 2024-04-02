@@ -88,7 +88,7 @@ export default function PaymentOption() {
                     layout="vertical"
                     labelCol={{ span: 8 }}
                     initialValues={{ remember: true }}
-                    className="font-semibold border border-[#a8eb33] pl-5 pt-5 pr-5 h-[41vh] rounded-lg"
+                    className="font-semibold pl-5 pt-5 pr-5 h-[41vh] rounded-lg"
                   >
                     <Form.Item
                       label="Card Number"
