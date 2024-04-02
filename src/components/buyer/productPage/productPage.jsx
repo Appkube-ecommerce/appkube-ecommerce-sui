@@ -55,13 +55,10 @@ const ProductPage = () => {
     <div className="xl:px-36 sm:p-6  ">
       <div className="flex md:flex-row flex-col sm:justify-center justify-between gap-2 border-b-[2px] border-dashed border-gray-400  sm:w-[100%] ">
         {/* product image */}
-<<<<<<< HEAD
+
         {/* <ImgsData /> */}
-=======
-        <Image src={product.image} width={100} height={100}></Image>           
 
->>>>>>> 3b9d90444aa09f786814295b58c631600f85ef37
-
+        <Image src={product.image} width={100} height={100}></Image>       
         {/* product details */}
         {/* className="h-[700px] w-[580px] " */}
         <div className=" sm:h-[100%] sm:w-[100%] lg:w-[90%] lg:h-[80%] md:w-[70%] md:h-[85%] mt-6 mb-16 sm:p-4">

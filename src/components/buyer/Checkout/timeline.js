@@ -1,4 +1,3 @@
-
 "use client"
 import React, { useState } from 'react';
 import { Steps } from 'antd';
@@ -55,26 +54,6 @@ const Timeline = () => {
                     />
                 ))}
             </Steps>
-        </div>
-
-        <Steps
-
-            className="w-[60%] text-sm"
-
-            direction="horizontal"
-            current={current}
-            onChange={onChange}
-        >
-            {steps.map((step, index) => (
-                <Step
-                    key={index}
-                    title={<span style={{ color: 'white'}}>{step.title}</span>}
-                    description={<span style={{ color: 'white' }}>{step.description}</span>}
-                    icon={step.icon}
-                    onClick={step.onClick}
-                />
-            ))}
-        </Steps>
         </div>
     );
 };
