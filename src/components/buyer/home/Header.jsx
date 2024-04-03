@@ -1,69 +1,72 @@
-"use client"
+"use client";
 import { useState } from "react";
-import { useSelector } from 'react-redux';
+import { useSelector } from "react-redux";
 import { IoSearch } from "react-icons/io5";
 import { FaLocationArrow } from "react-icons/fa";
 import { BsFillBasketFill } from "react-icons/bs";
-import { MdAccountCircle } from "react-icons/md";
+//import { MdAccountCircle } from "react-icons/md";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { RxCross1 } from "react-icons/rx";
 import Link from "next/link";
-import { setAllProducts } from "@/redux/slices/products";
-import Image from "next/image"; 
- import { useRouter } from "next/navigation";
- import { FaBookmark } from "react-icons/fa6";
-
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { FaBookmark } from "react-icons/fa6";
+import DropDown from "../myAccont/profile/dropDown";
 
 const Header = ({ onSearch }) => {
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
+  const [isDropDownOpen, setIsDropDownOpen] = useState(false);
 
   const handleSearchChange = (e) => {
     setSearchQuery(e.target.value);
     onSearch(e.target.value);
   };
-  const router =useRouter()
+
+  const handleDropDown = () => {
+    setIsDropDownOpen(!isDropDownOpen); // Toggle dropdown visibility
+  };
+
+  const router = useRouter();
   const saveForLater = () => {
- router.push("/buyer/SaveForlater")
-  }
+    router.push("/buyer/SaveForlater");
+  };
+
   const [isNavOpen, setIsNavOpen] = useState(false);
-  const cartItems = useSelector(state => state.cartDetails.cart);
-  // const products = useSelector(state => state.allProducts.products);
+  const cartItems = useSelector((state) => state.cartDetails.cart);
+  const allProducts = useSelector((state) => state.allProducts.products);
+  console.log(allProducts);
+  const AddProductsintocart = useSelector(
+    (state) => state.saveForLaterSlice.saveForLater
+  );
 
   const HandleNav = () => {
     setIsNavOpen(!isNavOpen);
   };
-  const allProducts=useSelector(state=>state.allProducts.products);
-  console.log(allProducts);
-  const AddProductsintocart = useSelector(state => state.saveForLaterSlice.saveForLater);
 
   return (
-
     <header className="container-fluid flex justify-between items-center px-[5%] w-full h-[12vh] border-t-green-500 border-t-4">
       <div className="logo w-[20%] sm:w-[16%] lg:w-[10%]">
         <Link href="/buyer/home">
-        <Image
-  src="https://asset.brandfetch.io/idIM18oaEt/idnUr2C08_.svg"
-  alt="Logo"
-  width={100}
-  height={100}
-/>
-
+          <Image
+            src="https://asset.brandfetch.io/idIM18oaEt/idnUr2C08_.svg"
+            alt="Logo"
+            width={100}
+            height={100}
+          />
         </Link>
       </div>
       <div className="searchbar container-fluid w-[60%] sm:w-[55%] md:w-[45%] lg:w-[40%] relative flex shadow">
-        {/* <IoSearch className="text-green-500 absolute top-3 left-1 flex text-lg " /> */}
         <input
-        type="text"
-        placeholder="Search for products"
-        value={searchQuery}
-        onChange={handleSearchChange}
-        className="search-input w-full"
-        
-      />
-      </div>        
+          type="text"
+          placeholder="Search for products"
+          value={searchQuery}
+          onChange={handleSearchChange}
+          className="search-input w-full"
+        />
+      </div>
 
-      <div className={`burger md:hidden p-1 cursor-pointer ${isNavOpen ? <RxCross1 /> :<GiHamburgerMenu/> }`} onClick={HandleNav} >
-      {isNavOpen ? <RxCross1 className="font-extrabold text-xl" /> : <GiHamburgerMenu className="font-extrabold text-xl flex flex-col" />}
+      <div className={`burger md:hidden p-1 cursor-pointer ${isNavOpen ? <RxCross1 /> : <GiHamburgerMenu />} `} onClick={HandleNav}>
+        {isNavOpen ? <RxCross1 className="font-extrabold text-xl" /> : <GiHamburgerMenu className="font-extrabold text-xl flex flex-col" />}
       </div>
 
       <div className={`buttons justify-between w-[10%] md:flex md:w-[35%] lg:w-[35%] ${isNavOpen ? 'flex flex-col' : 'hidden'}`}>
@@ -80,7 +83,6 @@ const Header = ({ onSearch }) => {
               Login /Signup
             </button>
           </Link>
-          <MdAccountCircle className="bg-black text-white md:hidden sm:inline" />
         </div>
 
         <div className="relative">
@@ -94,10 +96,12 @@ const Header = ({ onSearch }) => {
           </Link>
         </div>
         <button className="p-2 md:p-3 border-2 rounded-md flex">
-          <FaBookmark className="font-bold text-lg  flex md:text-lg " onClick={saveForLater}/>
+          <FaBookmark className="font-bold text-lg  flex md:text-lg " onClick={saveForLater} />
           <div className="bg-black text-white text-xs text-center font-semibold w-4 h-4 rounded-lg">{AddProductsintocart.length}</div>
         </button>
+<DropDown />
       </div>
+      
     </header>
   );
 };

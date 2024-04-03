@@ -1,63 +1,41 @@
-"use client";
-import React, { useState, useEffect } from "react";
+'use client'
+import React, { useState } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { Layout, Menu, Button, Input } from "antd";
 import Header from "@/components/buyer/home/Header";
+import { useRouter } from "next/navigation";
 import {
-  HomeFilled,
   ShoppingCartOutlined,
-  TagFilled,
   UserOutlined,
-  BellOutlined,
   BarChartOutlined,
 } from "@ant-design/icons";
 
 const { Content, Sider } = Layout;
 const { Search } = Input;
 
-function getItem(label, key, icon, children) {
-  return {
-    key,
-    icon,
-    children,
-    label,
-  };
-}
-
 export default function RootLayout({ children }) {
+  const router = useRouter();
   const pathname = usePathname();
   const [display, setDisplay] = useState(true);
   const [collapsed, setCollapsed] = useState(false);
 
-  //   useEffect(() => {
-
-  //     if (pathname === "/admin/orders/summary") {
-  //       setDisplay(false);
-  //     } else {
-  //       setDisplay(true);
-  //     }
-  // }, [pathname]);
-
   const onSearch = (value) => console.log(value);
 
+  function getItem(label, key, icon, children) {
+    return {
+      key,
+      icon,
+      children,
+      label,
+    };
+  }
+
   const items = [
-    getItem(
-      <Link href={"/buyer/myAccount"}>My Account</Link>,
-      "1",
-      <UserOutlined />
-    ),
-    getItem(
-      <Link href={"/buyer/myAccount/myOrders"}>My Orders</Link>,
-      "4",
-      <ShoppingCartOutlined />
-    ),
-    getItem(
-      <Link href={"/buyer/myAccount/logout"}>Logout</Link>,
-      "5",
-      <BarChartOutlined />
-    ),
+    getItem(<Link href={"/buyer/myAccount"}>My Account</Link>, "1", <UserOutlined />),
+    getItem(<Link href={"/buyer/myAccount/myOrders"}>My Orders</Link>, "4", <ShoppingCartOutlined />),
   ];
+
 
   return (
     <div className="w-[70%]">
@@ -72,8 +50,6 @@ export default function RootLayout({ children }) {
               style={{
                 overflow: "auto",
                 height: "100vh",
-                // position: "fixed",
-                // marginTop: "10vh",
                 left: 0,
                 top: 0,
                 bottom: 0,
@@ -93,10 +69,10 @@ export default function RootLayout({ children }) {
               <div className={`${collapsed ? "ml-[80px]" : "ml-[200px]"}`}>
                 {children}
               </div>
-              {/* <Footer style={{ marginLeft: 200 }}></Footer> */}
             </Content>
           </Layout>
         </Layout>
+        
       </Layout>
     </div>
   );
