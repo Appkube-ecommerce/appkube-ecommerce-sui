@@ -9,7 +9,7 @@ const useFetchCustomers = () => {
     const fetchData = async () => {
       try {
         const result = await fetchcustomer(); // Assuming fetchProducts is your API call function
-        setcustomer(result.data.listCustomers.items);
+        setcustomer(result.data);
         setLoading(false);
       } catch (error) {
         setError(error);

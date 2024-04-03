@@ -46,7 +46,7 @@ const Card = () => {
     return (
       <div className="empty-cart">
         {/* <ShoppingCartOutlined style={{ fontSize: '500px', color: '#ccc' }} /> */}
-        <Image src={empty} height={500} width={500} ></Image>
+        <Image src={empty} height={500} width={500} alt="image"></Image>
         <div className="flex gap-5">
         <h1 className="text-lg font-bold">Add some items into the cart</h1>
         <Link href="/">

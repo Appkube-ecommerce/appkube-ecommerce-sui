@@ -3,7 +3,6 @@ import React, { useRef, useState, useEffect } from "react";
 import {
   SearchOutlined,
   EditOutlined,
-  LoadingOutlined,
   PlusOutlined,
   ShoppingCartOutlined,
 } from "@ant-design/icons";
@@ -29,7 +28,22 @@ import ProductList from "../print/print";
 import { useDispatch } from "react-redux";
 import axios from "@/Api/axios";
 import Image from "next/image";
-
+const getBase64 = (img, callback) => {
+  const reader = new FileReader();
+  reader.addEventListener('load', () => callback(reader.result));
+  reader.readAsDataURL(img);
+};
+const beforeUpload = (file) => {
+  const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
+  if (!isJpgOrPng) {
+    message.error('You can only upload JPG/PNG file!');
+  }
+  const isLt2M = file.size / 1024 / 1024 < 2;
+  if (!isLt2M) {
+    message.error('Image must smaller than 2MB!');
+  }
+  return isJpgOrPng && isLt2M;
+};
 const Products = () => {
   const dispatch = useDispatch();
   const { Option } = Select;
@@ -59,15 +73,6 @@ const Products = () => {
     fetchData();
   }, [dispatch]);
 
-  // useEffect(() => {
-  //   const updatedCart = products.filter((product) => product.selected);
-  //   setCart(updatedCart);
-  //   setSelectedCount(updatedCart.length);
-  //   console.log(updatedCart);
-  //   console.log("cart items", cart);
-  //   console.log("count of cart", selectedCount);
-  // }, [products]);
-
   useEffect(() => {
     const updatedCart = products.filter((product) => product.selected);
     setCart(updatedCart);
@@ -77,33 +82,6 @@ const Products = () => {
     setSelectedCount(cart.length);
   }, [cart]); // Only include cart in the dependency array
 
-  // useEffect(() => {
-  //   const count = products.reduce((acc, curr,record) => {
-  //     // console.log('current',curr)
-  //     // console.log('acc',acc)
-  //     // return curr.selected ? acc + 1 : acc;
-  //     if(curr.selected){
-  //       setCart([...cart,curr.record])
-  //       return acc +  1
-  //       console.log('cart details',cart)
-  //     }
-  //     // else if(!curr.selected){
-  //     //   const itemIndex = cart.findIndex(
-  //     //     (item) => item.id === curr.id,
-  //     //     );
-
-  //     //     const newCart = cart.splice(itemIndex, 1);
-  //     //   // setCart(newCart)
-  //     //  {(newCart.length > 0) ? (console.log('new Cart',newCart)) : ("")}
-
-  //     // }
-  //     else{
-  //       return acc
-
-  //     }
-  //   }, 0);
-  //   setSelectedCount(count);
-  // }, [products]);
   const showModalForEdit = (record) => {
     setOpen(true);
     setOpenEditModal(true);
@@ -163,7 +141,6 @@ const Products = () => {
   };
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
-  const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const searchInput = useRef(null);
   const showModal = () => {
@@ -171,9 +148,7 @@ const Products = () => {
     setOpenExportModal(true);
   };
   const handleOk = () => {
-    setLoading(true);
     setTimeout(() => {
-      setLoading(false);
       setOpen(false);
       setOpenExportModal(true);
     }, 3000);
@@ -310,46 +285,22 @@ const Products = () => {
     }
   };
 
-  // upload imag code for edit modal
-  // const beforeUpload = (file) => {
-  //   const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png";
-  //   if (!isJpgOrPng) {
-  //     message.error("You can only upload JPG/PNG file!");
-  //   }
-  //   return isJpgOrPng;
-  // };
-
-  // const handleChange = (info) => {
-  //   // if (info.file.status === "uploading") {
-  //   //   return;
-  //   // }
-  //   // if (info.file.status === "done") {
-  //     // Get this url from response in real world.
-  //     const newImageUrl = info.file.response.url;
-  //     console.log("image url new",newImageUrl)
-  //     setEditedData({ ...editedData, image: newImageUrl }); // Update editedData with new image URL
-  //     setImageUrl(newImageUrl); // Update imageUrl state with new image URL
-  // };
-  const handleChange = (info) => {
-    if (info.file.status === "done") {
-      const reader = new FileReader();
-      reader.onload = () => {
-        // The base64 code of the image is in the 'result' property of the FileReader object
-        const base64Code = reader.result;
-        // Update the editedData and imageUrl state with the new base64 code
-        setEditedData({ ...editedData, image: base64Code });
-        setImageUrl(base64Code);
-      };
-      // Read the file as a data URL
-      reader.readAsDataURL(info.file.originFileObj);
-      console.log(base64Code);
-    }
-  };
   const uploadButton = (
-    <div>
-      {loading ? <LoadingOutlined /> : <PlusOutlined />}
-      <div style={{ marginTop: 8 }}>Upload</div>
-    </div>
+    <button
+      style={{
+        border: 0,
+        background: 'none',
+      }}
+      type="button"
+      >
+      <div
+        style={{
+          marginTop: 8,
+        }}
+      >
+        Upload
+      </div>
+    </button>
   );
   const columns = [
     {
@@ -370,10 +321,10 @@ const Products = () => {
             }
           }}
           checked={products.every((product) => product.selected)}
-        />
-      ),
-      width: "5%",
-      render: (_, record) => (
+          />
+          ),
+          width: "5%",
+          render: (_, record) => (
         <Checkbox
           checked={record.selected}
           onChange={(e) => handleCheckboxChange(record, e.target.checked)}
@@ -386,7 +337,7 @@ const Products = () => {
       key: "image",
       width: "10%",
       render: (image) => (
-        <Image src={image} alt="Product" width={50} height={50} />
+        <Image unoptimized src={image} alt="Product" width={60} height={60} />
       ),
     },
 
@@ -431,7 +382,18 @@ const Products = () => {
       ),
     },
   ];
+  
+  const handleChange = (info) => {
+    if (info.file.status === 'done') {
+      // Get this url from response in real world.
+      getBase64(info.file.originFileObj, (url) => {
+        console.log("my image url",imageUrl)
+        setEditedData({ ...editedData, image: url });
+        setImageUrl(url);
+      });
+    }
 
+  };
   return (
     <div>
       <header className="flex justify-between items-center mt-4  ">
@@ -445,7 +407,7 @@ const Products = () => {
               padding: "8px 15px 8px 15px",
             }}
             onClick={showModal}
-          >
+            >
             Export
           </button>
           <ImportButton />
@@ -455,9 +417,8 @@ const Products = () => {
           <button
             key="link"
             // className="md:text-sm bg-black text-white rounded-md px-8 py-2"
-
+            
             className="bg-black text-white rounded-md px-8 py-2 "
-            loading={loading}
             onClick={AddProducts}
           >
             Add Product
@@ -480,7 +441,6 @@ const Products = () => {
             <Button
               key="Cancel"
               className="bg-black text-white"
-              loading={loading}
               onClick={handleOk}
             >
               Export Products
@@ -573,15 +533,18 @@ const Products = () => {
                   listType="picture-card"
                   className="avatar-uploader"
                   showUploadList={false}
-                  action="/uploadURL"
-                  // beforeUpload={beforeUpload}
+                  // action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
+                  beforeUpload={beforeUpload}
                   onChange={handleChange}
                 >
                   {imageUrl ? (
                     <Image
+                    width={imageUrl ? 100 : undefined} // Set width if imageUrl is available
+                    height={imageUrl ? 100 : undefined} 
                       src={imageUrl}
+                      unoptimized
                       alt="image"
-                      style={{ width: "100%" }}
+                      style={{ width: "auto",height:"auto" }}
                     />
                   ) : (
                     uploadButton

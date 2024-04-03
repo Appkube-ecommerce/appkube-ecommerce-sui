@@ -1,11 +1,8 @@
 "use client";
-import Link from "next/link";
-//import { useRouter } from 'next/router';
 import React from "react";
 import { Space } from "antd";
 import pro from "./images/product.svg";
 import Image from "next/image";
-import ImportButton from "./customers/importButton";
 import { useRouter } from "next/navigation";
 
 const Home = () => {
@@ -54,7 +51,6 @@ const Home = () => {
                   <Image src={pro} alt="product" height={100} width={100} />
                 </div>
                 <div className="hover:cursor-pointer mt-3">
-                  {/* <ImportButton /> */}
                 </div>
               </div>
               <div>

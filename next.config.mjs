@@ -5,7 +5,8 @@ const withBundleAnalyzer = bundleAnalyzer({ enabled: process.env.ANALYZE === 'tr
 const nextConfig = {
 
   images: {
-    domains: ['posdmsservice.s3.amazonaws.com', 'shopify-assets.shopifycdn.com'],
+  
+    domains: ['posdmsservice.s3.amazonaws.com', 'shopify-assets.shopifycdn.com','www.shutterstock.com'],
   },
 };
 
