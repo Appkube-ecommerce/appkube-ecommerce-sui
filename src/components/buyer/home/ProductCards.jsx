@@ -38,7 +38,8 @@ const ProductCards = ({ data,searchQuery}) => {
               src={data.image}
               width={100}
               height={100}
-              alt={data.category}
+              style={{width:"auto",height:"auto"}}
+              alt="product image"
               unoptimized 
               className="w-[100%] h-[100%] rounded-md"
             />

@@ -58,7 +58,7 @@ const ProductPage = () => {
 
         {/* <ImgsData /> */}
 
-        <Image src={product.image} width={100} height={100}></Image>       
+        <Image src={product.image} width={100} height={100} alt="product image"></Image>       
         {/* product details */}
         {/* className="h-[700px] w-[580px] " */}
         <div className=" sm:h-[100%] sm:w-[100%] lg:w-[90%] lg:h-[80%] md:w-[70%] md:h-[85%] mt-6 mb-16 sm:p-4">

@@ -89,8 +89,8 @@ export default function RootLayout({ children }) {
             </Sider>
           )}
           <Layout className="site-layout flex flex-col">
-            <Content style={{ paddingLeft: 10 }}>
-              <div className={`${collapsed ? "ml-[80px]" : "ml-[200px]"}`}>
+            <Content className="p-10">
+              <div>
                 {children}
               </div>
               {/* <Footer style={{ marginLeft: 200 }}></Footer> */}
