@@ -10,7 +10,6 @@ import {
   UserOutlined,
   BarChartOutlined,
 } from "@ant-design/icons";
-
 const { Content, Sider } = Layout;
 const { Search } = Input;
 
@@ -19,7 +18,6 @@ export default function RootLayout({ children }) {
   const pathname = usePathname();
   const [display, setDisplay] = useState(true);
   const [collapsed, setCollapsed] = useState(false);
-
   const onSearch = (value) => console.log(value);
 
   function getItem(label, key, icon, children) {
@@ -35,8 +33,6 @@ export default function RootLayout({ children }) {
     getItem(<Link href={"/buyer/myAccount"}>My Account</Link>, "1", <UserOutlined />),
     getItem(<Link href={"/buyer/myAccount/myOrders"}>My Orders</Link>, "4", <ShoppingCartOutlined />),
   ];
-
-
   return (
     <div className="w-[70%]">
       <Header />

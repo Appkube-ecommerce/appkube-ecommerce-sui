@@ -20,10 +20,6 @@ const MyAccountPage = () => {
           </h1>
         </div>
       </div>
-
-<<<<<<< HEAD
-export default MyAccountPage;
-=======
       <bottom className="pt-10">
        <h1 className="font-semibold text-2xl">My Orders</h1>
        <div>
@@ -37,4 +33,3 @@ export default MyAccountPage;
 };
 
 export default MyAccountPage;
->>>>>>> 2b385b57733e7ccf61373adc84b3a6ba8ec09a32
