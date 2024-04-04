@@ -4,11 +4,8 @@ import { Card, Button, Modal, Radio, Steps, Popconfirm } from "antd"; // Added P
 import { DeleteOutlined, DashboardFilled } from "@ant-design/icons";
 import Image from "next/image";
 import pro from "../../../../components/admin/images/product.svg";
-import OrderSummary from "./OrderSummary";
 import { useRouter } from "next/navigation"; // Fixed import path
 import { useSelector } from "react-redux";
-
-const { Step } = Steps;
 
 const DeliveryOption = () => {
   const router = useRouter();

@@ -36,6 +36,7 @@ const ProductCards = ({ data,searchQuery}) => {
               src={data.image}
               width={100}
               height={100}
+              loading="lazy"
               style={{width:"auto",height:"auto"}}
               alt="product image"
               unoptimized 

@@ -9,7 +9,7 @@ import 'jspdf-autotable';
 import { notification } from "antd";
 import useFetchCustomers from "@/components/customHooks/useFetchCustomers";
 
-const Share = () => {
+export const Share = () => {
   const router = useRouter();
 
   const AddCustomers = () => {
