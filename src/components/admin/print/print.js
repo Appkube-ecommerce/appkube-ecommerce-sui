@@ -31,7 +31,7 @@ const ProductList = () => {
         const fetchData = async () => {
             try {
               const result = await axios.get("/product");
-                setProducts(result.data.listProducts.items);
+                setProducts(result.data);
             } catch (error) {
                 console.error("Error fetching products:", error);
             }

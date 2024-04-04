@@ -3,12 +3,12 @@ import React, { useState } from "react";
 import { Card, Button, Modal, Radio, Steps, Popconfirm } from "antd"; // Added Popconfirm import
 import { DeleteOutlined, DashboardFilled } from "@ant-design/icons";
 import Image from "next/image";
-import pro from "../../../../components/admin/images/product.svg";
 import OrderSummary from "./OrderSummary";
 import { useRouter } from "next/navigation"; // Fixed import path
 import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { remove } from "@/redux/slices/CartSlice";
 
-const { Step } = Steps;
 
 const DeliveryOption = () => {
   const router = useRouter();
@@ -21,12 +21,6 @@ const DeliveryOption = () => {
   const [selectedSlot, setSelectedSlot] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
   const [itemsModalVisible, setItemsModalVisible] = useState(false);
-  const [items, setItems] = useState([
-    { id: 1, name: "Item 1", image: pro },
-    { id: 2, name: "Item 2", image: pro },
-    { id: 3, name: "Item 3", image: pro },
-    // Add more items as needed
-  ]);
   const dates = [];
   const currentDate = new Date();
   for (let i = 0; i < 5; i++) {
@@ -62,9 +56,10 @@ const DeliveryOption = () => {
   const handleViewItems = () => {
     setItemsModalVisible(true);
   };
-
+  const dispatch = useDispatch();
   const handleDeleteItem = (id) => {
-    setItems(items.filter((item) => item.id !== id));
+    dispatch(remove(id));
+    // setItems(AddProductsintocart.filter((item) => item.id!== id));
   };
   
   const AddProductsintocart = useSelector(state => state.cartDetails.cart);
@@ -77,7 +72,7 @@ const DeliveryOption = () => {
             <div className="flex mb-3 gap-2">
               {AddProductsintocart.map((item) => (
                 <div key={item.id} className="w-[10%] h-[45%] border rounded-md">
-                  <Image src={item.image} alt={item.name} />
+                  <Image src={item.image} alt={item.name}  width={50} height={50}/>
                 </div>
               ))}
               <div
@@ -163,7 +158,7 @@ const DeliveryOption = () => {
               </div>
               <Popconfirm
                 title="Are you sure to delete this item?"
-                onConfirm={() => handleDeleteItem(item.id)}
+                onConfirm={() => handleDeleteItem(AddProductsintocart.id)}
                 okText="Yes"
                 cancelText="No"
               >
@@ -172,6 +167,9 @@ const DeliveryOption = () => {
             </div>
           ))}
         </Modal>
+      </div>
+      <div>
+        <OrderSummary/>
       </div>
     </div>
   );

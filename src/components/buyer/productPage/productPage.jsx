@@ -58,6 +58,10 @@ const ProductPage = () => {
         <Image src={product.image} width={100} height={100}></Image>           
 
 
+<<<<<<< HEAD
+=======
+        <Image src={product.image} width={100} height={100} alt="product image"></Image>       
+>>>>>>> 2b385b57733e7ccf61373adc84b3a6ba8ec09a32
         {/* product details */}
         {/* className="h-[700px] w-[580px] " */}
         <div className=" sm:h-[100%] sm:w-[100%] lg:w-[90%] lg:h-[80%] md:w-[70%] md:h-[85%] mt-6 mb-16 sm:p-4">

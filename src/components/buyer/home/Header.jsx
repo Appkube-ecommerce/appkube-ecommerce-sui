@@ -71,7 +71,7 @@ const Header = ({ onSearch }) => {
 
       <div className={`buttons justify-between w-[10%] md:flex md:w-[35%] lg:w-[35%] ${isNavOpen ? 'flex flex-col' : 'hidden'}`}>
         <div className="relative">
-          <button className="btn bg-[#E8E8E8] md:p-1 lg:p-2 shadow lg:pl-7 rounded-md p-2 lg:inline-block hover:bg-gray-300 transition-colors">
+          <button className="btn bg-[#E8E8E8] md:p-1 lg:p-2 shadow lg:pl-7 rounded-md p-1 h-14 lg:inline-block hover:bg-gray-300 transition-colors">
             <FaLocationArrow className="absolute top-3 left-1 md:hidden lg:inline" />
             Select Location
           </button>
@@ -79,7 +79,7 @@ const Header = ({ onSearch }) => {
 
         <div className="relative">
           <Link href="/buyer/login">
-            <button className="btn bg-black md:p-1 lg:p-2 rounded-md text-white hidden p-2 md:inline-block hover:bg-gray-600 transition-colors">
+            <button className="btn bg-black md:p-1 lg:p-2 rounded-md text-white  p-1 w-auto md:inline-block h-14 hover:bg-gray-600 transition-colors">
               Login /Signup
             </button>
           </Link>
@@ -87,7 +87,7 @@ const Header = ({ onSearch }) => {
 
         <div className="relative">
           <Link href="/buyer/AddTocardProd">
-            <button className="btn bg-red-200 rounded-md p-2 hover:bg-red-300 transition-colors">
+            <button className="btn bg-red-200 rounded-md p-2 hover:bg-red-300 transition-colors w-auto">
               <div className="rounded-full flex bg-red-600 p-1">
                 <BsFillBasketFill className="text-white text-2xl h-4" />
                 <div className="bg-black text-white text-xs text-center font-semibold w-4 h-4 rounded-lg">{cartItems.length}</div>
@@ -95,8 +95,13 @@ const Header = ({ onSearch }) => {
             </button>
           </Link>
         </div>
+<<<<<<< HEAD
         <button className="p-2 md:p-3 border-2 rounded-md flex">
           <FaBookmark className="font-bold text-lg  flex md:text-lg " onClick={saveForLater} />
+=======
+        <button className="p-1 md:p-3 border-2 rounded-md flex w-auto h-10">
+          <FaBookmark className="font-bold text-lg  flex md:text-lg " onClick={saveForLater}/>
+>>>>>>> 2b385b57733e7ccf61373adc84b3a6ba8ec09a32
           <div className="bg-black text-white text-xs text-center font-semibold w-4 h-4 rounded-lg">{AddProductsintocart.length}</div>
         </button>
 <DropDown />

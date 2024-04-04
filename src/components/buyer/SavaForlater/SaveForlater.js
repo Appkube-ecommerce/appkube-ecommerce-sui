@@ -21,13 +21,13 @@ const SaveForlater = () => {
 
   const cards = saveForLater.map((product) => (
 
-    <div className="m-10 flex justify-center gap-7 w-[100%]">
+    <div className="m-10 flex justify-center gap-7 w-[100%]" key={product.id}>
       <div
         className="bg-white shadow-lg rounded-lg flex justify-evenly  "
         style={{ width: "100%" }}
       >
         <figure className="flex-shrink-0 p-5 rounded-lg pl-10">
-          <img
+          <Image
             src={product.image}
             className="w-[100%] h-48 object-cover p-3"
             alt="product"
