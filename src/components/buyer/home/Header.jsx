@@ -1,29 +1,32 @@
-"use client"
-import { useState } from "react";
-import { useSelector } from 'react-redux';
+'use client'
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import { IoSearch } from "react-icons/io5";
 import { FaLocationArrow } from "react-icons/fa";
 import { BsFillBasketFill } from "react-icons/bs";
-import { MdAccountCircle } from "react-icons/md";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { RxCross1 } from "react-icons/rx";
 import Link from "next/link";
-import { setAllProducts } from "@/redux/slices/products";
-import Image from "next/image"; 
-import { useRouter } from "next/navigation";
+import Image from "next/image";
+import { useRouter } from "next/navigation"; // Update import for useRouter
 import { FaBookmark } from "react-icons/fa6";
+import DropdownComponent from "../myAccont/profile/dropDown";
+import LogoutConfirmation from "../myAccont/profile/logout";
 
 const Header = ({ onSearch }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [isNavOpen, setIsNavOpen] = useState(false);
   const router = useRouter();
   const cartItems = useSelector(state => state.cartDetails.cart);
-  const allProducts = useSelector(state => state.allProducts.products);
   const AddProductsintocart = useSelector(state => state.saveForLaterSlice.saveForLater);
 
   const handleSearchChange = (e) => {
     setSearchQuery(e.target.value);
     onSearch(e.target.value);
+  };
+
+  const handleDropDown = () => {
+    setIsDropDownOpen(!isDropDownOpen); 
   };
 
   const saveForLater = () => {
@@ -46,51 +49,55 @@ const Header = ({ onSearch }) => {
           />
         </Link>
       </div>
-      <div className="searchbar container-fluid w-[60%] sm:w-[55%] md:w-[45%] lg:w-[40%] relative flex shadow">
+
+      <div className="searchbar container-fluid w-[60%] sm:w-[55%] md:w-[45%] lg:w-[40%] relative flex shadow-md">
         <input
           type="text"
           placeholder="Search for products"
           value={searchQuery}
           onChange={handleSearchChange}
-          className="search-input w-full"
+          className="w-full h-8 text-sm hover:border-0 border-none"
         />
-      </div>        
+      </div>
 
-      <div className={`burger md:hidden p-1 cursor-pointer ${isNavOpen ? 'block' : 'hidden'}`} onClick={HandleNav} >
+      <div className={`burger md:hidden p-1 cursor-pointer ${isNavOpen ? 'block' : 'hidden'}`} onClick={HandleNav}>
         {isNavOpen ? <RxCross1 className="font-extrabold text-xl" /> : <GiHamburgerMenu className="font-extrabold text-xl flex flex-col" />}
       </div>
 
       <div className={`buttons justify-between w-[10%] md:flex md:w-[35%] lg:w-[35%] ${isNavOpen ? 'flex flex-col' : 'hidden'}`}>
         <div className="relative">
-          <button className="btn bg-[#E8E8E8] md:p-1 lg:p-2 shadow lg:pl-7 rounded-md p-1 h-14 lg:inline-block hover:bg-gray-300 transition-colors">
-            <FaLocationArrow className="absolute top-3 left-1 md:hidden lg:inline" />
-            Select Location
+          <button className="btn bg-[#E8E8E8] md:p-1 lg:p-2 rounded-md p-1 h-8 w-32 lg:inline-flex items-center justify-center hover:bg-gray-300 transition-colors">
+            <FaLocationArrow className="md:hidden lg:inline mr-1" />
+            <p className="text-xs font-semibold">Select Location</p>
           </button>
         </div>
 
         <div className="relative">
           <Link href="/buyer/login">
-            <button className="btn bg-black md:p-1 lg:p-2 rounded-md text-white  p-1 w-auto md:inline-block h-14 hover:bg-gray-600 transition-colors">
-              Login /Signup
+            <button className="btn bg-black md:p-1 lg:p-2 rounded-md text-white p-1 w-24 md:inline-block h-8 hover:bg-gray-600 transition-colors ">
+              <p className="text-xs">Login /Signup</p> 
             </button>
           </Link>
-          <MdAccountCircle className="bg-black text-white md:hidden sm:inline" />
         </div>
 
         <div className="relative">
           <Link href="/buyer/AddTocardProd">
-            <button className="btn bg-red-200 rounded-md p-2 hover:bg-red-300 transition-colors w-auto">
-              <div className="rounded-full flex bg-red-600 p-1">
-                <BsFillBasketFill className="text-white text-2xl h-4" />
-                <div className="bg-black text-white text-xs text-center font-semibold w-4 h-4 rounded-lg">{cartItems.length}</div>
+            <button className="btn bg-red-200 rounded-md p-0 hover:bg-red-300 transition-colors w-auto h-8 relative">
+              <div className="rounded-full flex bg-red-600 p-1 relative">
+                <BsFillBasketFill className="text-white text-2xl" />
+                <div className="absolute -top-1 -right-1 bg-black text-white text-xs text-center font-semibold w-4 h-4 rounded-full">{cartItems.length}</div>
               </div>
             </button>
           </Link>
         </div>
-        <button className="p-1 md:p-3 border-2 rounded-md flex w-auto h-10">
-          <FaBookmark className="font-bold text-lg  flex md:text-lg " onClick={saveForLater}/>
-          <div className="bg-black text-white text-xs text-center font-semibold w-4 h-4 rounded-lg">{AddProductsintocart.length}</div>
+
+        <button className="p-1 md:p-0 border-2 rounded-md flex w-auto h-8 relative">
+          <div className="absolute -top-1 -right-1 bg-black text-white text-xs text-center font-semibold w-4 h-4 rounded-full">{AddProductsintocart.length}</div>
+          <FaBookmark className="font-bold text-lg  flex md:text-lg m-auto" onClick={saveForLater}/>
         </button>
+
+        <DropdownComponent />
+        <LogoutConfirmation />
       </div>
     </header>
   );

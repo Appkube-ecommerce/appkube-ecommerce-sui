@@ -20,7 +20,6 @@ const MyAccountPage = () => {
           </h1>
         </div>
       </div>
-
       <bottom className="pt-10">
        <h1 className="font-semibold text-2xl">My Orders</h1>
        <div>
