@@ -244,7 +244,7 @@ const Products = () => {
     filterIcon: (filtered) => (
       <SearchOutlined
         style={{
-          color: filtered ? "#1677ff" : undefined,
+          color: filtered ? "#1677ff" : null,
         }}
       />
     ),

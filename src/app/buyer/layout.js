@@ -10,8 +10,12 @@ const inter = Inter({ subsets: ["latin"] });
 export default function RootLayout({ children, includeHeader = false }) {
   const pathname = usePathname();
   const exclude = [
+    "/buyer/Checkout/DeliveryAddress",
+    "/buyer/Checkout/DeliveryOption",
+    "/buyer/Checkout/PaymentOption",
     "/buyer/myAccount/logout",
     "/buyer/login",
+    "/buyer/SaveForlater",
     "/buyer/register",
     "/buyer/login/account",
   ];
@@ -30,6 +34,7 @@ export default function RootLayout({ children, includeHeader = false }) {
 
   return (
     <div className="container-fluid flex flex-col justify-center items-center w-[100%] min-h-[100vh]">
+      {exclude.includes(pathname) ? null : <Header />}
       {shouldIncludeTimeline(pathname) && <Timeline />}
       {children}
       {/* {includeHeader && <Header />} */}
