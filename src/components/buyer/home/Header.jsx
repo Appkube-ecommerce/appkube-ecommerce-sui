@@ -7,6 +7,7 @@ import { BsFillBasketFill } from "react-icons/bs";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { RxCross1 } from "react-icons/rx";
 import Link from "next/link";
+<<<<<<< HEAD
 import Image from "next/image";
 // Update import for useRouter
 import { useRouter } from "next/navigation";
@@ -18,12 +19,27 @@ const Header = ({ onSearch }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [isDropDownOpen, setIsDropDownOpen] = useState(false);
   const [isNavOpen, setIsNavOpen] = useState(false);
+=======
+import { setAllProducts } from "@/redux/slices/products";
+import Image from "next/image"; 
+import { useRouter } from "next/navigation";
+import { FaBookmark } from "react-icons/fa6";
+
+const Header = ({ onSearch }) => {
+  const [searchQuery, setSearchQuery] = useState('');
+  const [isNavOpen, setIsNavOpen] = useState(false);
+  const router = useRouter();
+  const cartItems = useSelector(state => state.cartDetails.cart);
+  const allProducts = useSelector(state => state.allProducts.products);
+  const AddProductsintocart = useSelector(state => state.saveForLaterSlice.saveForLater);
+>>>>>>> acaa5af51024ccf477c03e21cb763be9c0d4d5d7
 
   const handleSearchChange = (e) => {
     setSearchQuery(e.target.value);
     onSearch(e.target.value);
   };
 
+<<<<<<< HEAD
   const handleDropDown = () => {
     setIsDropDownOpen(!isDropDownOpen); 
   };
@@ -38,13 +54,22 @@ const Header = ({ onSearch }) => {
   const AddProductsintocart = useSelector(
     (state) => state.saveForLaterSlice.saveForLater
   );
+=======
+  const saveForLater = () => {
+    router.push("/buyer/SaveForlater");
+  };
+>>>>>>> acaa5af51024ccf477c03e21cb763be9c0d4d5d7
 
   const HandleNav = () => {
     setIsNavOpen(!isNavOpen);
   };
 
   return (
+<<<<<<< HEAD
     <header className="container-fluid flex justify-between items-center px-[5%] w-full h-[12vh] border-t-green-500 border-t-4">
+=======
+    <header className="container-fluid flex justify-between items-center px-[5%] w-full h-[12vh] border-t-green-500 border-t-4 sticky top-0 bg-white z-10">
+>>>>>>> acaa5af51024ccf477c03e21cb763be9c0d4d5d7
       <div className="logo w-[20%] sm:w-[16%] lg:w-[10%]">
         <Link href="/buyer/home">
           <Image
@@ -55,6 +80,7 @@ const Header = ({ onSearch }) => {
           />
         </Link>
       </div>
+<<<<<<< HEAD
       <div className="searchbar container-fluid w-[60%] sm:w-[55%] md:w-[45%] lg:w-[40%] relative flex shadow-md">
   <input
     type="text"
@@ -67,6 +93,19 @@ const Header = ({ onSearch }) => {
 
 
       <div className={`burger md:hidden p-1 cursor-pointer ${isNavOpen ? "hidden" : ""}`} onClick={HandleNav}>
+=======
+      <div className="searchbar container-fluid w-[60%] sm:w-[55%] md:w-[45%] lg:w-[40%] relative flex shadow">
+        <input
+          type="text"
+          placeholder="Search for products"
+          value={searchQuery}
+          onChange={handleSearchChange}
+          className="search-input w-full"
+        />
+      </div>        
+
+      <div className={`burger md:hidden p-1 cursor-pointer ${isNavOpen ? 'block' : 'hidden'}`} onClick={HandleNav} >
+>>>>>>> acaa5af51024ccf477c03e21cb763be9c0d4d5d7
         {isNavOpen ? <RxCross1 className="font-extrabold text-xl" /> : <GiHamburgerMenu className="font-extrabold text-xl flex flex-col" />}
       </div>
 

@@ -1,13 +1,14 @@
 'use client'
 import React, { useEffect, useState } from "react";
-import ProductCards from "./ProductCards";
+// import ProductCards from "./ProductCards";
 import { FaChevronLeft } from "react-icons/fa";
 import { FaChevronRight } from "react-icons/fa";
 import axios from "@/Api/axios";
 import Header from "./Header";
 import { useDispatch, useSelector } from "react-redux";
 import { setAllProducts } from "@/redux/slices/products";
-
+import dynamic from 'next/dynamic'
+const ProductCards = dynamic(() => import('./ProductCards'))
 const MyBasket = () => {
 const [products, setProducts] = useState([]);
 const dispatch = useDispatch()

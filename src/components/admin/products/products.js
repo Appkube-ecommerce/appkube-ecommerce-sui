@@ -539,8 +539,8 @@ const Products = () => {
                 >
                   {imageUrl ? (
                     <Image
-                    width={imageUrl ? 100 : undefined} // Set width if imageUrl is available
-                    height={imageUrl ? 100 : undefined} 
+                    width={imageUrl ? 100 : null} // Set width if imageUrl is available
+                    height={imageUrl ? 100 : null} 
                       src={imageUrl}
                       unoptimized
                       alt="image"
