@@ -10,60 +10,54 @@ import { RxCross1 } from "react-icons/rx";
 import Link from "next/link";
 import { setAllProducts } from "@/redux/slices/products";
 import Image from "next/image"; 
- import { useRouter } from "next/navigation";
- import { FaBookmark } from "react-icons/fa6";
-
+import { useRouter } from "next/navigation";
+import { FaBookmark } from "react-icons/fa6";
 
 const Header = ({ onSearch }) => {
   const [searchQuery, setSearchQuery] = useState('');
+  const [isNavOpen, setIsNavOpen] = useState(false);
+  const router = useRouter();
+  const cartItems = useSelector(state => state.cartDetails.cart);
+  const allProducts = useSelector(state => state.allProducts.products);
+  const AddProductsintocart = useSelector(state => state.saveForLaterSlice.saveForLater);
 
   const handleSearchChange = (e) => {
     setSearchQuery(e.target.value);
     onSearch(e.target.value);
   };
-  const router =useRouter()
+
   const saveForLater = () => {
- router.push("/buyer/SaveForlater")
-  }
-  const [isNavOpen, setIsNavOpen] = useState(false);
-  const cartItems = useSelector(state => state.cartDetails.cart);
-  // const products = useSelector(state => state.allProducts.products);
+    router.push("/buyer/SaveForlater");
+  };
 
   const HandleNav = () => {
     setIsNavOpen(!isNavOpen);
   };
-  const allProducts=useSelector(state=>state.allProducts.products);
-  console.log(allProducts);
-  const AddProductsintocart = useSelector(state => state.saveForLaterSlice.saveForLater);
 
   return (
-
-    <header className="container-fluid flex justify-between items-center px-[5%] w-full h-[12vh] border-t-green-500 border-t-4">
+    <header className="container-fluid flex justify-between items-center px-[5%] w-full h-[12vh] border-t-green-500 border-t-4 sticky top-0 bg-white z-10">
       <div className="logo w-[20%] sm:w-[16%] lg:w-[10%]">
         <Link href="/buyer/home">
-        <Image
-  src="https://asset.brandfetch.io/idIM18oaEt/idnUr2C08_.svg"
-  alt="Logo"
-  width={100}
-  height={100}
-/>
-
+          <Image
+            src="https://asset.brandfetch.io/idIM18oaEt/idnUr2C08_.svg"
+            alt="Logo"
+            width={100}
+            height={100}
+          />
         </Link>
       </div>
       <div className="searchbar container-fluid w-[60%] sm:w-[55%] md:w-[45%] lg:w-[40%] relative flex shadow">
-        {/* <IoSearch className="text-green-500 absolute top-3 left-1 flex text-lg " /> */}
         <input
-        type="text"
-        placeholder="Search for products"
-        value={searchQuery}
-        onChange={handleSearchChange}
-        className="search-input w-full"
-        
-      />
+          type="text"
+          placeholder="Search for products"
+          value={searchQuery}
+          onChange={handleSearchChange}
+          className="search-input w-full"
+        />
       </div>        
 
-      <div className={`burger md:hidden p-1 cursor-pointer ${isNavOpen ? <RxCross1 /> :<GiHamburgerMenu/> }`} onClick={HandleNav} >
-      {isNavOpen ? <RxCross1 className="font-extrabold text-xl" /> : <GiHamburgerMenu className="font-extrabold text-xl flex flex-col" />}
+      <div className={`burger md:hidden p-1 cursor-pointer ${isNavOpen ? 'block' : 'hidden'}`} onClick={HandleNav} >
+        {isNavOpen ? <RxCross1 className="font-extrabold text-xl" /> : <GiHamburgerMenu className="font-extrabold text-xl flex flex-col" />}
       </div>
 
       <div className={`buttons justify-between w-[10%] md:flex md:w-[35%] lg:w-[35%] ${isNavOpen ? 'flex flex-col' : 'hidden'}`}>

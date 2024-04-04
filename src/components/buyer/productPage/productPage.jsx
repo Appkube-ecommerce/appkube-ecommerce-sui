@@ -182,7 +182,7 @@ const ProductPage = () => {
         <div className="flex gap-6 justify-center sm:flex-wrap lg:flex-nowrap flex-wrap">
           <div className="bg-gray-100 w-72 h-40 p-4 text-center rounded-md flex flex-col items-center ">
             <div className="w-16 h-16 rounded-full p-3 bg-white mb-3">
-              <Image src="/bottle-svgrepo-com.svg" alt=""/>
+              <Image src="/bottle-svgrepo-com.svg" alt="" height={100} width={100}/>
             </div>
 
             <p className="font-medium">Quality</p>
@@ -191,7 +191,7 @@ const ProductPage = () => {
 
           <div className="bg-gray-100 w-72 h-40 p-4 text-center rounded-md flex flex-col items-center">
             <div className="w-16 h-16 rounded-full p-3 bg-white mb-3">
-              <Image src="/bottle-svgrepo-com.svg" alt=""/>
+              <Image src="/bottle-svgrepo-com.svg" alt="" height={100} width={100}/>
             </div>
 
             <p className="font-medium">Quality</p>
@@ -200,7 +200,7 @@ const ProductPage = () => {
 
           <div className="bg-gray-100 w-72 h-40 p-4 text-center rounded-md flex flex-col items-center">
             <div className="w-16 h-16 rounded-full p-3 bg-white mb-3">
-              <Image src="/bottle-svgrepo-com.svg" alt=""/>
+              <Image src="/bottle-svgrepo-com.svg" alt="" height={100} width={100}/>
             </div>
 
             <p className="font-medium">Quality</p>
@@ -209,7 +209,7 @@ const ProductPage = () => {
 
           <div className="bg-gray-100 w-72 h-40 p-4 text-center rounded-md flex flex-col items-center">
             <div className="w-16 h-16 rounded-full p-3 bg-white mb-3">
-              <Image src="/bottle-svgrepo-com.svg" alt=""/>
+              <Image src="/bottle-svgrepo-com.svg" alt="" height={100} width={100}/>
             </div>
 
             <p className="font-medium">Quality</p>
