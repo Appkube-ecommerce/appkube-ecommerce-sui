@@ -7,8 +7,6 @@ import { useDispatch,useSelector} from "react-redux";
 import { addToCart } from "@/redux/slices/CartSlice";
 import { addToSaveForLater } from "@/redux/slices/saveForLaterSlice";
 import { notification } from 'antd';
-
-
 const ProductCards = ({ data,searchQuery}) => {
     // const allProducts = useSelector((state) => state.allProducts.products);
   
@@ -41,21 +39,21 @@ const ProductCards = ({ data,searchQuery}) => {
               style={{width:"auto",height:"auto"}}
               alt="product image"
               unoptimized 
-              className="w-[100%] h-[100%] rounded-md"
+              className="rounded-md"
             />
           </Link>
         </div>
-      <div className="self-start text-lg font-semibold flex m-1 justify-center items-center ">
+      <div className="text-lg font-semibold flex m-1 justify-center items-center ">
         {data.name}
       </div>
-      <div className="self-start gap-2">
+      <div className=" gap-2">
         <h2 className="text-lg  h-6 ">Category:{data.category}</h2>
        
       </div>
-      <div className="self-start text-lg font-semibold flex m-1 justify-center items-center">
+      <div className=" text-lg font-semibold flex m-1 justify-center items-center">
         {data.unit}   :  <FaRupeeSign />{data.price}
       </div>
-      {/* <div className="self-start text-lg font-bold flex m-1 justify-center items-center">
+      {/* <div className="text-lg font-bold flex m-1 justify-center items-center">
          
         </div> */}
       <div className="flex justify-between items-center w-[100%] h-[10%]">
@@ -68,6 +66,7 @@ const ProductCards = ({ data,searchQuery}) => {
       </div>
     </div>
     </div >
+
   );
 };
 

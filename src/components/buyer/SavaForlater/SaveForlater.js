@@ -31,6 +31,8 @@ const SaveForlater = () => {
             src={product.image}
             className="w-[100%] h-48 object-cover p-3"
             alt="product"
+            width={100}
+            height={100}
           />
         </figure>
         <div className="p-6 flex flex-col justify-between">

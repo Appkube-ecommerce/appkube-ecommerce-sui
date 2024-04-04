@@ -113,7 +113,7 @@ const Share = () => {
     }
   };
 
-  const { loadings } = useFetchCustomers();
+  const { loadings } =  (loadings);
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
   const [loading, setLoading] = useState(false);

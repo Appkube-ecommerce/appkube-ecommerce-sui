@@ -14,9 +14,9 @@ const Comp = () => {
 
   return (
 
-    <div className='flex flex-col gap-3 justify-center'>
+    <div className='flex flex-col gap-3 justify-center '>
       {items.length > 0 && (
-        <section className='bg-black med:flex justify-between items-center p-[2%] rounded-md '>
+        <section className='bg-black med:flex justify-between items-center p-[2%] rounded-md sticky top-0 z-10'>
           <right className='xsmall:text-xs small:text-sm med:text-md lgr:text-lg'>
             <h1 className="text-white">Subtotal ({items.length} item): ₹{subtotal.toFixed(2)}</h1>
             <h3 className="text-lime-500 font-bold bg-gradient-to-r from-gray-900 to-stone-600 rounded-md">Savings: ₹{subtotal/2}</h3>

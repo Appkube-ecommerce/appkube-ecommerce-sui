@@ -77,7 +77,7 @@ const DeliveryOption = () => {
             <div className="flex mb-3 gap-2">
               {AddProductsintocart.map((item) => (
                 <div key={item.id} className="w-[10%] h-[45%] border rounded-md">
-                  <Image src={item.image} alt={item.name} />
+                  <Image src={item.image} alt={item.name} width={100} height={100}/>
                 </div>
               ))}
               <div
@@ -95,7 +95,7 @@ const DeliveryOption = () => {
                 {/* Modal for selecting date and slot */}
                 <Modal
                   title="Select Date and Slot"
-                  visible={modalVisible}
+                  open={modalVisible}
                   onCancel={handleCloseModal}
                   footer={[
                     <Button key="cancel" onClick={handleCloseModal}>
@@ -147,7 +147,7 @@ const DeliveryOption = () => {
         {/* Modal for viewing items */}
         <Modal
           title="Items"
-          visible={itemsModalVisible}
+          open={itemsModalVisible}
           onCancel={handleCloseItemsModal}
           footer={[
             <Button key="close" onClick={handleCloseItemsModal}>
