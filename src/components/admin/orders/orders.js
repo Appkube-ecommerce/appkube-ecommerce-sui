@@ -7,8 +7,9 @@ import { Button, Modal, Radio } from 'antd';
 import { useDispatch,useSelector } from 'react-redux';
 import { saveOrdersList } from '@/redux/slices/orderSlice';
 import { useRouter } from 'next/navigation';
-import { useSearchParams } from 'next/navigation'
+import { useSearchParams } from 'next/navigation';
 // import { data } from 'autoprefixer';
+import axios from "@/Api/axios";
 
 const Orders = () => {
   const router = useRouter()
@@ -66,30 +67,59 @@ const Orders = () => {
       key: "totalPrice",
       render: (totalPrice) => `${totalPrice}`,
     },
+    {
+      title: 'Payment Status',
+      // className: 'text-xs',   
+      dataIndex: 'status',
+      key: "status",
+      render: (status) => `${status}`,
+    },
+    // {
+    //   title: 'items',
+    //   // className: 'text-xs',   
+    //   dataIndex: 'items',
+    //   key: "items",
+    //   render: (items) => `${items}`,
+    // },
   ];
   
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [exportOption, setExportOption] = useState('option1');
   //const [orders, setOrders] = useState([]);
   // Correct usage of useSelector
-  const orders = useSelector((state) => state.ordersData.ordersList);
+ // const orders = useSelector((state) => state.ordersData.ordersList);
 
   const dispatch = useDispatch();
+
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       console.log('fetching');
+  //       const result = await FetchOrders();
+  //       console.log('result', result);
+  //       dispatch(saveOrdersList(result.data.listOrders.items));
+  //     } catch (error) {
+  //       console.error('Error fetching orders:', error);
+  //     }
+  //   };
+
+  //   fetchData(); // Call fetchData immediately after defining it
+  // }, [dispatch]); // Include dispatch in the dependency array, since it's used inside useEffect
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        console.log('fetching');
-        const result = await FetchOrders();
-        console.log('result', result);
-        dispatch(saveOrdersList(result.data.listOrders.items));
+        const result = await axios.get("/getAllOrders");
+        console.log("orders", result);
+        dispatch(saveOrdersList(result.data)); // save fetched data in Redux store
       } catch (error) {
         console.error('Error fetching orders:', error);
       }
     };
 
-    fetchData(); // Call fetchData immediately after defining it
-  }, [dispatch]); // Include dispatch in the dependency array, since it's used inside useEffect
+    fetchData();
+  }, [dispatch]);
+
 
   const showModal = () => {
     setIsModalOpen(true);
