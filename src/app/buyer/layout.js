@@ -13,9 +13,9 @@ export default function RootLayout({ children, includeHeader = false }) {
     "/buyer/Checkout/DeliveryAddress",
     "/buyer/Checkout/DeliveryOption",
     "/buyer/Checkout/PaymentOption",
-    "/buyer/myAccount/logout",
+    "/buyer/myAccount",
+    "/buyer/myAccount/myOrders",
     "/buyer/login",
-    "/buyer/SaveForlater",
     "/buyer/register",
     "/buyer/login/account",
   ];

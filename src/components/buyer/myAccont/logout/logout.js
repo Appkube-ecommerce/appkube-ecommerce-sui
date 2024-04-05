@@ -4,7 +4,7 @@ import { Modal, Button } from "antd";
 const LogoutConfirmation = ({ visible, onCancel, onConfirm }) => {
   return (
     <Modal
-    visible={visible}
+    open={visible}
     //title="Logout"
     //centered
     width={350} 

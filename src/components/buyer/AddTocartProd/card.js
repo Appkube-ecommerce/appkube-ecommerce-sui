@@ -46,19 +46,19 @@ const Card = () => {
     return (
       <div className="empty-cart mt-5 mb-5">
         {/* <ShoppingCartOutlined style={{ fontSize: '500px', color: '#ccc' }} /> */}
-        <Image src={empty} height={500} width={500} alt="image"></Image>
-        <div className="flex gap-5">
-        <h1 className="text-lg font-bold">Add some items into the cart</h1>
+        <div className="flex gap-5 mb-2 justify-evenly">
+        <h1 className="text-lg font-bold">Please add items to your cart to continue</h1>
         <Link href="/">
             <Button
-              
-              style={{ marginTop: '16px', height: '40px', borderRadius: '20px' }}
+              style={{ height: '32px' }}
               icon={<HomeOutlined />}
             >
-              Back Home
+              Home
             </Button>
           </Link>
           </div>
+        <Image src={empty} height={500} width={500} alt="image"></Image>
+        
       </div>
     );
   }
@@ -92,7 +92,7 @@ const Card = () => {
                 >
                   -
                 </button>
-                <h2 className="m-2">{productCounts[product.id] || 0}</h2>
+                <h2 className="m-2">{productCounts[product.id] || 1}</h2>
                 <button
                   className="hover:bg-red-500 w-10 h-7 mt-1.5 rounded-md"
                   onClick={() => updateCount(product.id, (productCounts[product.id] || 0) + 1)}
