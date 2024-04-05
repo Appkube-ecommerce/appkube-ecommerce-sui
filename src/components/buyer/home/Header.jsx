@@ -8,14 +8,17 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { RxCross1 } from "react-icons/rx";
 import Link from "next/link";
 import Image from "next/image";
-import { useRouter } from "next/navigation"; // Update import for useRouter
+import { useRouter } from "next/navigation";
 import { FaBookmark } from "react-icons/fa6";
-import DropdownComponent from "../myAccont/profile/dropDown";
-import LogoutConfirmation from "../myAccont/profile/logout";
+import { MdAccountCircle } from "react-icons/md";
+import { Dropdown, Menu, message, Modal, Button } from 'antd';
+import LogoutConfirmation from "../myAccont/logout/logout";
 
 const Header = ({ onSearch }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [isNavOpen, setIsNavOpen] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false); // State for dropdown visibility
+  const [logoutModalVisible, setLogoutModalVisible] = useState(false); // State for logout modal visibility
   const router = useRouter();
   const cartItems = useSelector(state => state.cartDetails.cart);
   const AddProductsintocart = useSelector(state => state.saveForLaterSlice.saveForLater);
@@ -25,8 +28,8 @@ const Header = ({ onSearch }) => {
     onSearch(e.target.value);
   };
 
-  const handleDropDown = () => {
-    setIsDropDownOpen(!isDropDownOpen); 
+  const handleDropdown = () => {
+    setIsDropdownOpen(!isDropdownOpen); // Toggle dropdown visibility
   };
 
   const saveForLater = () => {
@@ -36,6 +39,34 @@ const Header = ({ onSearch }) => {
   const HandleNav = () => {
     setIsNavOpen(!isNavOpen);
   };
+
+  const handleLogout = () => {
+    setLogoutModalVisible(true);
+    setIsDropdownOpen(false); // Close dropdown
+  };
+
+  const handleCancelLogout = () => {
+    setLogoutModalVisible(false);
+  };
+
+  const handleConfirmLogout = () => {
+    message.success('Logged out successfully');
+    setLogoutModalVisible(false);
+  };
+
+  const menu = (
+    <Menu>
+      <Menu.Item key="0">
+        <Link href="/buyer/myAccount">My Account</Link>
+      </Menu.Item>
+      <Menu.Item key="1">
+        <Link href="/buyer/myAccount/myOrders">My Orders</Link>
+      </Menu.Item>
+      <Menu.Item key="3">
+        <a onClick={handleLogout}>Logout</a>
+      </Menu.Item>
+    </Menu>
+  );
 
   return (
     <header className="container-fluid flex justify-between items-center px-[5%] w-full h-[12vh] border-t-green-500 border-t-4 sticky top-0 bg-white z-10">
@@ -90,15 +121,24 @@ const Header = ({ onSearch }) => {
             </button>
           </Link>
         </div>
-
         <button className="p-1 md:p-0 border-2 rounded-md flex w-auto h-8 relative">
           <div className="absolute -top-1 -right-1 bg-black text-white text-xs text-center font-semibold w-4 h-4 rounded-full">{AddProductsintocart.length}</div>
           <FaBookmark className="font-bold text-lg  flex md:text-lg m-auto" onClick={saveForLater}/>
         </button>
+        <div>
+          <Dropdown overlay={menu} trigger={['click']} open={isDropdownOpen} onVisibleChange={setIsDropdownOpen}>
+            <MdAccountCircle onClick={handleDropdown} />
+          </Dropdown>
+        </div>
 
-        <DropdownComponent />
-        <LogoutConfirmation />
+       
       </div>
+
+      <LogoutConfirmation
+        visible={logoutModalVisible}
+        onCancel={handleCancelLogout}
+        onConfirm={handleConfirmLogout}
+      />
     </header>
   );
 };

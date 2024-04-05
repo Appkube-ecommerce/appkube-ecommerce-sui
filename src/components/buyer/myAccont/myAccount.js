@@ -1,33 +1,44 @@
 import React from "react";
+import Link from "next/link";
 import { EditOutlined, MailOutlined, PhoneOutlined } from "@ant-design/icons";
 const MyAccountPage = () => {
   return (
     <main>
-      <div className="bg-white">
-        <div className="flex gap-1">
-          <h1 className="font-semibold text-2xl">Profile Details</h1>
+      <div>
+      <div className="bg-white p-4">
+        <div className="flex gap-4 mb-2">
+          <h1 className="font-semibold text-xl">Profile Details</h1>
           <EditOutlined />
         </div>
-        <div className="text-lg m-3">
+        <div className="text-base">
           <h1>Maimuna Gulafshan</h1>
           <h1>
-            <MailOutlined className="" />
+            <MailOutlined />
             maimunagulafshan1@gmail.com
           </h1>
           <h1>
-            <PhoneOutlined />
+            {/* <PhoneOutlined /> */}
             +91 9876509855
           </h1>
         </div>
       </div>
-      <bottom className="pt-10">
-       <h1 className="font-semibold text-2xl">My Orders</h1>
-       <div>
-        
-       </div>
-      <hr />
-      
-      </bottom>
+
+      <div className="border border-gray-200 p-4 mt-6">
+        <div className="flex gap-4 mb-2">
+          <h1 className="font-semibold text-xl">My Orders</h1>
+        </div>
+        <div className="">
+        <p className="font-semibold">
+  You haven't placed any order yet, 
+  <Link href="/" className="text-blue-500 hover:underline ml-1">
+     Start Shopping!
+  </Link>
+</p>
+                  </div>
+
+      </div>
+
+      </div>
     </main>
   );
 };
