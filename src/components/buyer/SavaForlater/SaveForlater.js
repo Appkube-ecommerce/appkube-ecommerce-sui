@@ -49,7 +49,7 @@ const SaveForlater = () => {
 
     <div className="m-10 flex justify-center gap-7 w-[100%]" key={product.id}>
       <div
-        className="bg-slate-50 shadow-lg rounded-lg flex justify-evenly  "
+        className="bg-white shadow-lg rounded-lg flex justify-evenly  "
         style={{ width: "100%" }}
       >
         <figure className="flex-shrink-0 p-5 rounded-lg pl-10">
@@ -61,22 +61,16 @@ const SaveForlater = () => {
             height={100}
           />
         </figure>
-        <div className="p-4 flex flex-col justify-between">
+        <div className="p-6 flex flex-col justify-between">
           <div>
-            <h2 className="text-lg font-bold mt-8">{product.name}</h2>
-            <p className="text-base font-bold text-gray-600">INR: ₹{product.price}</p>
-            <h2 className="text-base font-lg "><b>Category :</b> {product.category}</h2>
-            <h2 className="text-base font-lg "><b>Unit available :</b> {product.unit}</h2>
+            <h2 className="text-xl font-bold mb-2">{product.name}</h2>
+            <p className="text-xl font-bold text-gray-600">INR: ₹{product.price}</p>
+            <h2 className="text-xl font-lg mb-2"><b>Category :</b> {product.category}</h2>
+            <h2 className="text-xl font-lg mb-2"><b>Unit available :</b> {product.unit}</h2>
           </div>
-
-          <div className="flex justify-center gap-3 item-center mb-6">
-            <button className="btn bg-red-500 font-semibold p-1 text-xs text-white rounded-lg" onClick={()=>removeToCart(product.id)}>Remove</button>
-            <button className="btn  bg-green-500 font-semibold p-1  text-xs text-white rounded-lg" onClick={()=>cartAdd(product)}>Add To Cart</button>
-
           <div className="mt-4 flex justify-end  gap-4 items-end">
             <button className="btn bg-red-600 text-white font-semibold p-3 rounded-lg" onClick={()=>removeFromSave(product.id)}>Remove</button>
             <button className="btn bg-green-500 text-white font-semibold p-3 rounded-lg" onClick={()=>cartAdd(product)}>Add To Cart</button>
-
 
           </div>
         </div>
