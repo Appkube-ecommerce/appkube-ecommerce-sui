@@ -11,12 +11,12 @@ const initialState = {
         state.saveForLater.push(action.payload);
         // console.log('payload',action.payload) 
           },
-          remove: (state, action) => {
+          removeSave: (state, action) => {
             state.saveForLater = state.saveForLater.filter(item => item.id !== action.payload);
           }
     },
   });
   
-  export const { addToSaveForLater,remove } = saveSlice.actions;
+  export const { addToSaveForLater,removeSave } = saveSlice.actions;
   export default saveSlice.reducer;
   
