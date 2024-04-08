@@ -7,14 +7,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addCustomer,createCustomer } from "../../../../redux/slices/addCustomerSlice";
 import { notification } from 'antd';
 import { usePathname } from "next/navigation";
+import axios from "@/Api/axios";
 
 // const { Option } = Select;
 
 const AddCustomer = () => {
   const [form] = Form.useForm();
 
-  const customers = useSelector((state)=> state.customerSlice.customers)
-  console.log(customers);
+  // const customers = useSelector((state)=> state.customerSlice.customers)
+  // console.log(customers);
   //  console.log(customers);
   const dispatch = useDispatch();
   
@@ -34,19 +35,19 @@ const AddCustomer = () => {
   const onFinish = async (values) => {
     setLoading(true);
     try {
-      await dispatch(createCustomer(values));
-            dispatch(addCustomer(values));
+      // console.log("data", data);
+      const response = await axios.post("/customerinsert", values);
+      console.log("response", response);
+      // if (response.status == 200) {
+      //   dispatch(setCreateProduct(data));
+      // }
       notification.success({
         message: 'Customer created successfully!',
       });
-       // Reset form fields
-    form.resetFields();
     } catch (error) {
-      notification.error({
-        message: 'Failed to create customer',
-        description: error.message,
-      });
-    } finally {
+      console.log("error", error);
+    }
+finally {
       setLoading(false);
     }
   const onFinishFailed = (errorInfo) => {

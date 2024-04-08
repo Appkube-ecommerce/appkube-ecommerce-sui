@@ -1,23 +1,74 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
-import { SearchOutlined } from "@ant-design/icons";
-import { Button, Input, Space, Table, Tag, Modal } from "antd";
+import { SearchOutlined,EditOutlined } from "@ant-design/icons";
+import { Button, Input, Space, Table, Tag, Modal,Form } from "antd";
 import Highlighter from "react-highlight-words";
 import ImportButton from "./importButton";
 import { useRouter } from "next/navigation";
 import Link from "next/link"
 import { Radio } from 'antd';
-
+// import { useDispatch } from "react-redux";
+import axios from "@/Api/axios";
 // import { fetchcustomer } from "@/Api/fetchingcustomers";
 
-import useFetchCustomers from "@/components/customHooks/useFetchCustomers";
+// import useFetchCustomers from "@/components/customHooks/useFetchCustomers";
 
 // import Addproduct from "./addproduct";
 
 
 const Customer = () => {
-  const { customers, loadings, error } = useFetchCustomers();
+  const [editingProduct, setEditingProduct] = useState(null);
+  const [editedData, setEditedData] = useState({});
+  // const [selectedRows, setselectedRows] = useState([]);
+  const [openEditModal, setOpenEditModal] = useState(false);
+  const showModalForEdit = (record) => {
+    setOpenEditModal(true);
+    console.log("Editing product:", record);
+    setEditingProduct(record);
+    setEditedData(record);
+   
+  };
+  const [customers, setcustomers] = useState([]);
+  // const { customers, loadings, error } = useFetchCustomers();
   const [radio1, setradio1] = useState(1);
+  const handleSaveForEdit = () => {
+    console.log("Saving edited data:", editedData);
+    setEditingProduct(null);
+    setEditedData({});
+    putRequest(editedData); //here put api is hitting
+    setOpenEditModal(false);
+  };
+  const putRequest = async (values) => {
+    const { id, name, phone } = values;
+    try {
+      console.log("stored data", values);
+      const response = await axios.put(`/updateCustomer/${id}`, { name, phone });
+      console.log("success", response);
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
+
+
+  const handleCancelForEdit = () => {
+    setOpenEditModal(false);
+  };
+  
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const result = await axios.get("/getAllCustomer");
+        console.log("customers", result);
+        setcustomers(result.data);
+        // dispatch(setAllcustomers(result.data));
+        console.log(result.data)
+      } catch (error) {
+        console.error("Error fetching customers:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
   const onChangeRadio1 = (e) => {
     console.log('radio checked', e.target.value);
     setradio1(e.target.value);
@@ -162,6 +213,7 @@ const Customer = () => {
   });
 
 const columns = [
+ 
   {
     ...getColumnSearchProps("name"),
     title: "Customer name",
@@ -184,6 +236,19 @@ const columns = [
     width: 50, // Adjust the width as needed
     render: (id) => `₹${id}`,
   },
+  {
+    title: "Action",
+    key: "action",
+    width: "8%",
+    render: (text, record) => (
+      <Space size="middle">
+        <button onClick={() => showModalForEdit(record)}>
+          <EditOutlined /> Edit
+        </button>
+      </Space>
+    ),
+  },
+  
   ];
  
   
@@ -213,7 +278,7 @@ const columns = [
             Export
           </button>
           <ImportButton />
-          {/* <Link href="/admin/products/addproduct"> */}
+          {/* <Link href="/admin/customers/addproduct"> */}
           <button
             key="link"
           
@@ -226,8 +291,56 @@ const columns = [
           {/* </Link> */}
         </div>
         <Modal
+          title="Title"
+          open={openEditModal}
+          onCancel={handleCancelForEdit}
+          footer={[
+            <button
+              key="save"
+              className="bg-black text-white px-8 py-2 rounded-lg"
+              onClick={handleSaveForEdit}
+            >
+              Save
+            </button>,
+          ]}
+        >
+            <div className="">
+            <Form layout="vertical">
+          
+              <Form.Item label="ID">
+                <Input
+                  value={editedData.id}
+                  onChange={(e) =>
+                    setEditedData({ ...editedData, id: e.target.value })
+                  }
+                />
+              </Form.Item>
+              
+              <Form.Item label="Name">
+                <Input
+                  value={editedData.name}
+                  onChange={(e) =>
+                    setEditedData({ ...editedData, name: e.target.value })
+                  }
+                />
+              </Form.Item>
+              <Form.Item label="Phone">
+                <Input
+                  value={editedData.phone}
+                  onChange={(e) =>
+                    setEditedData({ ...editedData, phone: e.target.value })
+                  }
+                />
+              </Form.Item>
+
+             
+                
+            </Form>
+          </div>
+        </Modal>
+        <Modal
   open={open}
-  title="Export products"
+  title="Export customers"
   onOk={handleOk}
   onCancel={handleCancel}
   footer={[

@@ -6,9 +6,12 @@ import Image from "next/image";
 import pro from "../../../../components/admin/images/product.svg";
 import { useRouter } from "next/navigation"; // Fixed import path
 import { useSelector } from "react-redux";
+import OrderSummary from "./OrderSummary";
 
 const DeliveryOption = () => {
   const router = useRouter();
+
+
 
   function GotoPayment() {
     router.push("/buyer/Checkout/PaymentOption");
@@ -170,6 +173,7 @@ const DeliveryOption = () => {
           ))}
         </Modal>
       </div>
+      <OrderSummary/>
     </div>
   );
 };
