@@ -72,8 +72,8 @@ const ProductCards = ({ data, searchQuery }) => {
           <h2 className="text-lg h-6">Category: {data.category}</h2>
         </div>
         <div className="text-lg font-semibold flex m-1 justify-center items-center">
-          {data.unit} : <FaRupeeSign />
-          {data.price}
+          Unit:{data.unit} : <FaRupeeSign />
+          Price:{data.price}
         </div>
         <div className="flex justify-between items-center w-[100%] h-[10%]">
           {saveItem ? (
