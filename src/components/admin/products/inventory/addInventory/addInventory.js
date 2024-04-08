@@ -49,7 +49,7 @@ const AddInventory = () => {
       availabeQuantity: formData.availabeQuantity,
       unit: formData.unit,
       // id:"26064"
-      id: formData.id,
+      // id: formData.id,
     };
     console.log(data, "hitting api");
     // "Invalid input. "productId" and "availableQuantity" are required and "availableQuantity" must be a number. "unit" must be a non-empty string."
