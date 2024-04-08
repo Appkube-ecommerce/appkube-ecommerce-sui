@@ -44,25 +44,6 @@ const beforeUpload = (file) => {
   return isLt2M;
 };
 const { TextArea } = Input;
-// publishing form code
-// const formItemLayout = {
-//   labelCol: {
-//     xs: {
-//       span: 24,
-//     },
-//     sm: {
-//       span: 8,
-//     },
-//   },
-//   wrapperCol: {
-//     xs: {
-//       span: 24,
-//     },
-//     sm: {
-//       span: 16,
-//     },
-//   },
-// };
 const config = {
   rules: [
     {

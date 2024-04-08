@@ -38,6 +38,7 @@ const Inventory = () => {
   // const [selectedRows, setselectedRows] = useState([]);
   const [openEditModal, setOpenEditModal] = useState(false);
   const [products, setProducts] = useState([]);
+  const [inventory, setInventory] = useState([]);
   const [selectedCount, setSelectedCount] = useState(0);
   const [cart, setCart] = useState([]);
 
@@ -45,6 +46,24 @@ const Inventory = () => {
     const fetchData = async () => {
       try {
         const result = await axios.get("/getAllInventory");
+        console.log("Inventory", result);
+        setInventory(result.data);
+        // dispatch(setAllProducts(result.data));
+        // console.log(result.data)
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      }
+    };
+
+   fetchData(); 
+  }, []);
+
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const result = await axios.get("/product");
+        // const result = await axios.get("/product");
         console.log("products", result);
         setProducts(result.data);
         // dispatch(setAllProducts(result.data));
@@ -56,6 +75,7 @@ const Inventory = () => {
 
     fetchData();
   }, []);
+
 
   useEffect(() => {
     const updatedCart = products.filter((product) => product.selected);
@@ -293,7 +313,16 @@ const Inventory = () => {
     //     />
     //   ),
     // },
-  
+    {
+      title: "Image",
+      dataIndex: "image",
+      key: "image",
+      width: "10%",
+      render: (image) => (
+        <Image src={image} alt="Product" width={60} height={60} />
+      ),
+    },
+
     {
       title: "productId",
       dataIndex: "productId",
@@ -333,7 +362,7 @@ const Inventory = () => {
   return (
     <div>
       <header className="flex justify-between items-center mt-4  ">
-        <h1 className="font-bold text-2xl">Products</h1>
+        <h1 className="font-bold text-2xl">Inventory</h1>
 
         <div className="flex gap-3 px-5">
           <button
@@ -510,7 +539,7 @@ const Inventory = () => {
       <Table
         className="mt-5 mr-3"
         columns={columns}
-        dataSource={products}
+        dataSource={inventory}
         pagination={false}
         scroll={{ x: 800, y: 4000 }}
       />
