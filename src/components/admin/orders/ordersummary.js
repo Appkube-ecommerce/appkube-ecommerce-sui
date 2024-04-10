@@ -1,5 +1,5 @@
 "use client"
-import React, { useState,useEffect } from "react";
+import React, { useState } from "react";
 import { Button, Input, message, Upload } from "antd";
 import { ArrowLeftOutlined } from "@ant-design/icons";
 import { useRouter } from "next/navigation";
@@ -166,11 +166,12 @@ OrderInfo = () => {
 </div>
 
 </div>
-<p className="font-semibold text-base px-2 py-2">Timeline</p>
+<div className="flex justify-"><p className="font-semibold text-base px-2 py-2">Timeline</p>
+<button>Edit</button></div>
 <div className="h-20 w-10/12 bg-white rounded-xl py-7 px-2 shadow-md">
       <Steps
           size="small"
-          current={2}
+          current={3}
           items={[
             {
               title: "Order Placed",
