@@ -1,9 +1,9 @@
 'use client';
 import { InboxOutlined } from '@ant-design/icons';
 import React, { useState,useEffect } from 'react';
-import { Table } from 'antd';
+import { SearchOutlined,EditOutlined } from "@ant-design/icons";
 import Link from 'next/link';
-import { Button, Modal, Radio } from 'antd';
+import { Button, Modal,Space, Radio,Table,Form,Input } from 'antd';
 import { useDispatch,useSelector } from 'react-redux';
 import { saveOrdersList } from '@/redux/slices/orderSlice';
 import { useRouter } from 'next/navigation';
@@ -12,13 +12,53 @@ import { useSearchParams } from 'next/navigation';
 import axios from "@/Api/axios";
 
 const Orders = () => {
+  const [editingProduct, setEditingProduct] = useState(null);
+  const [editedData, setEditedData] = useState({});
+  const [openEditModal, setOpenEditModal] = useState(false);
+  const [open, setOpen] = useState(false);
+
   const router = useRouter()
   // const HandlePush = (record)=>{
   //   router.push(
   //    '/admin/orders/summary',
   //  {query:{data:record}})
   // }
+  const [filterOption, setFilterOption] = useState('all'); 
+  const showModalForEdit = (record) => {
+    setOpen(true);
+    setOpenEditModal(true);
+    console.log("Editing product:", record);
+    setEditingProduct(record);
+    setEditedData(record);
+  
+  };
+  const handleSaveForEdit = () => {
+    console.log("Saving edited data:", editedData);
+    setEditingProduct(null);
+    setEditedData({});
+    putRequest(editedData); //here put api is hitting
+    setOpenEditModal(false);
+  };
+  const putRequest = async (values) => {
+    let data = {
+      createdAt: values.createdAt,
+      id: values.id,     
+      items: values.items,
+paymentMethod: values.paymentMethod,
+status: values.status,
+totalPrice: values.totalPrice,
+updatedAt: values.updatedAt,
+_lastChangedAt: values._lastChangedAt,
 
+    };
+    try {
+      console.log("stored data", data);
+      const response = await axios.put(`/updateOrder/${id}`, data);
+      console.log("success", response);
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
   const searchParams = useSearchParams()
   console.log("data",searchParams.get('data')) 
   const id = searchParams.get('data')
@@ -26,7 +66,28 @@ const Orders = () => {
     const data = order.filter((item)=>{
     return item.id === id
   })
-  console.log('filter value',data)
+  console.log('filter value',data);
+
+  const handleFilterOptionChange = (option) => {
+    setFilterOption(option);
+  };
+
+  const handleCancelForEdit = () => {
+    setOpenEditModal(false);
+  };
+
+  const filteredOrders = order.filter((item) => {
+    if (filterOption === 'all') {
+      return true; 
+    } else if (filterOption === 'pending') {
+      return item.status === 'PENDING';
+    } else if (filterOption === 'upi') {
+      return item.paymentMethod === 'UPI'; 
+    }
+  
+    return true;
+  });
+
   const columns = [
     {
       title: 'Order',
@@ -38,11 +99,11 @@ const Orders = () => {
   href={{
     pathname: '/admin/orders/summary',
     query: {
-      data: `${record.id}`
+    data:`${record.id}`
     }
   }}
 >
-  <span>{text}</span>
+  <span>#{text}</span>
       </Link>
         ),
     },
@@ -54,18 +115,17 @@ const Orders = () => {
       render: (createdAt) => `${createdAt}`,
     },
     {
-      title: 'Customer Orders Id',
+      title: 'Customer Name',
       // className: 'text-xs', 
-      dataIndex: 'customerOrdersId',
-      key: "customerOrdersId",
-      render: (customerOrdersId) => `${customerOrdersId}`,
+      dataIndex: 'customerName',
+      key: "customerName",
+      render: (customerName) => `${customerName}`,
     },
     {
       title: 'Total Price',
-      // className: 'text-xs',   
       dataIndex: 'totalPrice',
       key: "totalPrice",
-      render: (totalPrice) => `${totalPrice}`,
+      render: (totalPrice) => `₹${totalPrice}`,
     },
     {
       title: 'Payment Method',
@@ -81,6 +141,13 @@ const Orders = () => {
       key: "status",
       render: (status) => `${status}`,
     },
+    // {
+    //   title: 'items',
+    //   // className: 'text-xs',   
+    //   dataIndex: 'items',
+    //   key: "items",
+    //   render: (items) => `${items}`,
+    // },
     {
       title: 'items',
       // className: 'text-xs',   
@@ -95,6 +162,19 @@ const Orders = () => {
       key: "_lastChangedAt",
       render: (_lastChangedAt) => `${_lastChangedAt}`,
     },
+    {
+      title: "Action",
+      key: "action",
+      width: "8%",
+      render: (text, record) => (
+        <Space size="middle">
+          <button onClick={() => showModalForEdit(record)}>
+            <EditOutlined /> Edit
+          </button>
+        </Space>
+      ),
+    },
+
   ];
   
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -168,46 +248,128 @@ const Orders = () => {
         Export
       </button>
       <Modal
-        open={isModalOpen}
-        onCancel={handleCancel}
-        style={{ padding: 0 }}
-        footer={[
-          <div key="buttons" style={{ display: 'flex' }} className='justify-center items-end gap-1 mt-6 ml-28'>
-            <button className="shadow-lg h-7 rounded-lg border border-gray-200 w-18 px-2" onClick={handleCancel}>
-              Cancel
-            </button>
-            <button className="shadow-lg rounded-lg border border-gray-200 w-48 h-7 px-2">
-              Export transaction histories
-            </button>
-            <button className="bg-gray-800 text-white rounded-lg h-7 w-30 px-2">
-              Export orders
-            </button>
-          </div>
-        ]}
-      >
-        <div className='h-10 w-full font-semibold text-slate-800 border-b'>
-          <h2 className='text-base font-semibold'>Export Orders</h2>
-        </div>
-        <div className='py-4'>
-          <div>
-            <p className='font-medium text-slate-800'>Export</p>
-            <div onChange={handleExportOptionChange} value={exportOption} className='mt-2'>
-              <Radio value='option1'>Current page</Radio><br/>
-              <Radio value='option2'>All orders</Radio><br/>
-              <Radio value="C" disabled>Selected: 0 products</Radio><br/>
-              <Radio value="D" disabled>50+ orders matching your search</Radio><br/>
-              <Radio value='option3'>Orders by date</Radio>
-            </div>
-          </div>
-          <div className='mt-4'>
-            <p className='font-medium text-slate-800'>Export as</p>
-            <div onChange={handleExportOptionChange} value={exportOption} className='mt-2'>
-              <Radio value='option1'>CSV for excel, Numbers, or other spreadsheet programs</Radio><br/>
-              <Radio value='option2'>Plain CSV file</Radio>
-            </div>
-          </div>
-        </div>
-      </Modal>
+  open={isModalOpen}
+  onCancel={handleCancel}
+  style={{ padding: 0 }}
+  footer={[
+    <div key="buttons" style={{ display: 'flex' }} className='justify-center items-end gap-1 mt-6 ml-28'>
+      <button className="shadow-lg h-7 rounded-lg border border-gray-200 w-18 px-2" onClick={handleCancel}>
+        Cancel
+      </button>
+      <button className="shadow-lg rounded-lg border border-gray-200 w-48 h-7 px-2">
+        Export transaction histories
+      </button>
+      <button className="bg-gray-800 text-white rounded-lg h-7 w-30 px-2">
+        Export orders
+      </button>
+    </div>
+  ]}
+>
+  <div className='h-10 w-full font-semibold text-slate-800 border-b'>
+    <h2 className='text-base font-semibold'>Export Orders</h2>
+  </div>
+  <div className='py-4'>
+    <div>
+      <p className='font-medium text-slate-800'>Export</p>
+      <div onChange={handleExportOptionChange} value={exportOption} className='mt-2'>
+        <Radio value='option1'>Current page</Radio><br/>
+        <Radio value='option2'>All orders</Radio><br/>
+        <Radio value="C" disabled>Selected: 0 products</Radio><br/>
+        <Radio value="D" disabled>50+ orders matching your search</Radio><br/>
+        <Radio value='option3'>Orders by date</Radio>
+      </div>
+    </div>
+    <div className='mt-4'>
+      <p className='font-medium text-slate-800'>Export as</p>
+      <div onChange={handleExportOptionChange} value={exportOption} className='mt-2'>
+        <Radio value='option1'>CSV for excel, Numbers, or other spreadsheet programs</Radio><br/>
+        <Radio value='option2'>Plain CSV file</Radio>
+      </div>
+    </div>
+  </div>
+</Modal>
+<Modal
+          // title="Title"
+          open={openEditModal}
+          onCancel={handleCancelForEdit}
+          footer={[
+            <button
+              key="save"
+              className="bg-black text-white px-8 py-2 rounded-lg"
+              onClick={handleSaveForEdit}
+            >
+              Save
+            </button>,
+          ]}
+        >
+            <Form layout="vertical"
+            className='p-4'>
+          <Form.Item label="Order Id">
+                <Input
+                  value={editedData.
+                    id
+                    }
+                  onChange={(e) =>
+                    setEditedData({ ...editedData, 
+                      id
+                      : e.target.value })
+                  }
+                />
+              </Form.Item>
+              <Form.Item label="Date">
+                <Input
+                  value={editedData.createdAt}
+                  onChange={(e) =>
+                    setEditedData({ ...editedData, createdAt: e.target.value })
+                  }
+                />
+              </Form.Item>  <Form.Item label="Customer Name">
+                <Input
+                  value={editedData.name}
+                  onChange={(e) =>
+                    setEditedData({ ...editedData, name: e.target.value })
+                  }
+                />
+              </Form.Item>  <Form.Item label="Total Price">
+                <Input
+                  value={editedData.totalPrice}
+                  onChange={(e) =>
+                    setEditedData({ ...editedData, totalPrice: e.target.value })
+                  }
+                />
+              </Form.Item>  <Form.Item label="Payment Method">
+                <Input
+                  value={editedData.paymentMethod}
+                  onChange={(e) =>
+                    setEditedData({ ...editedData, paymentMethod: e.target.value })
+                  }
+                />
+              </Form.Item>  <Form.Item label="Payment Status">
+                <Input
+                  value={editedData.status}
+                  onChange={(e) =>
+                    setEditedData({ ...editedData, status: e.target.value })
+                  }
+                />
+              </Form.Item>  <Form.Item label="No of Items	">
+                <Input
+                  value={editedData.items
+                  }
+                  onChange={(e) =>
+                    setEditedData({ ...editedData, items: e.target.value })
+                  }
+                />
+              </Form.Item>  <Form.Item label="Last changed at">
+                <Input
+                  value={editedData._lastChangedAt}
+                  onChange={(e) =>
+                    setEditedData({ ...editedData, _lastChangedAt: e.target.value })
+                  }
+                />
+              </Form.Item>
+</Form>
+        </Modal>
+
     </>
           </div>
         </div>
@@ -238,17 +400,23 @@ const Orders = () => {
 
 <div className='bg-white p-4 rounded-lg mr-3'>
       <div className='gap-2 h-8'>
-        <button className="rounded-lg w-10 text-xs font-semibold hover:bg-gray-100">All</button>
-        <button className="rounded-lg w-20 text-xs font-semibold hover:bg-gray-100">Unfulfilled</button>
-        <button className="rounded-lg  w-14 text-xs font-semibold hover:bg-gray-100">Unpaid</button>
-        <button className="rounded-lg  w-12 text-xs font-semibold hover:bg-gray-100">Open</button>
+      <button className={`rounded-lg w-10 text-xs font-semibold hover:bg-gray-100 ${filterOption === 'all' ? 'bg-gray-100' : ''}`} onClick={() => handleFilterOptionChange('all')}>
+              All
+            </button>
+            <button className={`rounded-lg w-20 text-xs font-semibold hover:bg-gray-100 ${filterOption === 'pending' ? 'bg-gray-100' : ''}`} onClick={() => handleFilterOptionChange('pending')}>
+              Pending
+            </button>
+            <button className={`rounded-lg  w-14 text-xs font-semibold hover:bg-gray-100 ${filterOption === 'upi' ? 'bg-gray-100' : ''}`} onClick={() => handleFilterOptionChange('upi')}>
+              UPI
+            </button>
+        {/* <button className="rounded-lg  w-12 text-xs font-semibold hover:bg-gray-100">Open</button>
         <button className="rounded-lg w-14 text-xs font-semibold hover:bg-gray-100">Closed</button>
         <button className="rounded-lg w-24 text-xs font-semibold hover:bg-gray-100">Local Delivery</button>
-        <button className="rounded-lg w-6 text-xs font-semibold hover:bg-gray-100">+</button>
+        <button className="rounded-lg w-6 text-xs font-semibold hover:bg-gray-100">+</button> */}
       </div>
         <Table
           columns={columns}
-          dataSource={order}
+          dataSource={filteredOrders}
           pagination={false}
           // pagination={{
           //   position: ['bottomCenter'], 

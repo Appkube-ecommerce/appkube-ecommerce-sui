@@ -36,6 +36,7 @@ const Customer = () => {
   const [radio1, setradio1] = useState(1);
   const handleSaveForEdit = async () => {
     console.log("Saving edited data:", editedData);
+
     try {
       await putRequest(editedData);
       // Update the customers state with the new data
@@ -47,6 +48,7 @@ const Customer = () => {
     } catch (error) {
       console.error("Error saving edit:", error);
     }
+
   };
 
 
