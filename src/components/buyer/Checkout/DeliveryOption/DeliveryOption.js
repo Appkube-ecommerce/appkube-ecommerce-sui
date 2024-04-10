@@ -5,18 +5,19 @@ import { DeleteOutlined, DashboardFilled } from "@ant-design/icons";
 import Image from "next/image";
 import pro from "../../../../components/admin/images/product.svg";
 import { useRouter } from "next/navigation"; // Fixed import path
-import { useSelector } from "react-redux";
-import OrderSummary from "./OrderSummary";
+import { useSelector,useDispatch } from "react-redux";
+import { remove } from "@/redux/slices/CartSlice";
 
 const DeliveryOption = () => {
   const router = useRouter();
-
-
+  const dispatch = useDispatch();
 
   function GotoPayment() {
     router.push("/buyer/Checkout/PaymentOption");
   }
-
+  const removeToCart = (data) => {
+    dispatch(remove(data));
+  };
   const [selectedDate, setSelectedDate] = useState("");
   const [selectedSlot, setSelectedSlot] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
@@ -63,10 +64,6 @@ const DeliveryOption = () => {
     setItemsModalVisible(true);
   };
 
-  const handleDeleteItem = (id) => {
-    setItems(items.filter((item) => item.id !== id));
-  };
-  
   const AddProductsintocart = useSelector(state => state.cartDetails.cart);
 
   return (
@@ -163,7 +160,7 @@ const DeliveryOption = () => {
               </div>
               <Popconfirm
                 title="Are you sure to delete this item?"
-                onConfirm={() => handleDeleteItem(item.id)}
+                onConfirm={() => removeToCart(item.id)}
                 okText="Yes"
                 cancelText="No"
               >
@@ -173,7 +170,6 @@ const DeliveryOption = () => {
           ))}
         </Modal>
       </div>
-      <OrderSummary/>
     </div>
   );
 };

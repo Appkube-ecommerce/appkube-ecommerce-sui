@@ -1,23 +1,56 @@
-'use client'
+"use client";
 import React, { useRef, useState, useEffect } from "react";
-import { SearchOutlined, ArrowLeftOutlined } from "@ant-design/icons";
-import { Button, Input, Space, Table, Modal } from "antd";
+import {
+  SearchOutlined,
+  EditOutlined,
+  PlusOutlined,
+  ShoppingCartOutlined,
+} from "@ant-design/icons";
+import {
+  Button,
+  Input,
+  Form,
+  Upload,
+  Space,
+  Table,
+  Checkbox,
+  Modal,
+  Select,
+} from "antd";
 import Highlighter from "react-highlight-words";
+import ImportButton from "../importButton";
+import { addToAdminCart } from "@/redux/slices/admincartSlice";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Radio } from "antd";
-import ImportButton from "../importButton";
+import { setAllProducts } from "@/redux/slices/products";
+import { useDispatch } from "react-redux";
+import axios from "@/Api/axios";
 import Image from "next/image";
+import { CiGlass } from "react-icons/ci";
 
 const Inventory = () => {
+  const dispatch = useDispatch();
+  const { Option } = Select;
+  const [imageUrl, setImageUrl] = useState(); // Define imageUrl state variable
+  const [openExportModal, setOpenExportModal] = useState(false);
+  const [editingProduct, setEditingProduct] = useState(null);
+  const [editedData, setEditedData] = useState({});
+  // const [selectedRows, setselectedRows] = useState([]);
+  const [openEditModal, setOpenEditModal] = useState(false);
   const [products, setProducts] = useState([]);
+  const [inventory, setInventory] = useState([]);
+  const [selectedCount, setSelectedCount] = useState(0);
+  const [cart, setCart] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const result = await fetchCategories();
-        console.log(result);
-        setProducts(result.data.listProducts.items);
+        const result = await axios.get("/getAllInventory");
+        console.log("Inventory", result);
+        setInventory(result.data);
+        // dispatch(setAllProducts(result.data));
+        // console.log(result.data)
       } catch (error) {
         console.error("Error fetching products:", error);
       }
@@ -26,6 +59,65 @@ const Inventory = () => {
     fetchData();
   }, []);
 
+  console.log("invent", inventory);
+
+    
+    const id = inventory.map((item) => item.productId);
+    console.log("Product IDs:", id);
+  for (let i = 0; i < id.length; i++) {
+    const fetchProduct = async (id) => {
+      try {
+        const result = await axios.get(`/product/${id}`);
+        setProducts(result.data);
+        console.log("success", products);
+      } catch (error) {
+        console.error("Error fetching product:", error);
+      }
+    };
+    fetchProduct(id[i]);
+  }
+  let image=null;
+  if(products.id == inventory.id){
+    let image = products.image;
+  }
+
+  const showModalForEdit = (record) => {
+    setOpen(true);
+    setOpenEditModal(true);
+    console.log("Editing product:", record);
+    setEditingProduct(record);
+    setEditedData(record);
+    setImageUrl(record.image);
+  };
+  const handleSaveForEdit = () => {
+    console.log("Saving edited data:", editedData);
+    setEditingProduct(null);
+    setEditedData({});
+    // putRequest(editedData); //here put api is hitting
+    setOpenEditModal(false);
+  };
+  // const putRequest = async (values) => {
+  //   let data = {
+  //     productId: values.productId,
+  //     availableQuantity: values.availableQuantity,
+  //     id: ,
+  //     unit: values.unit,
+
+  //   };
+  //   try {
+  //     console.log("stored data", data);
+  //     const response = await axios.put("/product", data);
+  //     console.log("success", response);
+  //   } catch (error) {
+  //     console.log("error", error);
+  //   }
+  // };
+
+  const handleCancelForEdit = () => {
+    setOpenEditModal(false);
+  };
+
+  const isEditing = (record) => record === editingProduct;
   const router = useRouter();
   const [radio1, setradio1] = useState(1);
   const onChangeRadio1 = (e) => {
@@ -38,30 +130,25 @@ const Inventory = () => {
     setradio2(e.target.value);
   };
 
-  const Products = () => {
-    router.push("/admin/products");
+  const AddNewInventory = () => {
+    router.push("/admin/products/inventory/addInventory");
   };
-
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
-  const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const searchInput = useRef(null);
-
   const showModal = () => {
     setOpen(true);
+    setOpenExportModal(true);
   };
-
   const handleOk = () => {
-    setLoading(true);
     setTimeout(() => {
-      setLoading(false);
       setOpen(false);
+      setOpenExportModal(true);
     }, 3000);
   };
-
   const handleCancel = () => {
-    setOpen(false);
+    setOpenExportModal(false);
   };
 
   const handleSearch = (selectedKeys, confirm, dataIndex) => {
@@ -76,7 +163,13 @@ const Inventory = () => {
   };
 
   const getColumnSearchProps = (dataIndex) => ({
-    filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters, close }) => (
+    filterDropdown: ({
+      setSelectedKeys,
+      selectedKeys,
+      confirm,
+      clearFilters,
+      close,
+    }) => (
       <div
         style={{
           padding: 8,
@@ -87,7 +180,9 @@ const Inventory = () => {
           ref={searchInput}
           placeholder={`Search ${dataIndex}`}
           value={selectedKeys[0]}
-          onChange={(e) => setSelectedKeys(e.target.value ? [e.target.value] : [])}
+          onChange={(e) =>
+            setSelectedKeys(e.target.value ? [e.target.value] : [])
+          }
           onPressEnter={() => handleSearch(selectedKeys, confirm, dataIndex)}
           style={{
             marginBottom: 8,
@@ -128,7 +223,13 @@ const Inventory = () => {
           >
             Filter
           </Button>
-          <Button type="link" size="small" onClick={() => close()}>
+          <Button
+            type="link"
+            size="small"
+            onClick={() => {
+              close();
+            }}
+          >
             close
           </Button>
         </Space>
@@ -137,7 +238,7 @@ const Inventory = () => {
     filterIcon: (filtered) => (
       <SearchOutlined
         style={{
-          color: filtered ? "#1677ff" : undefined,
+          color: filtered ? "#1677ff" : null,
         }}
       />
     ),
@@ -163,64 +264,71 @@ const Inventory = () => {
         text
       ),
   });
+  const handleCheckboxChange = (record, checked) => {
+    const updatedProducts = products.map((product) =>
+      product === record ? { ...product, selected: checked } : product
+    );
+    setProducts(updatedProducts); // Update products state with the selected record
+
+    if (checked) {
+      dispatch(addToAdminCart(record)); // Dispatch the selected record to admincart
+    } else {
+      // Remove the record from admincart
+      const updatedCart = cart.filter((item) => item !== record);
+      dispatch(setAllProducts(updatedCart)); // Update the state of admincart
+    }
+  };
 
   const columns = [
     {
       title: "Image",
-      dataIndex: "image",
-      key: "image",
-      width: "6%",
-      render: (image) => <Image src={image} alt="Product" width={50} />,
+      dataIndex: "img",
+      key: "img",
+      width: "10%",
+      render: () => <Image src={image} alt="Product" width={60} height={60} />,
     },
     {
-      title: "Product",
-      dataIndex: "name",
-      key: "name",
+      title: "productId",
+      dataIndex: "productId",
+      key: "id",
       width: "16%",
-      ...getColumnSearchProps("name"),
+      ...getColumnSearchProps("productId"),
+      render: (productId) => `${productId}`,
     },
     {
-      title: "SKU",
-      dataIndex: "sku",
-      key: "sku",
-      width: "16%",
-    },
-    {
-      title: "Unavailable",
-      dataIndex: "unavailable",
-      key: "unavauilable",
+      title: "availableQuantity",
+      dataIndex: "availableQuantity",
+      key: "availableQuantity",
       width: "10%",
+      render: (availableQuantity) => `${availableQuantity}`,
     },
     {
-      title: "Committed",
-      dataIndex: "committed",
-      key: "committed",
-      width: "10%",
-    },
-    {
-      title: "Available",
-      dataIndex: "available",
-      key: "avauilable",
-      width: "10%",
-    },
-    {
-      title: "Onhand",
-      dataIndex: "onhand",
-      key: "onhand",
+      title: "unit",
+      dataIndex: "unit",
+      key: "unit",
       width: "10%",
       render: (unit) => `${unit}`,
+    },
+    {
+      title: "Action",
+      key: "action",
+      width: "8%",
+      render: (text, record) => (
+        <Space size="middle">
+          <button onClick={() => showModalForEdit(record)}>
+            <EditOutlined /> Edit
+          </button>
+        </Space>
+      ),
     },
   ];
 
   return (
-    <>
-      <header className="flex justify-between mt-4 ">
-        <h1 className="font-bold text-2xl">
-          <ArrowLeftOutlined onClick={Products} />
-          &nbsp;&nbsp;Inventory
-        </h1>
+    <div>
+      <header className="flex justify-between items-center mt-4  ">
+        <h1 className="font-bold text-2xl">Inventory</h1>
 
-        <div className="flex gap-3">
+        <div className="flex gap-3 px-5">
           <button
             style={{
               backgroundColor: "#E3E3E3",
@@ -232,98 +340,177 @@ const Inventory = () => {
             Export
           </button>
           <ImportButton />
+          {/* <Link href="/admin/products/addproduct"> */}
+
           <button
             key="link"
-            className="bg-black text-white rounded-md w-24 mr-2 h-10"
-            style={{
-              padding: "8px 15px 8px 15px",
-            }}
-            loading={loading}
-            onClick={Products}
+            // className="md:text-sm bg-black text-white rounded-md px-8 py-2"
+
+            className="bg-black text-white rounded-md px-8 py-2 "
+            onClick={AddNewInventory}
           >
-            View Product
+            Add Inventory
           </button>
         </div>
-      </header>
+        <Modal
+          open={openExportModal}
+          title="Export products"
+          onOk={handleOk}
+          onCancel={handleCancel}
+          footer={[
+            <Button key="back" className="shadow-lg" onClick={handleCancel}>
+              Cancel
+            </Button>,
+            <Button
+              key="Cancel"
+              className="bg-black text-white"
+              onClick={handleOk}
+            >
+              Export Products
+            </Button>,
+          ]}
+        >
+          <hr></hr>
+          <div className="mt-5 mb-5">
+            <p>
+              This CSV file can update all product information. To update just
+              inventory quantities use the{" "}
+              <Link href="/" className="text-blue-500 underline">
+                CSV file for inventory.
+              </Link>
+            </p>
 
-      <div className="bg-white p-2 rounded-lg mt-6 mr-3">
-        <div className="h-8 p-1">
-          <button className="rounded-lg w-10 font-semibold text-xs hover:bg-gray-100">All</button>
-          <button className="rounded-lg w-6 font-semibold hover:bg-gray-100">+</button>
-        </div>
-      
-        <Table
-          className="mr-3"
-          columns={columns}
-          dataSource={products}
-          pagination={false}
-        />
-      </div>
+            <div className="m-5">
+              <div className="mb-5">
+                <Space direction="vertical">
+                  <h5>Export</h5>
 
-      <Modal
-        open={open}
-        title="Export products"
-        onOk={handleOk}
-        onCancel={handleCancel}
-        footer={[
-          <Button key="back" className="shadow-lg" onClick={handleCancel}>
-            Cancel
-          </Button>,
-          <Button key="Cancel" className="bg-black text-white" loading={loading} onClick={handleOk}>
-            Export Products
-          </Button>,
-        ]}
-      >
-        <hr />
-        <div className="mt-5 mb-5">
-          <p>
-            This CSV file can update all product information. To update just inventory quantities use the{" "}
-            <Link href="/" className="text-blue-500 underline">
-              CSV file for inventory.
-            </Link>
-          </p>
-          <div className="m-5">
-            <div className="mb-5">
-              <Space direction="vertical">
-                <h5>Export</h5>
-                <Radio.Group onChange={onChangeRadio1} value={radio1} defaultValue="A">
-                  <Space direction="vertical">
-                    <Radio value="A">Current Page</Radio>
-                    <Radio value="B">All products</Radio>
-                    <Radio value="C" disabled>
-                      Selected:0 products
-                    </Radio>
-                    <Radio value="D" disabled>
-                      1 product matching your search
-                    </Radio>
-                  </Space>
-                </Radio.Group>
-              </Space>
+                  <Radio.Group
+                    onChange={onChangeRadio1}
+                    value={radio1}
+                    defaultValue="A"
+                  >
+                    <Space direction="vertical">
+                      <Radio value="A">Current Page</Radio>
+                      <Radio value="B">All products</Radio>
+                      <Radio value="C" disabled>
+                        Selected:0 products
+                      </Radio>
+                      <Radio value="D" disabled>
+                        1 product matching your search{" "}
+                      </Radio>
+                    </Space>
+                  </Radio.Group>
+                </Space>
+              </div>
+              <div className="mb-5">
+                <Space direction="vertical">
+                  <h5>Export as</h5>
+                  <Radio.Group
+                    onChange={onChangeRadio2}
+                    value={radio2}
+                    defaultValue="E"
+                  >
+                    <Space direction="vertical">
+                      <Radio value="E">
+                        CSV for Excel,Numbers,or other spreadsheet programs
+                      </Radio>
+                      <Radio value="F">Plain CSV file</Radio>
+                    </Space>
+                  </Radio.Group>
+                </Space>
+              </div>
             </div>
-            <div className="mb-5">
-              <Space direction="vertical">
-                <h5>Export as</h5>
-                <Radio.Group onChange={onChangeRadio2} value={radio2} defaultValue="E">
-                  <Space direction="vertical">
-                    <Radio value="E">CSV for Excel,Numbers,or other spreadsheet programs</Radio>
-                    <Radio value="F">Plain CSV file</Radio>
-                  </Space>
-                </Radio.Group>
-              </Space>
-            </div>
+            <p>
+              Learn more about{" "}
+              <Link href="/" className="text-blue-400 underline">
+                exporting products to CSV file
+              </Link>{" "}
+              or the{" "}
+              <Link href="/" className="text-blue-400 underline">
+                bulk editor.
+              </Link>
+            </p>
           </div>
-          <p>
-            Learn more about{" "}
-            <Link href="/" className="text-blue-400 underline">
-              exporting products to CSV file
-            </Link>{" "}
-            or the <Link href="/" className="text-blue-400 underline">bulk editor.</Link>
-          </p>
-        </div>
-        <hr />
-      </Modal>
+          <hr></hr>
+        </Modal>
+        <Modal
+          title="Title"
+          open={openEditModal}
+          onCancel={handleCancelForEdit}
+          footer={[
+            <button
+              key="save"
+              className="bg-black text-white px-8 py-2 rounded-lg"
+              onClick={handleSaveForEdit}
+            >
+              Save
+            </button>,
+          ]}
+        >
+          <div className="">
+            <Form layout="vertical">
+              <Form.Item label="Product Id">
+                <Input
+                  value={editedData.id}
+                  onChange={(e) =>
+                    setEditedData({ ...editedData, productId: e.target.value })
+                  }
+                />
+              </Form.Item>
 
-    </>
+              <Form.Item
+                label="Unit"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please input Unit!",
+                  },
+                ]}
+              >
+                <Select
+                  className="rounded-md border-none"
+                  placeholder="Select a option for UNIT"
+                  value={editedData.unit}
+                  onChange={(value) =>
+                    setEditedData({ ...editedData, unit: value })
+                  }
+                  // name="unit"
+                  allowClear
+                >
+                  <Option value="kg">KG</Option>
+                  <Option value="piece">PIECE</Option>
+                </Select>
+              </Form.Item>
+              <Form.Item label="Available Quantity">
+                <Input
+                  value={editedData.availableQuantity}
+                  onChange={(e) =>
+                    setEditedData({
+                      ...editedData,
+                      availableQuantity: e.target.value,
+                    })
+                  }
+                />
+              </Form.Item>
+            </Form>
+          </div>
+        </Modal>
+      </header>
+      <br />
+      <div>
+        <button className="border-2 rounded-lg p-3">
+          {selectedCount} Items Added to Cart
+        </button>
+      </div>
+      <Table
+        className="mt-5 mr-3"
+        columns={columns}
+        dataSource={inventory}
+        pagination={false}
+        scroll={{ x: 800, y: 4000 }}
+      />
+    </div>
   );
 };
 
