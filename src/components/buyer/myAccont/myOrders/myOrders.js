@@ -16,7 +16,20 @@ const MyOrdersPage = () => {
         </p>
       </div>
     </div>
+<<<<<<< HEAD
+    <div className="">
+    <p className="font-semibold text-center mt-6">
+    You haven&apos;t placed any order yet,
+<Link href="/" className="text-blue-500 hover:underline ml-1">
+ Start Shopping!
+</Link>
+</p>
+              </div></div>
+  )
+}
+=======
   );
 };
+>>>>>>> 4bde426f34b4a4b4503490f90824700a3ed41e30
 
 export default MyOrdersPage;
