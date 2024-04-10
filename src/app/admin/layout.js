@@ -56,7 +56,13 @@ export default function RootLayout({ children }) {
     getItem(<Link href={"/admin/customers"}>customers</Link>, "4", <UserOutlined />),
     getItem(<Link href={"/admin/analytics"}>analytics</Link>, "5", <BarChartOutlined />),
   ];
-
+  const handleSearch = (query) => {
+    // Filter products based on search query
+    const filteredProducts = allProducts.filter(product =>
+      product.name.toLowerCase().includes(query.toLowerCase())
+    );
+    setFilteredProducts(filteredProducts);
+  };
   return (
     <Layout style={{ minHeight: "100vh" }}>
       {display && (
