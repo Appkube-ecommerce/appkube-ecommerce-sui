@@ -7,12 +7,31 @@ import { useRouter } from "next/navigation";
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import { notification } from "antd";
-import useFetchCustomers from "@/components/customHooks/useFetchCustomers";
-
+import axios from "@/Api/axios";
 export const Share = () => {
   const router = useRouter();
+  const [customers, setcustomers] = useState([]);
+  const searchInput = useRef(null);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const result = await axios.get("/getAllCustomer");
+        console.log("customers", result);
+        setcustomers(result.data);
+        // dispatch(setAllcustomers(result.data));
+        console.log(result.data)
+      } catch (error) {
+        console.error("Error fetching customers:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const AddCustomers = () => {
+
+
+   
     router.push('/admin/Share/addcustomer');
   };
 
@@ -20,8 +39,11 @@ export const Share = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const result = await fetchProducts();
-        setProducts(result.data.listProducts.items);
+        const result = await axios.get("/product");
+        console.log("products", result);
+        setProducts(result.data);
+        // dispatch(setAllProducts(result.data));
+        // console.log(result.data)
       } catch (error) {
         console.error("Error fetching products:", error);
       }
@@ -30,110 +52,98 @@ export const Share = () => {
     fetchData();
   }, []);
 
-  const { customers } = useFetchCustomers();
   const [show, setshow] = useState(false);
 
-  const generatePdf = async (phoneNumber) => {
+  const handleShare = async (phoneNumber) => {
     try {
       const pdf = new jsPDF();
-
+      
       // Add title
       pdf.text("Synectiks Farm", 10, 10);
-
+  
       // Add date and time
+  
+  
       const currentDate = new Date().toLocaleDateString();
       const currentTime = new Date().toLocaleTimeString([], {
         hour: '2-digit',
         minute: '2-digit',
       });
       pdf.text(currentDate + ' ' + currentTime, 10, 20);
-      const imgPromises = products.map(async (product) => {
-        const response = await fetch(product.image);
-        const blob = await response.blob();
-        return new Promise((resolve) => {
-          const reader = new FileReader();
-          reader.onloadend = () => {
-            const base64Img = reader.result;
-            product.imageBase64 = base64Img;
-            resolve(base64Img);
-          };
-          reader.readAsDataURL(blob);
-        });
-      });
-      
-      await Promise.all(imgPromises);
-
-      // Define columns for the table
-      const columns = ["ID", "Name", "Image", "Price", "Category", "Unit"];
-
-      // Define rows for the table
-      const rows = products.map((product, index) => [{
-        id: index + 1,
-        name: product.name,
-        image: product.imageBase64,
-        price: product.price,
-        category: product.category,
-        unit: product.unit,
-      }
-    ]);
-
+  
+  
     
-    pdf.autoTable(pdf, {
-      head: [columns],
-      body: rows,
-      startY: 30,
-      columnStyles: {
-        2: {
-          cellWidth: 30,
-        },
-      },
-      didDrawCell: (data) => {
-        if (data.section === 'body' && data.column.index === 2) {
-          const imgProps = products.find((product) => product.name === data.row.cells[0].value);
-          if (imgProps && imgProps.imageBase64) {
-            pdf.addImage(imgProps.imageBase64, 'PNG', data.cell.x + 2, data.cell.y + 2, 10, 10);
-          }
-        }
-      }
-    });
-
-
-  pdf.save("pdf1.pdf")
-
+  const x = 15; // Adjust these values as needed
+  const y = 30; // Adjust these values as needed
+  const width = 40; // Adjust these values as needed
+  const height = 40; // Adjust these values as needed
+  
+     
+  
+      // Define columns and rows for the table
+      const columns = ["ID", "Name", "Image", "Price", "Category", "Unit"];
+      const rows = products.map((product, index) => [
+        
+        index + 1,
+        product.name,
+        // product.image,
+        product.price,
+        product.category,
+        product.unit
+      ]);
+  
+      // Add table using jspdf-autotable
+      pdf.autoTable({
+        head: [columns],
+        body: rows,
+        startY: 30 // Adjust startY as needed
+      });
+  
       // Save or send the PDF
+      console.log(phoneNumber);
       const base64String = pdf.output('datauristring');
       const prefixLength = "data:application/pdf;filename=generated.pdf;base64,".length;
       const remainingString = base64String.substring(prefixLength);
-      // await shareProducts(remainingString, phoneNumber);
-
+      await shareProducts(remainingString,phoneNumber);
+  
       // Set show state to true after PDF is generated
       setshow(true);
     } catch (error) {
       console.error('Error generating PDF:', error);
+      // Show error message
     }
   };
-
-  const { loadings } =  (loadings);
-  const [searchText, setSearchText] = useState("");
-  const [searchedColumn, setSearchedColumn] = useState("");
-  const [loading, setLoading] = useState(false);
-  const searchInput = useRef(null);
-
-  const handleSearch = (selectedKeys, confirm, dataIndex) => {
-    confirm();
-    setSearchText(selectedKeys[0]);
-    setSearchedColumn(dataIndex);
-  };   
-
-  const handleShare = async (phoneNumber) => {
+      console.log(products);
+  // ------- api fetching------
+  const shareProducts = async (content, phoneNumber)=> {
+    console.log(phoneNumber);
+    const myHeaders = new Headers();
+    myHeaders.append('Content-Type', 'application/json');
+  
+    const raw = JSON.stringify({
+      content: content,
+      name: 'directory',
+      phoneNumber: phoneNumber,
+    });
+  
+    const requestOptions = {
+    
+      headers: myHeaders,
+      body: raw,
+      redirect: 'follow',
+    };
     try {
-      const base64String = await generatePdf(phoneNumber);
-      show && notification.success({
-        message: 'Successfully Shared!',
-      });
-      setshow(true);
+      const response = await axios.post("/sendBills",requestOptions);// Corrected options to requestOptions
+      if (response.ok) {
+        console.log('Pdf send');
+      }
+      if (!response.ok) {
+        // throw new Error(HTTP error! Status: ${response.status});
+      }
+      return await response.text();
     } catch (error) {
-      console.error('Error sharing PDF:', error);
+      console.error(error);
+      return null; // Return null or handle the error as needed
     }
   };
 
@@ -266,7 +276,7 @@ export const Share = () => {
             key="link"
           
             className="bg-black m-10 float-end text-white rounded-md px-4 py-1"
-            loading={loading}
+            // loading={loading}
             onClick={AddCustomers}
             
           >
