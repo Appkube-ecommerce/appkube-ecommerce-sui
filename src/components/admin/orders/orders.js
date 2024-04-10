@@ -68,6 +68,13 @@ const Orders = () => {
       render: (totalPrice) => `${totalPrice}`,
     },
     {
+      title: 'Payment Method',
+      // className: 'text-xs',   
+      dataIndex: 'paymentMethod',
+      key: "paymentMethod",
+      render: (paymentMethod) => `${paymentMethod}`,
+    },
+    {
       title: 'Payment Status',
       // className: 'text-xs',   
       dataIndex: 'status',
@@ -81,6 +88,21 @@ const Orders = () => {
     //   key: "items",
     //   render: (items) => `${items}`,
     // },
+    {
+      title: 'items',
+      // className: 'text-xs',   
+      dataIndex: 'items',
+      key: "items",
+      render: (items) => `${items.length}`,
+    },
+    {
+      title: 'Last changed at',
+      // className: 'text-xs',   
+      dataIndex: '_lastChangedAt',
+      key: "_lastChangedAt",
+      render: (_lastChangedAt) => `${_lastChangedAt}`,
+    },
+
   ];
   
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -235,11 +257,12 @@ const Orders = () => {
         <Table
           columns={columns}
           dataSource={order}
-          pagination={{
-            position: ['bottomCenter'], 
-            prevIcon: <Button type='link' className='custom-pagination-btn'>{`<`}</Button>,
-            nextIcon: <Button type='link' className='custom-pagination-btn'>{`>`}</Button>,
-          }}
+          pagination={false}
+          // pagination={{
+          //   position: ['bottomCenter'], 
+          //   prevIcon: <Button type='link' className='custom-pagination-btn'>{`<`}</Button>,
+          //   nextIcon: <Button type='link' className='custom-pagination-btn'>{`>`}</Button>,
+          // }}
         />
       </div>
         </>
