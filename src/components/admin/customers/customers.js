@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
-import { SearchOutlined,EditOutlined } from "@ant-design/icons";
-import { Button, Input, Space, Table, Tag, Modal,Form } from "antd";
+import { SearchOutlined,EditOutlined, DeleteOutlined } from "@ant-design/icons";
+import { Button, Input, Space, Table, Tag, Modal,Form, Popconfirm } from "antd";
 import Highlighter from "react-highlight-words";
 import ImportButton from "./importButton";
 import { useRouter } from "next/navigation";
@@ -21,6 +21,7 @@ const Customer = () => {
   const [editedData, setEditedData] = useState({});
   // const [selectedRows, setselectedRows] = useState([]);
   const [openEditModal, setOpenEditModal] = useState(false);
+  // const [customers, setCustomers] = useState([]);
   const showModalForEdit = (record) => {
     setOpenEditModal(true);
     console.log("Editing product:", record);
@@ -40,6 +41,7 @@ const Customer = () => {
   };
   const putRequest = async (values) => {
     const { id, name, phone } = values;
+    console.log("my id ",id);
     try {
       console.log("stored data", values);
       const response = await axios.put(`/updateCustomer/${id}`, { name, phone });
@@ -77,6 +79,17 @@ const Customer = () => {
   const onChangeRadio2 = (e) => {
     console.log('radio checked', e.target.value);
     setradio2(e.target.value);
+  };
+  const handleDeleteItem = async (id) => {
+    try {
+      console.log("Deleting customer");
+      const response = await axios.delete(`/deleteCustomerById/${id}`);
+      console.log("Success", response);
+      // Remove the deleted customer from the state
+      setcustomers(customers.filter(customer => customer.id !== id));
+    } catch (error) {
+      console.log("Error deleting customer", error);
+    }
   };
   
 
@@ -219,14 +232,14 @@ const columns = [
     title: "Customer name",
     dataIndex: "name",
     key: "name",
-    width: 50, // Adjust the width as needed
+    width: 40, // Adjust the width as needed
     render: (name) => `${name}`,
   },
   {
     title: "Phone",
     dataIndex: "phone",
     key: "phone",
-    width: 50, // Adjust the width as needed
+    width: 30, // Adjust the width as needed
     render: (phone) => `₹${phone}`,
   },
   {
@@ -239,12 +252,23 @@ const columns = [
   {
     title: "Action",
     key: "action",
-    width: "8%",
+    width: 30,
+    align: "center", // Align the title in the center
+    
     render: (text, record) => (
       <Space size="middle">
         <button onClick={() => showModalForEdit(record)}>
           <EditOutlined /> Edit
         </button>
+        <span style={{ marginRight: 8, marginLeft: 8 }}></span> {/* Add space between icons */}
+        <Popconfirm 
+          title="Are you sure to delete this Customer?"
+          onConfirm={() => handleDeleteItem(record.id)}
+          okText="Yes"
+          cancelText="No"
+        >
+          <DeleteOutlined style={{ color: "red", cursor: "pointer" }} />
+        </Popconfirm>
       </Space>
     ),
   },
