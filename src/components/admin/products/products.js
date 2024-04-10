@@ -360,7 +360,7 @@ const Products = () => {
       dataIndex: "price",
       key: "price",
       width: "10%",
-      render: (price) => `₹${price}`,
+      render: (price) => `$${price}`,
     },
     {
       title: "Unit",

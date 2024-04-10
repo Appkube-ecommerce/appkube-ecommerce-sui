@@ -30,15 +30,28 @@ const Customer = () => {
    
   };
   const [customers, setcustomers] = useState([]);
+  const [modalClosed, setModalClosed] = useState(false);
+
   // const { customers, loadings, error } = useFetchCustomers();
   const [radio1, setradio1] = useState(1);
-  const handleSaveForEdit = () => {
+  const handleSaveForEdit = async () => {
     console.log("Saving edited data:", editedData);
-    setEditingProduct(null);
-    setEditedData({});
-    putRequest(editedData); 
-    setOpenEditModal(false);
+
+    try {
+      await putRequest(editedData);
+      // Update the customers state with the new data
+      const updatedCustomers = customers.map((customer) =>
+        customer.id === editedData.id ? editedData : customer
+      );
+      setcustomers(updatedCustomers);
+      setOpenEditModal(false);
+    } catch (error) {
+      console.error("Error saving edit:", error);
+    }
+
   };
+
+
   const putRequest = async (values) => {
     const { id, name, phone } = values;
     console.log("my id ",id);
@@ -240,14 +253,14 @@ const columns = [
     dataIndex: "phone",
     key: "phone",
     width: 30, // Adjust the width as needed
-    render: (phone) => `₹${phone}`,
+    render: (phone) => `${phone}`,
   },
   {
     title: "ID",
     dataIndex: "id",
     key: "id",
     width: 50, // Adjust the width as needed
-    render: (id) => `₹${id}`,
+    render: (id) => `${id}`,
   },
   {
     title: "Action",

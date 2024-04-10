@@ -20,15 +20,17 @@ OrderInfo = () => {
   const searchParams = useSearchParams();
   const idFromParams = searchParams.get("data");
   
-  // useEffect(() => {
-  //   const fetchOrders = async () => {
-  //     try {
-  //       const response = await FetchOrders(); 
-  //       dispatch(saveOrdersList(response.data.listOrders.items));
-  //     } catch (error) {
-  //       console.error("Error fetching orders:", error);
-  //     }
-  //   };
+
+  useEffect(() => {
+    const fetchOrders = async () => {
+      try {
+   
+        dispatch(saveOrdersList(result.data));
+      } catch (error) {
+        console.error("Error fetching orders:", error);
+      }
+    };
+
 
   //   fetchOrders();
   // },[dispatch]);
