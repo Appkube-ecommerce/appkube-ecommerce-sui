@@ -114,7 +114,7 @@ export default function RootLayout({ children }) {
               </div>
           
             <div><BellOutlined className="text-white text-lg"/>
-            <Button className="text-white">My Store</Button>
+            <button className="text-black">My Store</button>
             </div>
             {/* <div></div> */}
           </Header>
