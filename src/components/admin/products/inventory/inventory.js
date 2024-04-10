@@ -32,6 +32,7 @@ import { CiGlass } from "react-icons/ci";
 const Inventory = () => {
   const dispatch = useDispatch();
   const { Option } = Select;
+  const [images, setImages] = useState([]);
   const [imageUrl, setImageUrl] = useState(); // Define imageUrl state variable
   const [openExportModal, setOpenExportModal] = useState(false);
   const [editingProduct, setEditingProduct] = useState(null);
@@ -42,44 +43,46 @@ const Inventory = () => {
   const [inventory, setInventory] = useState([]);
   const [selectedCount, setSelectedCount] = useState(0);
   const [cart, setCart] = useState([]);
+  const allProductData = [];
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const result = await axios.get("/getAllInventory");
-        console.log("Inventory", result);
-        setInventory(result.data);
-        // dispatch(setAllProducts(result.data));
-        // console.log(result.data)
+        const inventoryResult = await axios.get("/getAllInventory");
+        console.log("Inventory ids", inventoryResult.data);
+        setInventory(inventoryResult.data);
+        
+        // Extract product IDs from the inventory data
+        const productIds = inventoryResult.data.map((item) => item.productId);
+        console.log("Product IDs:", productIds);
+  
+        // Array to hold all fetched product data
+  
+        // Fetch product data for each ID asynchronously using Promise.all
+        await Promise.all(productIds.map(async (id) => {
+          try {
+            const productResult = await axios.get(`/product/${id}`);
+            console.log("success", productResult.data);
+            console.log("images", productResult.data);
+            // Add fetched product data to the array
+            allProductData.push(productResult.data);
+          } catch (error) {
+            console.error("Error fetching product:", error);
+          }
+        }));
+  
+        // Log all fetched product data
+        console.log("All Product Data:", allProductData);
       } catch (error) {
         console.error("Error fetching products:", error);
       }
     };
-
+  
     fetchData();
   }, []);
+  
 
-  console.log("invent", inventory);
-
-    
-    const id = inventory.map((item) => item.productId);
-    console.log("Product IDs:", id);
-  for (let i = 0; i < id.length; i++) {
-    const fetchProduct = async (id) => {
-      try {
-        const result = await axios.get(`/product/${id}`);
-        setProducts(result.data);
-        console.log("success", products);
-      } catch (error) {
-        console.error("Error fetching product:", error);
-      }
-    };
-    fetchProduct(id[i]);
-  }
-  let image=null;
-  if(products.id == inventory.id){
-    let image = products.image;
-  }
+  let image = products.image;
 
   const showModalForEdit = (record) => {
     setOpen(true);
@@ -280,12 +283,27 @@ const Inventory = () => {
   };
 
   const columns = [
+    // {
+    //   title: "Image",
+    //   dataIndex: "productId",
+    //   key: "img",
+    //   width: "10%",
+    //   render: (productId) => {
+    //     // Find the product data with matching productId
+    //     const productData = allProductData;
+    //     // Render the image if product data is found
+    //     return productData ? (
+    //       <Image src={productData.image} alt="Product" width={60} height={60} />
+    //     ) : null;
+    //   },
+    // },
     {
-      title: "Image",
-      dataIndex: "img",
-      key: "img",
-      width: "10%",
-      render: () => <Image src={image} alt="Product" width={60} height={60} />,
+      title: "Inventory Id",
+      dataIndex: "id",
+      key: "id",
+      width: "16%",
+      ...getColumnSearchProps("id"),
+      render: (id) => `${id}`,
     },
     {
       title: "productId",
@@ -498,11 +516,11 @@ const Inventory = () => {
         </Modal>
       </header>
       <br />
-      <div>
+      {/* <div>
         <button className="border-2 rounded-lg p-3">
           {selectedCount} Items Added to Cart
         </button>
-      </div>
+      </div> */}
       <Table
         className="mt-5 mr-3"
         columns={columns}
