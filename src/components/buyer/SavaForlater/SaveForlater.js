@@ -8,6 +8,7 @@ import Image from 'next/image';
 import empty from "../../admin/images/empty.jpg"
 import Link from "next/link"
 import { ShoppingCartOutlined } from '@ant-design/icons'; // Import the Ant Design icon
+import { Button } from "antd";
 
 const SaveForlater = () => {
   const dispatch = useDispatch();
@@ -25,15 +26,16 @@ const SaveForlater = () => {
   if (saveForLater.length === 0) {
     return (
       <div className="empty-cart mt-5 mb-5">
-        <Image src={empty} height={500} width={500} alt="image" />
-        <div className="flex gap-5">
+        <div className="flex gap-4 justify-between">
           <h1 className="text-lg font-bold">Add some items to save for later</h1>
           <Link href="/">
-            <button style={{ marginTop: '16px', height: '40px', borderRadius: '20px' }}>
-              Back Home
-            </button>
+            <Button style={{ height: '30px' }} className="mb-1">
+              Home
+            </Button>
           </Link>
         </div>
+        <Image src={empty} height={500} width={500} alt="image" />
+        
       </div>
     );
   }
