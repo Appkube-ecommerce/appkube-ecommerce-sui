@@ -35,7 +35,7 @@ const Customer = () => {
     console.log("Saving edited data:", editedData);
     setEditingProduct(null);
     setEditedData({});
-    putRequest(editedData); //here put api is hitting
+    putRequest(editedData); 
     setOpenEditModal(false);
   };
   const putRequest = async (values) => {

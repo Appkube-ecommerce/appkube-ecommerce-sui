@@ -10,8 +10,7 @@ import { saveOrdersList } from "@/redux/slices/orderSlice";
 //import {Input, message, Upload } from "antd";
 import { EditOutlined } from "@ant-design/icons";
 import { useEffect } from 'react';
-
-
+import { Steps } from 'antd';
 
 const 
 OrderInfo = () => {
@@ -21,18 +20,18 @@ OrderInfo = () => {
   const searchParams = useSearchParams();
   const idFromParams = searchParams.get("data");
   
-  useEffect(() => {
-    const fetchOrders = async () => {
-      try {
-        const response = await FetchOrders(); 
-        dispatch(saveOrdersList(response.data.listOrders.items));
-      } catch (error) {
-        console.error("Error fetching orders:", error);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchOrders = async () => {
+  //     try {
+  //       const response = await FetchOrders(); 
+  //       dispatch(saveOrdersList(response.data.listOrders.items));
+  //     } catch (error) {
+  //       console.error("Error fetching orders:", error);
+  //     }
+  //   };
 
-    fetchOrders();
-  },[dispatch]);
+  //   fetchOrders();
+  // },[dispatch]);
 
   const orders = useSelector((state) => state.ordersData.ordersList);
   console.log(orders, "coming from redux");
@@ -52,13 +51,14 @@ OrderInfo = () => {
     <>
 
       <div className="p-8">
-        <header className="flex gap-5">
+        <header className="flex gap-1">
           <ArrowLeftOutlined
             className="text-lg font-semibold"
             onClick={backToOrders}
           />
-          <div className="flex gap-4 justify-center">
-            <h1 className="font-bold text-xl">{data[0]?.id||idFromParams}</h1>
+          <div className="flex justify-between w-10/12">
+            <div><h1 className="font-bold text-xl mt-1">#{data[0]?.id||idFromParams}</h1></div>
+            <div className="gap-4 flex">
             <button
               style={{
                 backgroundColor: "#E3E3E3",
@@ -86,17 +86,19 @@ OrderInfo = () => {
               }}
             >
               Edit
-            </button>
+            </button></div>
           </div>
         </header>
-        <div className="ml-10">{data[0]?.createdAt}</div>
+        <div className="ml-6">{data[0]?.createdAt} from {data[0]?.paymentMethod}</div>
       </div>
-      <div className='flex gap-5'>
+      <div className='flex gap-8'>
 <div>
       <div className="border-2 shadow-md w-[37.5rem] h-72 bg-white rounded-xl p-4">
-        <div></div>
+      <div className="font-semibold text-base p-1">#{data[0]?.id||idFromParams}</div>
         <div className='border border-slate-200 h-44 rounded-md'>
-        <div className='border-b h-14'><p></p></div>
+        <div className='border-b h-14 p-2'>
+        <p>{data[0]?.createdAt}</p>
+        </div> 
         <div className='border-b h-14'></div>
         <div className='h-14'></div></div>
         <div className='flex justify-end mt-2'>
@@ -107,40 +109,23 @@ OrderInfo = () => {
 
       </div>
       <div className="border-2 shadow-md w-[37.5rem] h-48 bg-white p-4 mt-5 rounded-xl">
+      <div className="font-semibold p-2">{data[0]?.status}</div>
       <div className='border border-slate-200 rounded-md'>
-      <div className='border-b h-16'></div>
-        <div className=' h-12'></div>
+      <div className='border-b h-16 p-2'>
+        <div className="flex justify-between">
+        <p>Sub total</p>
+      <p>{data[0]?.items.length} items</p>
+      <p>₹{data[0]?.totalPrice}</p></div>
+      <div className="py-1 justify-between flex"><p className="font-semibold">Total</p>
+      <p>₹{data[0]?.totalPrice}</p></div>
+      </div>
+        <div className=' h-12 py-3 px-2 flex justify-between'><p>{data[0]?.status}</p>
+        <p>₹{data[0]?.totalPrice}</p></div>
         </div>
       </div>
       <div className='mt-8'>
-      <p className='font-semibold text-base ml-4 text-slate-800 mb-2'>Timeline</p>
-      <div className="border-2 shadow-md w-[37.5rem] h-40 bg-white rounded-xl">
-      <div className="flex flex-col mt-4 space-y-4 items-end">
-              
-              <Input
-                placeholder="Leave a comment..."
-                value={comment} 
-                onChange={(e) => setComment(e.target.value)}
-                className='border-none hover:border-0 h-16 rounded-none'
-              />
-                <div className="bg-slate-50 flex justify-end h-full w-full"> {/* Use flex justify-end */}
-    <button
-      className="text-gray-500 font-semibold h-6 w-12  mt-4 mb-4 mr-3"
-      //onClick={handlePostComment}
-      style={{
-        backgroundColor: "#E3E3E3",
-        borderRadius: "5px",
-        
-      }}
-  
-    >
-      Post
-    </button>
-  </div>
-            </div>
+      
         </div>
-        </div>
-      <p className='text-slate-500 text-end'>Only you and other staff can see comments</p>
 </div>
 
 <div>
@@ -178,16 +163,36 @@ OrderInfo = () => {
 </div>
 
       </div>
-
-      <div className="border-2 shadow-md w-80 h-36 bg-white p-2 rounded-xl mt-5">
-        <p className='font-semibold text-slate-800'>Conversion summary</p>
-        <p className='text-slate-800 mt-4'>There aren&apos;t any conversion details available for this order.</p>
-        <div className="mt-4"><a className='text-sky-500 font-semibold'>Learn more</a></div>
-      </div>
-      <div className="border-2 shadow-md w-80 h-44 bg-white p-2 mt-5 rounded-xl font-semibold text-slate-800">Fraud analysis</div>
 </div>
 
 </div>
+<p className="font-semibold text-base px-2 py-2">Timeline</p>
+<div className="h-20 w-10/12 bg-white rounded-xl py-7 px-2 shadow-md">
+      <Steps
+          size="small"
+          current={2}
+          items={[
+            {
+              title: "Order Placed",
+            },  
+            {
+              title: "Order Confirmed",
+            },
+            {
+              title: "Order Processed",
+            },
+            {
+              title: "Shipped",
+            },
+            {
+              title: "Out for Delivery",
+            },
+            {
+              title: "Delivered",
+            },
+          ]}
+        />
+      </div>  
     </>
   );
 };
