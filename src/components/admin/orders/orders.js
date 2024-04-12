@@ -125,7 +125,7 @@ const Orders = () => {
       title: 'Total Price',
       dataIndex: 'totalPrice',
       key: "totalPrice",
-      render: (totalPrice) => `₹${totalPrice}`,
+      render: (totalPrice) => `$${totalPrice}`,
     },
     {
       title: 'Payment Method',
@@ -135,7 +135,7 @@ const Orders = () => {
       render: (paymentMethod) => `${paymentMethod}`,
     },
     {
-      title: 'Payment Status',
+      title: 'Order Status',
       // className: 'text-xs',   
       dataIndex: 'status',
       key: "status",

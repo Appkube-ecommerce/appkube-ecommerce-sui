@@ -226,8 +226,7 @@ const Customer = () => {
       searchedColumn === dataIndex ? (
         <Highlighter
           highlightStyle={{
-           
-            padding: 0,
+          padding: 0,
           }}
           searchWords={[searchText]}
           autoEscape

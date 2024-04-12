@@ -20,17 +20,15 @@ OrderInfo = () => {
   const searchParams = useSearchParams();
   const idFromParams = searchParams.get("data");
   
-
-  useEffect(() => {
-    const fetchOrders = async () => {
-      try {
-   
-        dispatch(saveOrdersList(result.data));
-      } catch (error) {
-        console.error("Error fetching orders:", error);
-      }
-    };
-
+  // useEffect(() => {
+  //   const fetchOrders = async () => {
+  //     try {
+  //       const response = await FetchOrders(); 
+  //       dispatch(saveOrdersList(response.data.listOrders.items));
+  //     } catch (error) {
+  //       console.error("Error fetching orders:", error);
+  //     }
+  //   };
 
   //   fetchOrders();
   // },[dispatch]);
@@ -44,6 +42,15 @@ OrderInfo = () => {
 
   const data = orders.filter((item) => item.id === idFromParams);
   console.log("filter value", data);
+
+   const statusToStepIndex = {
+    'PENDING': 0, 
+    'FULFILLED': 5, 
+    
+  };
+
+  
+  const currentStep = statusToStepIndex[data?.status];
   
   function Refund(){
      router.push("/admin/orders/Refund")
@@ -59,7 +66,9 @@ OrderInfo = () => {
             onClick={backToOrders}
           />
           <div className="flex justify-between w-10/12">
-            <div><h1 className="font-bold text-xl mt-1">#{data[0]?.id||idFromParams}</h1></div>
+           <div>
+              <h1 className="font-bold text-xl mt-1">#{data?.id || idFromParams}</h1>
+            </div>
             <div className="gap-4 flex">
             <button
               style={{
@@ -117,12 +126,12 @@ OrderInfo = () => {
         <div className="flex justify-between">
         <p>Sub total</p>
       <p>{data[0]?.items.length} items</p>
-      <p>₹{data[0]?.totalPrice}</p></div>
+      <p>${data[0]?.totalPrice}</p></div>
       <div className="py-1 justify-between flex"><p className="font-semibold">Total</p>
-      <p>₹{data[0]?.totalPrice}</p></div>
+      <p>${data[0]?.totalPrice}</p></div>
       </div>
         <div className=' h-12 py-3 px-2 flex justify-between'><p>{data[0]?.status}</p>
-        <p>₹{data[0]?.totalPrice}</p></div>
+        <p>${data[0]?.totalPrice}</p></div>
         </div>
       </div>
       <div className='mt-8'>
@@ -168,12 +177,12 @@ OrderInfo = () => {
 </div>
 
 </div>
-<div className="flex justify-"><p className="font-semibold text-base px-2 py-2">Timeline</p>
-<button>Edit</button></div>
+<div className="flex"><p className="font-semibold text-base px-2 py-2">Timeline</p>
+</div>
 <div className="h-20 w-10/12 bg-white rounded-xl py-7 px-2 shadow-md">
       <Steps
           size="small"
-          current={3}
+          current={currentStep} // Set the current step dynamically based on order status
           items={[
             {
               title: "Order Placed",
