@@ -18,6 +18,7 @@ export default function RootLayout({ children, includeHeader = false }) {
     "/buyer/login",
     "/buyer/register",
     "/buyer/login/account",
+
   ];
 
   // Function to check if the current pathname requires the timeline header
