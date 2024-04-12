@@ -100,12 +100,14 @@ const Inventory = () => {
     setOpenEditModal(false);
   };
   const putRequest = async (values) => {
-    let data = {
-      productId: values.productId,
-      availableQuantity: values.availableQuantity,
-      unit: values.unit,
+    const { id, availableQuantity, unit} = values;
+    console.log("my id ",id);
 
+    let data = {
+      availableQuantity:parseFloat(values.availableQuantity),
+      unit: values.unit,
     };
+
     try {
       console.log("stored data", data);
       const response = await axios.put(`/inventory/${id}`, data);

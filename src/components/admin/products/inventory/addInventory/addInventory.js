@@ -11,15 +11,16 @@ import {
   Select,
   DatePicker,
   Row,
+  notification
 } from "antd";
 import axios from "@/Api/axios";
 import { useRouter } from "next/navigation";
 import { ArrowLeftOutlined } from "@ant-design/icons";
 const { Option } = Select;
-
 const AddInventory = () => {
   const [products, setProducts] = useState([]);
   const [productOptions, setProductOptions] = useState([]);
+  const [form] = Form.useForm(); 
 
 
   const router = useRouter();
@@ -80,7 +81,12 @@ const AddInventory = () => {
       const response = await axios.post("/inventory", data);
       console.log("response", response);
       if (response.status == 200) {
+        form.resetFields();
         // dispatch(setCreateProduct(data));
+        notification.success({
+          message: 'Product added to Inventory Successfully!',
+        });
+        console.log(formData)
       }
     } catch (error) {
       console.log("error", error);
@@ -99,6 +105,7 @@ const AddInventory = () => {
       <Form
         requiredMark={false}
         layout="vertical"
+        form={form}
         labelCol={{
           span: 20,
         }}
@@ -114,24 +121,24 @@ const AddInventory = () => {
               },
             ]}
           >
-            <Input
+            {/* <Input
               name="unit"
               placeholder="unit"
               className="border border-black"
               onChange={handleInputChange}
               type="string"
-            />
-            {/* <Select
+            /> */}
+            <Select
+            name="unit"
               className="border rounded-md border-black"
               placeholder="Select a option for UNIT"
-              onChange={(value) => handleDropDownChange("unit", value)} name="unit"
-              
+              onChange={handleDropDownChange}               
               allowClear
             >
               <Option value="kg">KG</Option>
               <Option value="piece">PIECE</Option>
             </Select>
-           */}
+          
           </Form.Item>
         </Col>
         <Col span={12}>
@@ -151,6 +158,7 @@ const AddInventory = () => {
               className="border border-black"
               onChange={handleInputChange}
               type="number"
+              value={formData.availableQuantity}
               />
           </Form.Item>
         </Col>
