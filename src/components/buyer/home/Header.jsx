@@ -22,6 +22,8 @@ const Header = ({ onSearch }) => {
   const router = useRouter();
   const cartItems = useSelector(state => state.cartDetails.cart);
   const AddProductsintocart = useSelector(state => state.saveForLaterSlice.saveForLater);
+  const cartItemsFromStorage1 =localStorage.getItem('addcartitems');
+  const  cartItemsFromStorage= JSON.parse(cartItemsFromStorage1)
 
   const handleSearchChange = (e) => {
     setSearchQuery(e.target.value);
@@ -116,7 +118,7 @@ const Header = ({ onSearch }) => {
             <button className="btn bg-red-200 rounded-md p-0 hover:bg-red-300 transition-colors w-auto h-8 relative">
               <div className="rounded-full flex bg-red-600 p-1 relative">
                 <BsFillBasketFill className="text-white text-2xl" />
-                <div className="absolute -top-1 -right-1 bg-black text-white text-xs text-center font-semibold w-4 h-4 rounded-full">{cartItems.length}</div>
+                <div className="absolute -top-1 -right-1 bg-black text-white text-xs text-center font-semibold w-4 h-4 rounded-full">{cartItemsFromStorage ? cartItemsFromStorage.length : "0"}</div>
               </div>
             </button>
           </Link>

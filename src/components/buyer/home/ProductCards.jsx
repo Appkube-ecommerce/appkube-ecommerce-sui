@@ -1,38 +1,53 @@
-"use client"
-import { useState } from 'react'; // Import useState hook
+'use client'
+import { useState } from 'react';
 import { CiBookmark } from 'react-icons/ci';
 import { FaRupeeSign } from 'react-icons/fa';
 import Link from 'next/link';
 import Image from 'next/image';
-import { useDispatch } from 'react-redux'; // Removed useSelector since it's not used in this component
-import { addToCart } from '@/redux/slices/CartSlice';
-import { addToSaveForLater } from '@/redux/slices/saveForLaterSlice';
+import { useDispatch } from 'react-redux';
+import { addToCart, removeFromCart } from '@/redux/slices/CartSlice';
+import { addToSaveForLater, removeSave } from '@/redux/slices/saveForLaterSlice';
 import { notification } from 'antd';
 import { IoCheckmarkDoneCircleSharp } from "react-icons/io5";
-import { remove } from "@/redux/slices/CartSlice";
-import { removeSave } from "@/redux/slices/saveForLaterSlice";
-
-
 
 const ProductCards = ({ data, searchQuery }) => {
-  const [addedToCart, setAddedToCart] = useState(false); // State to track whether item is added to cart
-  const [saveItem, setSaveItem] = useState(false); // State to track whether item is added to save for later
+  const [addedToCart, setAddedToCart] = useState(false);
+  const [saveItem, setSaveItem] = useState(false);
   const dispatch = useDispatch();
 
+  // Function to add item to cart and local storage
   const cartAdd = (data) => {
     dispatch(addToCart(data));
-    setAddedToCart(true); // Mark item as added to cart
+    setAddedToCart(true);
+
+    // Retrieve cart items from local storage or create an empty array
+    const cartItemsFromStorage = JSON.parse(localStorage.getItem('addcartitems')) || [];
+    // Add the new item to the cart items array
+    const updatedCartItems = [...cartItemsFromStorage, data];
+    // Update local storage with the updated cart items array
+    localStorage.setItem('addcartitems', JSON.stringify(updatedCartItems));
   };
 
+  // Function to remove item from save for later and local storage
   const removeFromSave = (id) => {
     dispatch(removeSave(id));
-    setSaveItem(false); // Remove the saved status when removed from
+    setSaveItem(false);
+
+    // Remove the item from local storage
+    const cartItemsFromStorage = JSON.parse(localStorage.getItem('addcartitems')) || [];
+    const updatedCartItems = cartItemsFromStorage.filter(item => item.id !== id);
+    localStorage.setItem('addcartitems', JSON.stringify(updatedCartItems));
   };
 
-
-  const removeToCart = (data) => {
-    dispatch(remove(data));
+  // Function to remove item from cart and local storage
+  const removeToCart = (id) => {
+    dispatch(removeFromCart(id));
     setAddedToCart(false);
+
+    // Remove the item from local storage
+    const cartItemsFromStorage = JSON.parse(localStorage.getItem('addcartitems')) || [];
+    const updatedCartItems = cartItemsFromStorage.filter(item => item.id !== id);
+    localStorage.setItem('addcartitems', JSON.stringify(updatedCartItems));
   };
 
   const saveForLater = (data) => {
@@ -40,7 +55,7 @@ const ProductCards = ({ data, searchQuery }) => {
     notification.success({
       message: 'Product Saved For Later Successfully!',
     });
-    setSaveItem(true); // Mark item as added to save for later
+    setSaveItem(true);
   };
 
   return (
