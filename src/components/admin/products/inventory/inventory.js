@@ -70,7 +70,7 @@ const Inventory = () => {
             console.error("Error fetching product:", error);
           }
         }));
-  
+
         // Log all fetched product data
         console.log("All Product Data:", allProductData);
       } catch (error) {
@@ -96,25 +96,24 @@ const Inventory = () => {
     console.log("Saving edited data:", editedData);
     setEditingProduct(null);
     setEditedData({});
-    // putRequest(editedData); //here put api is hitting
+    putRequest(editedData); //here put api is hitting
     setOpenEditModal(false);
   };
-  // const putRequest = async (values) => {
-  //   let data = {
-  //     productId: values.productId,
-  //     availableQuantity: values.availableQuantity,
-  //     id: ,
-  //     unit: values.unit,
+  const putRequest = async (values) => {
+    let data = {
+      productId: values.productId,
+      availableQuantity: values.availableQuantity,
+      unit: values.unit,
 
-  //   };
-  //   try {
-  //     console.log("stored data", data);
-  //     const response = await axios.put("/product", data);
-  //     console.log("success", response);
-  //   } catch (error) {
-  //     console.log("error", error);
-  //   }
-  // };
+    };
+    try {
+      console.log("stored data", data);
+      const response = await axios.put(`/inventory/${id}`, data);
+      console.log("success", response);
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
 
   const handleCancelForEdit = () => {
     setOpenEditModal(false);

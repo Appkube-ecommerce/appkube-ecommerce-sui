@@ -22,8 +22,8 @@ OrderInfo = () => {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-   
-        dispatch(saveOrdersList(result.data));
+        const response = await FetchOrders(); 
+        dispatch(saveOrdersList(response.data.listOrders.items));
       } catch (error) {
         console.error("Error fetching orders:", error);
       }

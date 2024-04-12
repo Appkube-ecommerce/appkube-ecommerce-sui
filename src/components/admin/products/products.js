@@ -90,13 +90,25 @@ const Products = () => {
     setEditedData(record);
     setImageUrl(record.image);
   };
-  const handleSaveForEdit = () => {
+  const handleSaveForEdit = async () => {
     console.log("Saving edited data:", editedData);
-    setEditingProduct(null);
-    setEditedData({});
-    putRequest(editedData); //here put api is hitting
-    setOpenEditModal(false);
+    
+    try {
+      // Make the API call to update the product
+      const response = await putRequest(editedData);
+      console.log("success", response);
+      const updatedProducts = products.map(product =>
+        product.id === editedData.id ? editedData : product
+      );
+      setProducts(updatedProducts);
+      setOpenEditModal(false);
+    } catch (error) {
+      console.log("error", error);
+      // Handle error, show error message or handle it in a way appropriate to your application
+    }
   };
+  
+  
   const putRequest = async (values) => {
     let data = {
       id: values.id,

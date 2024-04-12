@@ -8,6 +8,7 @@ import { addToCart } from "@/redux/slices/CartSlice";
 import empty from "../../admin/images/empty.jpg"
 import Link from "next/link"
 import { ShoppingCartOutlined } from '@ant-design/icons'; // Import the Ant Design icon
+import { Button } from "antd";
 
 
 const SaveForlater = () => {
@@ -21,6 +22,23 @@ const SaveForlater = () => {
     dispatch(addToCart(data));
   };
 
+  // Render icon and text when cart is empty
+  if (saveForLater.length === 0) {
+    return (
+      <div className="empty-cart mt-5 mb-5">
+        <div className="flex gap-4 justify-between">
+          <h1 className="text-lg font-bold">Add some items to save for later</h1>
+          <Link href="/">
+            <Button style={{ height: '30px' }} className="mb-1">
+              Home
+            </Button>
+          </Link>
+        </div>
+        <Image src={empty} height={500} width={500} alt="image" />
+        
+      </div>
+    );
+  }
   const saveForLater = useSelector(state => state.saveForLaterSlice.saveForLater);
 
     // Render icon and text when cart is empty
@@ -44,6 +62,7 @@ const SaveForlater = () => {
         </div>
       );
     }
+
 
   const cards = saveForLater.map((product) => (
 

@@ -129,7 +129,7 @@ const Header = ({ onSearch }) => {
         </button>
         <div>
           <Dropdown overlay={menu} trigger={['click']} open={isDropdownOpen} onVisibleChange={setIsDropdownOpen}>
-            <MdAccountCircle onClick={handleDropdown} />
+            <MdAccountCircle className="cursor-pointer" onClick={handleDropdown} />
           </Dropdown>
         </div>
 

@@ -1,6 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import { EditOutlined, MailOutlined, PhoneOutlined } from "@ant-design/icons";
+
 const MyAccountPage = () => {
   return (
     <main>
@@ -13,12 +14,10 @@ const MyAccountPage = () => {
           <div className="text-base">
             <h1>Maimuna Gulafshan</h1>
             <h1>
-              <MailOutlined />
-              maimunagulafshan1@gmail.com
+              <MailOutlined /> maimunagulafshan1@gmail.com
             </h1>
             <h1>
-              {/*<PhoneOutlined />*/}
-              +91 9876509855
+              <PhoneOutlined /> +91 9876509855
             </h1>
           </div>
         </div>
@@ -29,9 +28,11 @@ const MyAccountPage = () => {
           </div>
           <div className="">
             <p className="font-semibold">
-              You havenot placed any order yet
-              <Link href="/" className="text-blue-500 hover:underline ml-1">
-                Start Shopping!
+              You haven't placed any order yet{" "}
+              <Link href="/" passHref>
+                <a className="text-blue-500 hover:underline ml-1">
+                  Start Shopping!
+                </a>
               </Link>
             </p>
           </div>
