@@ -64,13 +64,13 @@ const AddInventory = () => {
 
   const [formData, setFormData] = useState({
     productId: "",
-    availabeQuantity: "",
+    availableQuantity: "",
     unit: "",
   });
   const handleFormSubmit = async () => {
     const data = {
       productId: formData.productId,
-      availabeQuantity: parseFloat(formData.availabeQuantity), // Convert to number
+      availableQuantity: parseFloat(formData.availableQuantity), // Convert to number
       unit: formData.unit,
     };
     console.log(data, "stored");
@@ -137,7 +137,7 @@ const AddInventory = () => {
         <Col span={12}>
           <Form.Item
             label="Availabe Quantity"
-            name="availabeQuantity"
+            name="availableQuantity"
             rules={[
               {
                 required: true,
@@ -146,7 +146,7 @@ const AddInventory = () => {
             ]}
           >
             <Input
-              name="availabeQuantity"
+              name="availableQuantity"
               placeholder="Availabe Quantity"
               className="border border-black"
               onChange={handleInputChange}
