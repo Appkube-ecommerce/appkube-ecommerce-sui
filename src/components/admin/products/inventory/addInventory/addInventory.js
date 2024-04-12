@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState,useEffect} from "react";
 import {
   Form,
   Input,
@@ -18,6 +18,10 @@ import { ArrowLeftOutlined } from "@ant-design/icons";
 const { Option } = Select;
 
 const AddInventory = () => {
+  const [products, setProducts] = useState([]);
+  const [productOptions, setProductOptions] = useState([]);
+
+
   const router = useRouter();
   const backToInventory = () => {
     router.push("/admin/products/inventory");
@@ -33,10 +37,30 @@ const AddInventory = () => {
     }
   };
 
-  const handleDropDownChange = (name, value) => {
-    setFormData({ ...formData, [name]: value });
-    console.log(name, value, "change");
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const result = await axios.get("/product");
+        console.log("products", result.data);
+        setProducts(result.data);      
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      }
+    };
+  
+    fetchData();
+  }, []);
+  
+  useEffect(() => {
+    const options = products.map(item => ({ name: item.name, id: item.id }));
+    setProductOptions(options);
+  }, [products]);
+  
+  const handleDropDownChange = (value) => {
+    setFormData({ ...formData, productId: value });
+    console.log("productId", value, "change");
   };
+  
 
   const [formData, setFormData] = useState({
     productId: "",
@@ -46,19 +70,17 @@ const AddInventory = () => {
   const handleFormSubmit = async () => {
     const data = {
       productId: formData.productId,
-      availabeQuantity: formData.availabeQuantity,
+      availabeQuantity: parseFloat(formData.availabeQuantity), // Convert to number
       unit: formData.unit,
-      // id:"26064"
-      // id: formData.id,
     };
-    console.log(data, "hitting api");
+    console.log(data, "stored");
     // "Invalid input. "productId" and "availableQuantity" are required and "availableQuantity" must be a number. "unit" must be a non-empty string."
     try {
       console.log("data", data);
       const response = await axios.post("/inventory", data);
       console.log("response", response);
       if (response.status == 200) {
-        dispatch(setCreateProduct(data));
+        // dispatch(setCreateProduct(data));
       }
     } catch (error) {
       console.log("error", error);
@@ -97,6 +119,7 @@ const AddInventory = () => {
               placeholder="unit"
               className="border border-black"
               onChange={handleInputChange}
+              type="string"
             />
             {/* <Select
               className="border rounded-md border-black"
@@ -127,30 +150,39 @@ const AddInventory = () => {
               placeholder="Availabe Quantity"
               className="border border-black"
               onChange={handleInputChange}
-            />
+              type="number"
+              />
           </Form.Item>
         </Col>
 
         <Col span={12}>
           <Form.Item
-            label="Product Id"
-            name="productId"
-            rules={[
-              {
-                required: true,
-                message: "Please input currency!",
-              },
-            ]}
+                label="Product"
+                name="productId"
+                // onChange={handleDropDownChange}
+                rules={[
+                  {
+                    required: true,
+                    message: "Please select productId!",
+                  },
+                ]}
+                >
+            <Select
+            className="rounded-md border-none"
+            placeholder="Select a Product"
+            onChange={handleDropDownChange}
+            allowClear
+            type="string"
           >
-            <Input
-              name="productId"
-              placeholder="Product Id"
-              className="border border-black"
-              onChange={handleInputChange}
-            />
-          </Form.Item>
+            {productOptions.map((option, index) => (
+              <Option key={index} value={option.id}>
+                {`${option.name} - ${option.id}`}
+              </Option>
+            ))}
+          </Select>
+              </Form.Item>
         </Col>
-        <Col span={12}>
+        {/* <Col span={12}>
           <Form.Item
             label="Id "
             name="id"
@@ -168,7 +200,7 @@ const AddInventory = () => {
               onChange={handleInputChange}
             />
           </Form.Item>
-        </Col>
+        </Col> */}
       </Form>
       <div className="flex">
         <Button
@@ -178,10 +210,10 @@ const AddInventory = () => {
             backgroundColor: "black",
             borderRadius: "5px",
             // padding: "8px 0px 0px 90px",
-            width: "40%",
+            width: "50%",
           }}
           onClick={handleFormSubmit}
-          className="ml-44"
+          className="mb-6 w-full"
         >
           Submit
         </Button>
