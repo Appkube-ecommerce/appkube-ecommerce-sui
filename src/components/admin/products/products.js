@@ -61,14 +61,16 @@ const Products = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      try {
-        const result = await axios.get("/product");
-        console.log("products", result);
-        setProducts(result.data);
-        dispatch(setAllProducts(result.data));
-        // console.log(result.data)
-      } catch (error) {
-        console.error("Error fetching products:", error);
+      if(typeof window !== 'undefined'){
+        try {
+          const result = await axios.get("/product");
+          console.log("products", result);
+          setProducts(result.data);
+          dispatch(setAllProducts(result.data));
+          // console.log(result.data)
+        } catch (error) {
+          console.error("Error fetching products:", error);
+        }
       }
     };
 

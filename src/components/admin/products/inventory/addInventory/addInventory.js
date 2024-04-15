@@ -27,17 +27,7 @@ const AddInventory = () => {
   const backToInventory = () => {
     router.push("/admin/products/inventory");
   };
-  const handleInputChange = (e) => {
-    console.log("form data", formData);
-    if (e && e.target) {
-      const { name, value } = e.target;
-      setFormData({ ...formData, [name]: value });
-      console.log(name, value, "change");
-    } else {
-      console.log("Event or event target is undefined");
-    }
-  };
-
+  
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -48,18 +38,28 @@ const AddInventory = () => {
         console.error("Error fetching products:", error);
       }
     };
-  
+    
     fetchData();
   }, []);
   
+  const handleInputChange = (e) => {
+    console.log("form data", formData);
+    if (e && e.target) {
+      const { name, value } = e.target;
+      setFormData({ ...formData, [name]: value });
+      console.log(name, value, "change");
+    } else {
+      console.log("Event or event target is undefined");
+    }
+  };
   useEffect(() => {
     const options = products.map(item => ({ name: item.name, id: item.id }));
     setProductOptions(options);
   }, [products]);
   
-  const handleDropDownChange = (value) => {
-    setFormData({ ...formData, productId: value });
-    console.log("productId", value, "change");
+  const handleDropDownChange = (name, value) => {
+    setFormData({ ...formData, [name]: value }); 
+    console.log(name, value, "change");
   };
   
 
@@ -114,6 +114,7 @@ const AddInventory = () => {
           <Form.Item
             label="Unit"
             name="unit"
+            // onChange={handleDropDownChange}               
             rules={[
               {
                 required: true,
@@ -129,10 +130,10 @@ const AddInventory = () => {
               type="string"
             /> */}
             <Select
+            onChange={(value) => handleDropDownChange("unit", value)}
             name="unit"
               className="border rounded-md border-black"
               placeholder="Select a option for UNIT"
-              onChange={handleDropDownChange}               
               allowClear
             >
               <Option value="kg">KG</Option>
@@ -178,7 +179,7 @@ const AddInventory = () => {
             <Select
             className="rounded-md border-none"
             placeholder="Select a Product"
-            onChange={handleDropDownChange}
+            onChange={(value) => handleDropDownChange("productId", value)}
             allowClear
             type="string"
           >
