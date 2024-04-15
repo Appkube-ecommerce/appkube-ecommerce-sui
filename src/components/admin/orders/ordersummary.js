@@ -1,5 +1,5 @@
 "use client"
-import React, { useState,useEffect } from "react";
+import React, { useState } from "react";
 import { Button, Input, message, Upload } from "antd";
 import { ArrowLeftOutlined } from "@ant-design/icons";
 import { useRouter } from "next/navigation";
@@ -19,18 +19,21 @@ OrderInfo = () => {
   const searchParams = useSearchParams();
   const idFromParams = searchParams.get("data");
   
-  useEffect(() => {
-    const fetchOrders = async () => {
-      try {
-        const response = await FetchOrders(); 
-        dispatch(saveOrdersList(response.data));
-      } catch (error) {
-        console.error("Error fetching orders:", error);
-      }
-    };
 
-    fetchOrders();
-  },[dispatch]);
+  // useEffect(() => {
+  //   const fetchOrders = async () => {
+  //     try {
+  //       const response = await FetchOrders(); 
+  //       dispatch(saveOrdersList(response.data.listOrders.items));
+  //     } catch (error) {
+  //       console.error("Error fetching orders:", error);
+  //     }
+  //   };
+
+  //   fetchOrders();
+  // },[dispatch]);
+
+
 
   const orders = useSelector((state) => state.ordersData.ordersList);
   console.log(orders, "coming from redux");
@@ -41,6 +44,15 @@ OrderInfo = () => {
 
   const data = orders.filter((item) => item.id === idFromParams);
   console.log("filter value", data);
+
+   const statusToStepIndex = {
+    'PENDING': 0, 
+    'FULFILLED': 5, 
+    
+  };
+
+  
+  const currentStep = statusToStepIndex[data?.status];
   
   function Refund(){
      router.push("/admin/orders/Refund")
@@ -55,8 +67,12 @@ OrderInfo = () => {
             className="text-lg font-semibold"
             onClick={backToOrders}
           />
-          <div className="flex gap-4 justify-center">
-            <h1 className="font-bold text-xl">{data[0]?.id||idFromParams}</h1>
+          <div className="flex justify-between w-10/12">
+           <div>
+              <h1 className="font-bold text-xl mt-1">#{data?.id || idFromParams}</h1>
+            </div>
+            <div className="gap-4 flex">
+
             <button
               style={{
                 backgroundColor: "#E3E3E3",
@@ -106,8 +122,17 @@ OrderInfo = () => {
       </div>
       <div className="border-2 shadow-md w-[37.5rem] h-48 bg-white p-4 mt-5 rounded-xl">
       <div className='border border-slate-200 rounded-md'>
-      <div className='border-b h-16'></div>
-        <div className=' h-12'></div>
+      <div className='border-b h-16 p-2'>
+        <div className="flex justify-between">
+        <p>Sub total</p>
+      <p>{data[0]?.items.length} items</p>
+      <p>${data[0]?.totalPrice}</p></div>
+      <div className="py-1 justify-between flex"><p className="font-semibold">Total</p>
+      <p>${data[0]?.totalPrice}</p></div>
+      </div>
+        <div className=' h-12 py-3 px-2 flex justify-between'><p>{data[0]?.status}</p>
+        <p>${data[0]?.totalPrice}</p></div>
+
         </div>
       </div>
       <div className='mt-8'>
@@ -186,6 +211,35 @@ OrderInfo = () => {
 </div>
 
 </div>
+<div className="flex"><p className="font-semibold text-base px-2 py-2">Timeline</p>
+</div>
+<div className="h-20 w-10/12 bg-white rounded-xl py-7 px-2 shadow-md">
+      <Steps
+          size="small"
+          current={currentStep} // Set the current step dynamically based on order status
+          items={[
+            {
+              title: "Order Placed",
+            },  
+            {
+              title: "Order Confirmed",
+            },
+            {
+              title: "Order Processed",
+            },
+            {
+              title: "Shipped",
+            },
+            {
+              title: "Out for Delivery",
+            },
+            {
+              title: "Delivered",
+            },
+          ]}
+        />
+      </div>  
+
     </>
   );
 };

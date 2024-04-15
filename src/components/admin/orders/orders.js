@@ -12,7 +12,7 @@ import { useSearchParams } from 'next/navigation';
 import axios from "@/Api/axios";
 
 const Orders = () => {
-  const [editingProduct, setEditingProduct] = useState(null);
+  const [editingOrders, setEditingOrders] = useState(null);
   const [editedData, setEditedData] = useState({});
   const [openEditModal, setOpenEditModal] = useState(false);
   const [open, setOpen] = useState(false);
@@ -27,38 +27,38 @@ const Orders = () => {
   const showModalForEdit = (record) => {
     setOpen(true);
     setOpenEditModal(true);
-    console.log("Editing product:", record);
-    setEditingProduct(record);
+    console.log("Editing orders:", record);
+    setEditingOrders(record);
     setEditedData(record);
   
   };
   const handleSaveForEdit = () => {
     console.log("Saving edited data:", editedData);
-    setEditingProduct(null);
+    setEditingOrders(null);
     setEditedData({});
     putRequest(editedData); //here put api is hitting
     setOpenEditModal(false);
   };
   const putRequest = async (values) => {
     let data = {
+      id: values.id,
       createdAt: values.createdAt,
-      id: values.id,     
+      customerName: values.customerName,
+      totalPrice: values.totalPrice,
+      paymentMethod: values.paymentMethod,
+      status: values.status,
       items: values.items,
-paymentMethod: values.paymentMethod,
-status: values.status,
-totalPrice: values.totalPrice,
-updatedAt: values.updatedAt,
-_lastChangedAt: values._lastChangedAt,
-
+      _lastChangedAt: values._lastChangedAt,
     };
     try {
       console.log("stored data", data);
-      const response = await axios.put(`/updateOrder/${id}`, data);
+      const response = await axios.put(`/updateOrder/${values.id}`, data); // Pass the data object as the second parameter
       console.log("success", response);
     } catch (error) {
       console.log("error", error);
     }
   };
+  
   const searchParams = useSearchParams()
   console.log("data",searchParams.get('data')) 
   const id = searchParams.get('data')
@@ -125,7 +125,7 @@ _lastChangedAt: values._lastChangedAt,
       title: 'Total Price',
       dataIndex: 'totalPrice',
       key: "totalPrice",
-      render: (totalPrice) => `₹${totalPrice}`,
+      render: (totalPrice) => `$${totalPrice}`,
     },
     {
       title: 'Payment Method',
@@ -135,7 +135,7 @@ _lastChangedAt: values._lastChangedAt,
       render: (paymentMethod) => `${paymentMethod}`,
     },
     {
-      title: 'Payment Status',
+      title: 'Order Status',
       // className: 'text-xs',   
       dataIndex: 'status',
       key: "status",
@@ -310,9 +310,7 @@ _lastChangedAt: values._lastChangedAt,
                     id
                     }
                   onChange={(e) =>
-                    setEditedData({ ...editedData, 
-                      id
-                      : e.target.value })
+                    setEditedData({ ...editedData, id: e.target.value })
                   }
                 />
               </Form.Item>
