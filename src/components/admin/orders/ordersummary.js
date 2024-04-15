@@ -23,7 +23,7 @@ OrderInfo = () => {
     const fetchOrders = async () => {
       try {
         const response = await FetchOrders(); 
-        dispatch(saveOrdersList(response.data.listOrders.items));
+        dispatch(saveOrdersList(response.data));
       } catch (error) {
         console.error("Error fetching orders:", error);
       }

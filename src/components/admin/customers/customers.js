@@ -31,7 +31,6 @@ const Customer = () => {
   };
   const [customers, setcustomers] = useState([]);
   const [modalClosed, setModalClosed] = useState(false);
-
   // const { customers, loadings, error } = useFetchCustomers();
   const [radio1, setradio1] = useState(1);
   const handleSaveForEdit = async () => {
@@ -246,7 +245,17 @@ const columns = [
     dataIndex: "name",
     key: "name",
     width: 40, // Adjust the width as needed
-    render: (name) => `${name}`,
+    render: (name,record) =>(
+    <Link 
+    href={{
+      pathname: '/admin/customers/CustomerDetails',
+      query: {
+      data:`${record.id}`
+      }
+    }}
+  ><span>{name}</span>
+  </Link>
+    )
   },
   {
     title: "Phone",
