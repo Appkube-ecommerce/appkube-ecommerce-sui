@@ -13,6 +13,7 @@ import { Button } from "antd";
 
 const SaveForlater = () => {
   const dispatch = useDispatch();
+  const saveForLater = useSelector(state => state.saveForLaterSlice.saveForLater);
 
   const removeFromSave = (id) => {
     dispatch(removeSave(id));
@@ -39,7 +40,6 @@ const SaveForlater = () => {
       </div>
     );
   }
-  const saveForLater = useSelector(state => state.saveForLaterSlice.saveForLater);
 
     // Render icon and text when cart is empty
     if (saveForLater.length === 0) {

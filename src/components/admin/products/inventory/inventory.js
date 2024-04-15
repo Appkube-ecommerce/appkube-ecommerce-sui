@@ -4,6 +4,7 @@ import {
   SearchOutlined,
   EditOutlined,
   PlusOutlined,
+  DeleteOutlined,
   ShoppingCartOutlined,
 } from "@ant-design/icons";
 import {
@@ -14,9 +15,12 @@ import {
   Space,
   Table,
   Checkbox,
+  Popconfirm,
   Modal,
+  notification,
   Select,
 } from "antd";
+import InventoryImage from "./inventoryImage";
 import Highlighter from "react-highlight-words";
 import ImportButton from "../importButton";
 import { addToAdminCart } from "@/redux/slices/admincartSlice";
@@ -32,18 +36,14 @@ import { CiGlass } from "react-icons/ci";
 const Inventory = () => {
   const dispatch = useDispatch();
   const { Option } = Select;
-  const [images, setImages] = useState([]);
-  const [imageUrl, setImageUrl] = useState(); // Define imageUrl state variable
   const [openExportModal, setOpenExportModal] = useState(false);
   const [editingProduct, setEditingProduct] = useState(null);
   const [editedData, setEditedData] = useState({});
-  // const [selectedRows, setselectedRows] = useState([]);
   const [openEditModal, setOpenEditModal] = useState(false);
   const [products, setProducts] = useState([]);
   const [inventory, setInventory] = useState([]);
-  const [selectedCount, setSelectedCount] = useState(0);
   const [cart, setCart] = useState([]);
-  const allProductData = [];
+  const [allProductData,setAllProductData] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -63,8 +63,9 @@ const Inventory = () => {
           try {
             const productResult = await axios.get(`/product/${id}`);
             console.log("success", productResult.data);
-            console.log("images", productResult.data);
+            // console.log("images", productResult.data);
             // Add fetched product data to the array
+            // setAllProductData(productResult.data)
             allProductData.push(productResult.data);
           } catch (error) {
             console.error("Error fetching product:", error);
@@ -80,9 +81,6 @@ const Inventory = () => {
   
     fetchData();
   }, []);
-  
-
-  let image = products.image;
 
   const showModalForEdit = (record) => {
     setOpen(true);
@@ -90,31 +88,64 @@ const Inventory = () => {
     console.log("Editing product:", record);
     setEditingProduct(record);
     setEditedData(record);
-    setImageUrl(record.image);
   };
-  const handleSaveForEdit = () => {
+  const handleSaveForEdit = async () => {
     console.log("Saving edited data:", editedData);
-    setEditingProduct(null);
-    setEditedData({});
-    putRequest(editedData); //here put api is hitting
-    setOpenEditModal(false);
+    
+    try {
+      // Make the API call to update the product
+      const response = await putRequest(editedData);
+      console.log("success", response);
+      const updatedInventory = inventory.map(invent =>
+        invent.id === editedData.id ? editedData : invent
+      );
+      notification.success({
+        message: 'Inventory Product Edited Successfully!',
+      });
+      setInventory(updatedInventory);
+      setOpenEditModal(false);
+    } catch (error) {
+      console.log("error", error);
+      // Handle error, show error message or handle it in a way appropriate to your application
+    }
   };
   const putRequest = async (values) => {
-    let data = {
-      productId: values.productId,
-      availableQuantity: values.availableQuantity,
-      unit: values.unit,
+    const { id, availableQuantity, unit} = values;
+    console.log("my id ",id);
 
+    let data = {
+      availableQuantity:parseFloat(values.availableQuantity),
+      unit: values.unit,
     };
+
     try {
       console.log("stored data", data);
-      const response = await axios.put(`/inventory/${id}`, data);
+      const response = await axios.put(`/updateInventory/${id}`, data);
       console.log("success", response);
     } catch (error) {
       console.log("error", error);
     }
   };
-
+  const handleDeleteItem = async (id) => {
+    try {
+      console.log("Deleting Inventory");
+      const response = await axios.delete(`/inventory/${id}`);
+      console.log("Success", response);
+      if (response.status === 200) {
+        // Remove the deleted customer from the state
+        setInventory(inventory.filter((inventory) => inventory.id !== id));
+        notification.success({
+          message: 'Product removed from Inventory Successfully!',
+        });
+      } else {
+        // Handle other response status codes if needed
+        console.log("Error deleting Inventory: Unexpected response status");
+      }
+    } catch (error) {
+      console.log("Error deleting Inventory", error);
+    }
+  };
+  
   const handleCancelForEdit = () => {
     setOpenEditModal(false);
   };
@@ -169,6 +200,7 @@ const Inventory = () => {
       setSelectedKeys,
       selectedKeys,
       confirm,
+      
       clearFilters,
       close,
     }) => (
@@ -282,20 +314,23 @@ const Inventory = () => {
   };
 
   const columns = [
-    // {
-    //   title: "Image",
-    //   dataIndex: "productId",
-    //   key: "img",
-    //   width: "10%",
-    //   render: (productId) => {
-    //     // Find the product data with matching productId
-    //     const productData = allProductData;
-    //     // Render the image if product data is found
-    //     return productData ? (
-    //       <Image src={productData.image} alt="Product" width={60} height={60} />
-    //     ) : null;
-    //   },
-    // },
+  {
+    title: "Image",
+    dataIndex: "productId",
+    key: "img",
+    width: "10%", 
+  
+  render: (productId) => {
+    // Find the product data with matching productId
+    const productData = allProductData.find((product) => product.id === productId);
+
+    // Render the image if product data is found
+    return productData ? (
+      <Image src={productData.image} alt="Product" width={60} height={60} />
+    ) : null;
+  },
+},
+
     {
       title: "Inventory Id",
       dataIndex: "id",
@@ -307,10 +342,10 @@ const Inventory = () => {
     {
       title: "productId",
       dataIndex: "productId",
-      key: "id",
+      key: "productId",
       width: "16%",
-      ...getColumnSearchProps("productId"),
-      render: (productId) => `${productId}`,
+      ...getColumnSearchProps("productId"), // Use getColumnSearchProps with the dataIndex "productId"
+      render: (id) => `${id}`,
     },
     {
       title: "availableQuantity",
@@ -333,12 +368,23 @@ const Inventory = () => {
       render: (text, record) => (
         <Space size="middle">
           <button onClick={() => showModalForEdit(record)}>
-            <EditOutlined /> Edit
+            <EditOutlined style={{ color: "green", cursor: "pointer" }} /> Edit
           </button>
-        </Space>
+          <span style={{ marginRight: 8, marginLeft: 8 }}></span> {/* Add space between icons */}
+        <Popconfirm 
+          title="Are you sure to delete this?"
+          onConfirm={() => handleDeleteItem(record.id)}
+          okText="Yes"
+          cancelText="No"
+        >
+          <DeleteOutlined style={{ color: "red", cursor: "pointer" }} />
+        </Popconfirm>
+      </Space>
       ),
     },
   ];
+
+
 
   return (
     <div>
