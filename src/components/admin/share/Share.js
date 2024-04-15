@@ -56,37 +56,27 @@ export const Share = () => {
 
   const handleShare = async (phoneNumber) => {
     try {
-      const pdf = new jsPDF();
-      
+      const pdf = new jsPDF();  
       // Add title
       pdf.text("Synectiks Farm", 10, 10);
-  
       // Add date and time
-  
-  
       const currentDate = new Date().toLocaleDateString();
       const currentTime = new Date().toLocaleTimeString([], {
         hour: '2-digit',
         minute: '2-digit',
       });
       pdf.text(currentDate + ' ' + currentTime, 10, 20);
-  
-  
-    
   const x = 15; // Adjust these values as needed
   const y = 30; // Adjust these values as needed
   const width = 40; // Adjust these values as needed
   const height = 40; // Adjust these values as needed
-  
-     
-  
       // Define columns and rows for the table
       const columns = ["ID", "Name", "Image", "Price", "Category", "Unit"];
       const rows = products.map((product, index) => [
         
         index + 1,
         product.name,
-        // product.image,
+        product.image,
         product.price,
         product.category,
         product.unit
@@ -119,23 +109,29 @@ export const Share = () => {
     console.log(phoneNumber);
     const myHeaders = new Headers();
     myHeaders.append('Content-Type', 'application/json');
-  
-    const raw = JSON.stringify({
+
+  const raw = JSON.stringify({
       content: content,
       name: 'directory',
       phoneNumber: phoneNumber,
     });
-  
+
     const requestOptions = {
-    
+      method: 'POST',
       headers: myHeaders,
       body: raw,
       redirect: 'follow',
     };
     try {
-      const response = await axios.post("/sendBills",requestOptions);// Corrected options to requestOptions
+      const response = await fetch(
+        'https://2evfwh96lk.execute-api.us-east-1.amazonaws.com/sendBills',
+        requestOptions,
+      ); // Corrected options to requestOptions
       if (response.ok) {
         console.log('Pdf send');
+        notification.success({
+          message: 'PDF Sent successfully!',
+        });
       }
       if (!response.ok) {
         // throw new Error(HTTP error! Status: ${response.status});
@@ -146,7 +142,6 @@ export const Share = () => {
       return null; // Return null or handle the error as needed
     }
   };
-
   const handleReset = (clearFilters) => {
     clearFilters();
     setSearchText("");

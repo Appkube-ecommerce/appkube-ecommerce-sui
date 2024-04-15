@@ -19,6 +19,7 @@ OrderInfo = () => {
   const searchParams = useSearchParams();
   const idFromParams = searchParams.get("data");
   
+
   // useEffect(() => {
   //   const fetchOrders = async () => {
   //     try {
@@ -31,6 +32,7 @@ OrderInfo = () => {
 
   //   fetchOrders();
   // },[dispatch]);
+
 
 
   const orders = useSelector((state) => state.ordersData.ordersList);
