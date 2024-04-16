@@ -6,6 +6,8 @@ import { notification, Button } from 'antd';
 import { HomeOutlined } from '@ant-design/icons'; // Import the Ant Design icon
 import empty from "../../admin/images/empty.jpg"
 import Link from "next/link"
+import { remove } from "@/redux/slices/CartSlice";
+import { addToSaveForLater } from "@/redux/slices/saveForLaterSlice";
 
 const Card = () => {
   const dispatch = useDispatch();
@@ -45,6 +47,7 @@ const Card = () => {
   const saveForLater = (id) => {
     // Remove item from Redux store
     dispatch(remove(id));
+    dispatch(addToSaveForLater(id));
     // Remove item from local storage
     const updatedCartItems = cartItemsFromStorage.filter(item => item.id !== id);
     localStorage.setItem('addcartitems', JSON.stringify(updatedCartItems));

@@ -51,7 +51,18 @@ export const Share = () => {
 
     fetchData();
   }, []);
-
+  const urlToBase64 = async (url) => {
+    const response = await fetch(url)
+    const blob = await response.blob();
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        resolve(reader.result);
+      };
+      reader.onerror = reject;
+      reader.readAsDataURL(blob);
+    });
+  };
   const [show, setshow] = useState(false);
 
   const handleShare = async (phoneNumber) => {
@@ -71,24 +82,33 @@ export const Share = () => {
   const width = 40; // Adjust these values as needed
   const height = 40; // Adjust these values as needed
       // Define columns and rows for the table
+  
       const columns = ["ID", "Name", "Image", "Price", "Category", "Unit"];
-      const rows = products.map((product, index) => [
-        
-        index + 1,
-        product.name,
-        product.image,
-        product.price,
-        product.category,
-        product.unit
-      ]);
+      const rows = await Promise.all(products.map(async (product, index) => {
+        const base64Image = await urlToBase64(product.image);
+        console.log(base64Image);
+        return [
+          index + 1,
+          product.name,
+          base64Image,
+          product.price,
+          product.category,
+          product.unit
+        ];
+      }));
   
       // Add table using jspdf-autotable
       pdf.autoTable({
         head: [columns],
         body: rows,
-        startY: 30 // Adjust startY as needed
+        startY: 30,
+        didDrawCell: (data) => {
+          if (data.section === 'body' && data.column.index === 2) {
+            const base64Image = rows[data.row.index][2]; // Fetch base64Image from rows
+            pdf.addImage(base64Image, 'PNG', data.cell.x + 2, data.cell.y + 2, 10, 10)
+          }
+        }
       });
-  
       // Save or send the PDF
       console.log(phoneNumber);
       const base64String = pdf.output('datauristring');
