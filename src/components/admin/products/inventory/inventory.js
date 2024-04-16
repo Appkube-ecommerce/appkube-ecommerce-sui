@@ -19,8 +19,7 @@ import {
   Modal,
   notification,
   Select,
-} from "antd";
-import InventoryImage from "./inventoryImage";
+} from "antd";  
 import Highlighter from "react-highlight-words";
 import ImportButton from "../importButton";
 import { addToAdminCart } from "@/redux/slices/admincartSlice";
@@ -318,35 +317,42 @@ const Inventory = () => {
     title: "Image",
     dataIndex: "productId",
     key: "img",
-    width: "10%", 
+    width: "8%", 
   
   render: (productId) => {
     // Find the product data with matching productId
     const productData = allProductData.find((product) => product.id === productId);
-
+    
     // Render the image if product data is found
     return productData ? (
-      <Image src={productData.image} alt="Product" width={60} height={60} />
+      <Image unoptimized src={productData.image} alt="Product" width={60} height={60} />
     ) : null;
   },
 },
 
-    {
-      title: "Inventory Id",
-      dataIndex: "id",
+{
+  title: "Inventory Id",
+  dataIndex: "id",
       key: "id",
-      width: "16%",
+      width: "10%",
       ...getColumnSearchProps("id"),
       render: (id) => `${id}`,
     },
     {
-      title: "productId",
+      title: "Product Name",
       dataIndex: "productId",
-      key: "productId",
-      width: "16%",
-      ...getColumnSearchProps("productId"), // Use getColumnSearchProps with the dataIndex "productId"
-      render: (id) => `${id}`,
+      key: "productName",
+      width: "12%",
+      // ...getColumnSearchProps("id"),
+      render: (productId) => {
+        // Find the product data with matching productId
+        const productData = allProductData.find((product) => product.id === productId);
+        
+        // Render the product name if product data is found
+        return productData ? productData.name : null;
+      },
     },
+    
     {
       title: "availableQuantity",
       dataIndex: "availableQuantity",
@@ -358,13 +364,13 @@ const Inventory = () => {
       title: "unit",
       dataIndex: "unit",
       key: "unit",
-      width: "10%",
+      width: "8%",
       render: (unit) => `${unit}`,
     },
     {
-      title: "Action",
+      title: "Actions",
       key: "action",
-      width: "8%",
+      width: "10%",
       render: (text, record) => (
         <Space size="middle">
           <button onClick={() => showModalForEdit(record)}>

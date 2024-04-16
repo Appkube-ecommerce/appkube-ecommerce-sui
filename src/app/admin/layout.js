@@ -94,7 +94,7 @@ export default function RootLayout({ children }) {
           </div>
           <div className="">
             <BellOutlined className="text-white text-lg" />
-            <Button className="text-white ml-2">My Store</Button>
+            <Button className="text-black ml-2">My Store</Button>
           </div>
         </Header>
       )}
