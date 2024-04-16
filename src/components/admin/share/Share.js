@@ -77,11 +77,7 @@ export const Share = () => {
         minute: '2-digit',
       });
       pdf.text(currentDate + ' ' + currentTime, 10, 20);
-  const x = 15; // Adjust these values as needed
-  const y = 30; // Adjust these values as needed
-  const width = 40; // Adjust these values as needed
-  const height = 40; // Adjust these values as needed
-      // Define columns and rows for the table
+
   
       const columns = ["ID", "Name", "Image", "Price", "Category", "Unit"];
       const rows = await Promise.all(products.map(async (product, index) => {
