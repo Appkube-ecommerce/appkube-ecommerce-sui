@@ -11,6 +11,7 @@ import { saveOrdersList } from "@/redux/slices/orderSlice";
 import { EditOutlined } from "@ant-design/icons";
 import { useEffect } from 'react';
 import { Steps } from 'antd';
+import axios from "@/Api/axios";
 
 const 
 OrderInfo = () => {
@@ -42,15 +43,49 @@ OrderInfo = () => {
 
   const data = orders.filter((item) => item.id === idFromParams);
   console.log("filter value", data);
+const id = data.map((id => id.id));
+console.log("id of order",id)
 
-   const statusToStepIndex = {
+useEffect(() => {
+  const fetchData = async (id) => {
+    console.log("id inside useEffect",id)
+    try {
+      const result = await axios.get(`/getOrderById/${id}`);
+      console.log("order", result);
+      console.log("ids",result.data)
+      // const items = result.data.map((item => item.items))
+      // console.log("items",items)
+      // dispatch(saveOrdersList(result.data)); // save fetched data in Redux store
+    } catch (error) {
+      console.error('Error fetching orders:', error);
+    }
+  };
+  
+  fetchData(id);
+}, [dispatch]);
+
+  const statusToStepIndex = {
     'PENDING': 0, 
-    'FULFILLED': 5, 
-    
+    'CONFIRMED': 1, 
+    'PROCESSED': 2,
+    'SHIPPED': 3,
+    'OUT_FOR_DELIVERY': 4,
+    'DELIVERED': 5
   };
 
-  
-  const currentStep = statusToStepIndex[data?.status];
+  const handleDeleteItem = async (id) => {
+    try {
+      console.log("Deleting customer");
+      const response = await axios.delete(`/deleteCustomerById/${id}`);
+      console.log("Success", response);
+      // Remove the deleted customer from the state
+      setcustomers(customers.filter(customer => customer.id !== id));
+    } catch (error) {
+      console.log("Error deleting customer", error);
+    }
+  };
+
+  const currentStep = statusToStepIndex[data[0]?.status] || 0;
   
   function Refund(){
      router.push("/admin/orders/Refund")
@@ -97,7 +132,8 @@ OrderInfo = () => {
               }}
             >
               Edit
-            </button></div>
+            </button>
+            </div>
           </div>
         </header>
         <div className="ml-6">{data[0]?.createdAt} from {data[0]?.paymentMethod}</div>

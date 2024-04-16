@@ -28,7 +28,7 @@ const MyAccountPage = () => {
           </div>
           <div className="">
             <p className="font-semibold">
-              You haven't placed any order yet{" "}
+              You &lsquo; placed any order yet{" "}
               <Link href="/" passHref>
                 <a className="text-blue-500 hover:underline ml-1">
                   Start Shopping!

@@ -1,5 +1,5 @@
 import React from 'react'
-import MyAccountPage from '@/components/buyer/myAccont/myAccount'
+import MyAccountPage from '@/components/buyer/myAccount/myAccount'
 const Page = () => {
   return (
     <div><MyAccountPage/></div>

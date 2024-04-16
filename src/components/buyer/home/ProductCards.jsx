@@ -12,29 +12,22 @@ import { IoCheckmarkDoneCircleSharp } from "react-icons/io5";
 import { remove } from "@/redux/slices/CartSlice";
 import { removeSave } from "@/redux/slices/saveForLaterSlice";
 
-
-
 const ProductCards = ({ data, searchQuery }) => {
   const [addedToCart, setAddedToCart] = useState(false); // State to track whether item is added to cart
   const [saveItem, setSaveItem] = useState(false); // State to track whether item is added to save for later
   const dispatch = useDispatch();
-
   const cartAdd = (data) => {
     dispatch(addToCart(data));
     setAddedToCart(true); // Mark item as added to cart
   };
-
   const removeFromSave = (id) => {
     dispatch(removeSave(id));
     setSaveItem(false); // Remove the saved status when removed from
   };
-
-
   const removeToCart = (data) => {
     dispatch(remove(data));
     setAddedToCart(false);
   };
-
   const saveForLater = (data) => {
     dispatch(addToSaveForLater(data));
     notification.success({
@@ -85,8 +78,7 @@ const ProductCards = ({ data, searchQuery }) => {
               />
             </button>
           )}
-
-          {addedToCart ? (
+             {addedToCart ? (
             <button className="p-1 md:p-2 border border-green-500 w-[70%] rounded-md" onClick={() => removeToCart(data.id)}>
               Remove from Cart
             </button>
