@@ -1,9 +1,9 @@
 'use client';
 import { InboxOutlined } from '@ant-design/icons';
 import React, { useState,useEffect } from 'react';
-import { SearchOutlined,EditOutlined } from "@ant-design/icons";
+import { SearchOutlined,EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import Link from 'next/link';
-import { Button, Modal,Space, Radio,Table,Form,Input } from 'antd';
+import { Button, Modal,Space, Radio,Table,Form,Input, Popconfirm } from 'antd';
 import { useDispatch,useSelector } from 'react-redux';
 import { saveOrdersList } from '@/redux/slices/orderSlice';
 import { useRouter } from 'next/navigation';
@@ -23,6 +23,7 @@ const Orders = () => {
   //    '/admin/orders/summary',
   //  {query:{data:record}})
   // }
+
   const [filterOption, setFilterOption] = useState('all'); 
   const showModalForEdit = (record) => {
     setOpen(true);
@@ -30,15 +31,16 @@ const Orders = () => {
     console.log("Editing orders:", record);
     setEditingOrders(record);
     setEditedData(record);
-  
   };
+
   const handleSaveForEdit = () => {
     console.log("Saving edited data:", editedData);
     setEditingOrders(null);
     setEditedData({});
-    putRequest(editedData); //here put api is hitting
+    putRequest(editedData);
     setOpenEditModal(false);
   };
+
   const putRequest = async (values) => {
     let data = {
       id: values.id,
@@ -50,9 +52,10 @@ const Orders = () => {
       items: values.items,
       _lastChangedAt: values._lastChangedAt,
     };
+
     try {
       console.log("stored data", data);
-      const response = await axios.put(`/updateOrder/${values.id}`, data); // Pass the data object as the second parameter
+      const response = await axios.put(`/updateOrder/${values.id}`, data); 
       console.log("success", response);
     } catch (error) {
       console.log("error", error);
@@ -84,7 +87,6 @@ const Orders = () => {
     } else if (filterOption === 'upi') {
       return item.paymentMethod === 'UPI'; 
     }
-  
     return true;
   });
 
@@ -171,6 +173,15 @@ const Orders = () => {
           <button onClick={() => showModalForEdit(record)}>
             <EditOutlined /> Edit
           </button>
+          <span style={{ marginRight: 8, marginLeft: 8 }}></span> {/* Add space between icons */}
+        <Popconfirm 
+          title="Want to delete this order?"
+          onConfirm={() => handleDeleteItem(record.id)}
+          okText="Yes"
+          cancelText="No"
+        >
+          <DeleteOutlined style={{ color: "red", cursor: "pointer" }} />
+        </Popconfirm>
         </Space>
       ),
     },
@@ -205,6 +216,9 @@ const Orders = () => {
       try {
         const result = await axios.get("/getAllOrders");
         console.log("orders", result);
+        console.log("ids",result.data)
+        const items = result.data.map((item => item.items))
+        console.log("items",items)
         dispatch(saveOrdersList(result.data)); // save fetched data in Redux store
       } catch (error) {
         console.error('Error fetching orders:', error);
@@ -225,6 +239,18 @@ const Orders = () => {
 
   const handleExportOptionChange = (e) => {
     setExportOption(e.target.value);
+  };
+
+  const handleDeleteItem = async (id) => {
+    try {
+      console.log("Deleting order");
+      const response = await axios.delete(`/deleteOrderById/${id}`);
+      console.log("Success", response);
+      // Remove the deleted customer from the state
+      //setcustomers(customers.filter(customer => customer.id !== id));
+    } catch (error) {
+      console.log("Error deleting order", error);
+    }
   };
   
   return (

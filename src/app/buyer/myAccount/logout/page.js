@@ -1,4 +1,4 @@
-import LogoutConfirmation from '@/components/buyer/myAccont/logout/logout'
+import LogoutConfirmation from '@/components/buyer/myAccount/logout/logout'
 import React from 'react'
 
 const page = () => {

@@ -14,7 +14,7 @@ import { useRouter } from "next/navigation";
 import { FaBookmark } from "react-icons/fa6";
 import { MdAccountCircle } from "react-icons/md";
 import { Dropdown, Menu, message, Modal, Button } from 'antd';
-import LogoutConfirmation from "../myAccont/logout/logout";
+import LogoutConfirmation from "../myAccount/logout/logout";
 
 const Header = ({ onSearch }) => {
   const [searchQuery, setSearchQuery] = useState('');
