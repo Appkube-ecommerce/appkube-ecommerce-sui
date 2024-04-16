@@ -51,54 +51,64 @@ export const Share = () => {
 
     fetchData();
   }, []);
-
+  const urlToBase64 = async (url) => {
+    const response = await fetch(url)
+    const blob = await response.blob();
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        resolve(reader.result);
+      };
+      reader.onerror = reject;
+      reader.readAsDataURL(blob);
+    });
+  };
   const [show, setshow] = useState(false);
 
   const handleShare = async (phoneNumber) => {
     try {
-      const pdf = new jsPDF();
-      
+      const pdf = new jsPDF();  
       // Add title
       pdf.text("Synectiks Farm", 10, 10);
-  
       // Add date and time
-  
-  
       const currentDate = new Date().toLocaleDateString();
       const currentTime = new Date().toLocaleTimeString([], {
         hour: '2-digit',
         minute: '2-digit',
       });
       pdf.text(currentDate + ' ' + currentTime, 10, 20);
-  
-  
-    
   const x = 15; // Adjust these values as needed
   const y = 30; // Adjust these values as needed
   const width = 40; // Adjust these values as needed
   const height = 40; // Adjust these values as needed
-  
-     
-  
       // Define columns and rows for the table
+  
       const columns = ["ID", "Name", "Image", "Price", "Category", "Unit"];
-      const rows = products.map((product, index) => [
-        
-        index + 1,
-        product.name,
-        // product.image,
-        product.price,
-        product.category,
-        product.unit
-      ]);
+      const rows = await Promise.all(products.map(async (product, index) => {
+        const base64Image = await urlToBase64(product.image);
+        console.log(base64Image);
+        return [
+          index + 1,
+          product.name,
+          base64Image,
+          product.price,
+          product.category,
+          product.unit
+        ];
+      }));
   
       // Add table using jspdf-autotable
       pdf.autoTable({
         head: [columns],
         body: rows,
-        startY: 30 // Adjust startY as needed
+        startY: 30,
+        didDrawCell: (data) => {
+          if (data.section === 'body' && data.column.index === 2) {
+            const base64Image = rows[data.row.index][2]; // Fetch base64Image from rows
+            pdf.addImage(base64Image, 'PNG', data.cell.x + 2, data.cell.y + 2, 10, 10)
+          }
+        }
       });
-  
       // Save or send the PDF
       console.log(phoneNumber);
       const base64String = pdf.output('datauristring');
@@ -119,23 +129,29 @@ export const Share = () => {
     console.log(phoneNumber);
     const myHeaders = new Headers();
     myHeaders.append('Content-Type', 'application/json');
-  
-    const raw = JSON.stringify({
+
+  const raw = JSON.stringify({
       content: content,
       name: 'directory',
       phoneNumber: phoneNumber,
     });
-  
+
     const requestOptions = {
-    
+      method: 'POST',
       headers: myHeaders,
       body: raw,
       redirect: 'follow',
     };
     try {
-      const response = await axios.post("/sendBills",requestOptions);// Corrected options to requestOptions
+      const response = await fetch(
+        'https://2evfwh96lk.execute-api.us-east-1.amazonaws.com/sendBills',
+        requestOptions,
+      ); // Corrected options to requestOptions
       if (response.ok) {
         console.log('Pdf send');
+        notification.success({
+          message: 'PDF Sent successfully!',
+        });
       }
       if (!response.ok) {
         // throw new Error(HTTP error! Status: ${response.status});
@@ -146,7 +162,6 @@ export const Share = () => {
       return null; // Return null or handle the error as needed
     }
   };
-
   const handleReset = (clearFilters) => {
     clearFilters();
     setSearchText("");

@@ -4,6 +4,7 @@ import {
   SearchOutlined,
   EditOutlined,
   PlusOutlined,
+  DeleteOutlined,
   ShoppingCartOutlined,
 } from "@ant-design/icons";
 import {
@@ -13,6 +14,7 @@ import {
   Upload,
   Space,
   Table,
+  Popconfirm,
   Checkbox,
   Modal,
   Select,
@@ -59,14 +61,16 @@ const Products = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      try {
-        const result = await axios.get("/product");
-        console.log("products", result);
-        setProducts(result.data);
-        dispatch(setAllProducts(result.data));
-        // console.log(result.data)
-      } catch (error) {
-        console.error("Error fetching products:", error);
+      if(typeof window !== 'undefined'){
+        try {
+          const result = await axios.get("/product");
+          console.log("products", result);
+          setProducts(result.data);
+          dispatch(setAllProducts(result.data));
+          // console.log(result.data)
+        } catch (error) {
+          console.error("Error fetching products:", error);
+        }
       }
     };
 
@@ -90,13 +94,25 @@ const Products = () => {
     setEditedData(record);
     setImageUrl(record.image);
   };
-  const handleSaveForEdit = () => {
+  const handleSaveForEdit = async () => {
     console.log("Saving edited data:", editedData);
-    setEditingProduct(null);
-    setEditedData({});
-    putRequest(editedData); //here put api is hitting
-    setOpenEditModal(false);
+    
+    try {
+      // Make the API call to update the product
+      const response = await putRequest(editedData);
+      console.log("success", response);
+      const updatedProducts = products.map(product =>
+        product.id === editedData.id ? editedData : product
+      );
+      setProducts(updatedProducts);
+      setOpenEditModal(false);
+    } catch (error) {
+      console.log("error", error);
+      // Handle error, show error message or handle it in a way appropriate to your application
+    }
   };
+  
+  
   const putRequest = async (values) => {
     let data = {
       id: values.id,
@@ -138,6 +154,18 @@ const Products = () => {
 
   const AddProducts = () => {
     router.push("/admin/products/addproduct");
+  };
+  const handleDeleteItem = async () => {
+    try {
+      console.log("Deleting product");
+      const response = await axios.delete("/product");
+      console.log("Success", response.data);
+      // Remove the deleted customer from the state
+      // setProducts(products.filter)
+      // setProducts(products.filter(product => product.id !== id));
+    } catch (error) {
+      console.log("Error deleting customer", error);
+    }
   };
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
@@ -378,6 +406,15 @@ const Products = () => {
           <button onClick={() => showModalForEdit(record)}>
             <EditOutlined /> Edit
           </button>
+        <span style={{ marginLeft: 8 }}></span> {/* Add space between icons */}
+          <Popconfirm 
+          title="Are you sure to delete this Product?"
+          onConfirm={() => handleDeleteItem()}
+          okText="Yes"
+          cancelText="No"
+        >
+          <DeleteOutlined style={{ color: "red", cursor: "pointer" }} />
+        </Popconfirm>
         </Space>
       ),
     },

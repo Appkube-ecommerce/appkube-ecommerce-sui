@@ -11,7 +11,8 @@ const ProductList = () => {
     const [form] = Form.useForm();    const [searchValue, setSearchValue] = useState('');
 
     const handleShare = () => {
-      router.push("/admin/Share");
+      router.push("/admin/Share"
+    );
     };
     const router = useRouter();
 
@@ -29,11 +30,13 @@ const ProductList = () => {
     // }, []);
     useEffect(() => {
         const fetchData = async () => {
-            try {
-              const result = await axios.get("/product");
-                setProducts(result.data);
-            } catch (error) {
-                console.error("Error fetching products:", error);
+            if(typeof window !== 'undefined'){
+              try {
+                const result = await axios.get("/product");
+                  setProducts(result.data);
+              } catch (error) {
+                  console.error("Error fetching products:", error);
+              }
             }
         };
 

@@ -9,9 +9,13 @@ import { saveOrdersList } from "@/redux/slices/orderSlice";
 //import { FetchOrders } from "@/Api/fetchingOrders";
 //import {Input, message, Upload } from "antd";
 import { EditOutlined } from "@ant-design/icons";
+<<<<<<< HEAD
 import { useEffect } from 'react';
 import { Steps } from 'antd';
 import axios from "@/Api/axios";
+=======
+
+>>>>>>> b604c197c7fafda211a27d26509eab2d5fdd947d
 
 const 
 OrderInfo = () => {
@@ -21,6 +25,7 @@ OrderInfo = () => {
   const searchParams = useSearchParams();
   const idFromParams = searchParams.get("data");
   
+
   // useEffect(() => {
   //   const fetchOrders = async () => {
   //     try {
@@ -33,6 +38,8 @@ OrderInfo = () => {
 
   //   fetchOrders();
   // },[dispatch]);
+
+
 
   const orders = useSelector((state) => state.ordersData.ordersList);
   console.log(orders, "coming from redux");
@@ -95,7 +102,7 @@ useEffect(() => {
     <>
 
       <div className="p-8">
-        <header className="flex gap-1">
+        <header className="flex gap-5">
           <ArrowLeftOutlined
             className="text-lg font-semibold"
             onClick={backToOrders}
@@ -105,6 +112,7 @@ useEffect(() => {
               <h1 className="font-bold text-xl mt-1">#{data?.id || idFromParams}</h1>
             </div>
             <div className="gap-4 flex">
+
             <button
               style={{
                 backgroundColor: "#E3E3E3",
@@ -133,19 +141,20 @@ useEffect(() => {
             >
               Edit
             </button>
+<<<<<<< HEAD
             </div>
+=======
+>>>>>>> b604c197c7fafda211a27d26509eab2d5fdd947d
           </div>
         </header>
-        <div className="ml-6">{data[0]?.createdAt} from {data[0]?.paymentMethod}</div>
+        <div className="ml-10">{data[0]?.createdAt}</div>
       </div>
-      <div className='flex gap-8'>
+      <div className='flex gap-5'>
 <div>
       <div className="border-2 shadow-md w-[37.5rem] h-72 bg-white rounded-xl p-4">
-      <div className="font-semibold text-base p-1">#{data[0]?.id||idFromParams}</div>
+        <div></div>
         <div className='border border-slate-200 h-44 rounded-md'>
-        <div className='border-b h-14 p-2'>
-        <p>{data[0]?.createdAt}</p>
-        </div> 
+        <div className='border-b h-14'><p></p></div>
         <div className='border-b h-14'></div>
         <div className='h-14'></div></div>
         <div className='flex justify-end mt-2'>
@@ -156,7 +165,6 @@ useEffect(() => {
 
       </div>
       <div className="border-2 shadow-md w-[37.5rem] h-48 bg-white p-4 mt-5 rounded-xl">
-      <div className="font-semibold p-2">{data[0]?.status}</div>
       <div className='border border-slate-200 rounded-md'>
       <div className='border-b h-16 p-2'>
         <div className="flex justify-between">
@@ -168,11 +176,38 @@ useEffect(() => {
       </div>
         <div className=' h-12 py-3 px-2 flex justify-between'><p>{data[0]?.status}</p>
         <p>${data[0]?.totalPrice}</p></div>
+
         </div>
       </div>
       <div className='mt-8'>
-      
+      <p className='font-semibold text-base ml-4 text-slate-800 mb-2'>Timeline</p>
+      <div className="border-2 shadow-md w-[37.5rem] h-40 bg-white rounded-xl">
+      <div className="flex flex-col mt-4 space-y-4 items-end">
+              
+              <Input
+                placeholder="Leave a comment..."
+                value={comment} 
+                onChange={(e) => setComment(e.target.value)}
+                className='border-none hover:border-0 h-16 rounded-none'
+              />
+                <div className="bg-slate-50 flex justify-end h-full w-full"> {/* Use flex justify-end */}
+    <button
+      className="text-gray-500 font-semibold h-6 w-12  mt-4 mb-4 mr-3"
+      //onClick={handlePostComment}
+      style={{
+        backgroundColor: "#E3E3E3",
+        borderRadius: "5px",
+        
+      }}
+  
+    >
+      Post
+    </button>
+  </div>
+            </div>
         </div>
+        </div>
+      <p className='text-slate-500 text-end'>Only you and other staff can see comments</p>
 </div>
 
 <div>
@@ -210,6 +245,13 @@ useEffect(() => {
 </div>
 
       </div>
+
+      <div className="border-2 shadow-md w-80 h-36 bg-white p-2 rounded-xl mt-5">
+        <p className='font-semibold text-slate-800'>Conversion summary</p>
+        <p className='text-slate-800 mt-4'>There aren&apos;t any conversion details available for this order.</p>
+        <div className="mt-4"><a className='text-sky-500 font-semibold'>Learn more</a></div>
+      </div>
+      <div className="border-2 shadow-md w-80 h-44 bg-white p-2 mt-5 rounded-xl font-semibold text-slate-800">Fraud analysis</div>
 </div>
 
 </div>
@@ -241,6 +283,7 @@ useEffect(() => {
           ]}
         />
       </div>  
+
     </>
   );
 };

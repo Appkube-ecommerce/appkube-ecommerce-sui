@@ -1,24 +1,21 @@
-import { useState } from "react";
+'use client'
+import { useState, useEffect } from "react";
 import Image from "next/image";
-import { useSelector, useDispatch } from "react-redux";
-import { remove } from "@/redux/slices/CartSlice";
-import { addToSaveForLater } from "@/redux/slices/saveForLaterSlice";
-import { notification,Button } from 'antd';
-import { ShoppingCartOutlined,HomeOutlined } from '@ant-design/icons'; // Import the Ant Design icon
+import { useDispatch } from "react-redux";
+import { notification, Button } from 'antd';
+import { HomeOutlined } from '@ant-design/icons'; // Import the Ant Design icon
 import empty from "../../admin/images/empty.jpg"
 import Link from "next/link"
+import { remove } from "@/redux/slices/CartSlice";
+import { addToSaveForLater } from "@/redux/slices/saveForLaterSlice";
 
 const Card = () => {
   const dispatch = useDispatch();
-
-  // Accessing cart items from Redux store
-  const items = useSelector((state) => state.cartDetails.cart);
-
-  // State to store the quantity for each product item
   const [productCounts, setProductCounts] = useState({});
+  const cartItemsFromStorage1 = localStorage.getItem('addcartitems');
+  const cartItemsFromStorage = JSON.parse(cartItemsFromStorage1);
 
   const updateCount = (id, newCount) => {
-    // Ensure newCount is not less than 0
     if (newCount < 0) {
       newCount = 0;
     }
@@ -26,29 +23,45 @@ const Card = () => {
       ...prevCounts,
       [id]: newCount
     }));
+    // Add or remove item from local storage based on count
+    const updatedCartItems = [...cartItemsFromStorage];
+    if (newCount > (cartItemsFromStorage.find(item => item.id === id)?.quantity || 0)) {
+      updatedCartItems.push({ id, quantity: newCount });
+    } else {
+      const index = updatedCartItems.findIndex(item => item.id === id);
+      if (index !== -1) {
+        updatedCartItems.splice(index, 1);
+      }
+    }
+    localStorage.setItem('addcartitems', JSON.stringify(updatedCartItems));
   };
-  
 
   const removeToCart = (id) => {
+    // Remove item from Redux store
     dispatch(remove(id));
+    // Remove item from local storage
+    const updatedCartItems = cartItemsFromStorage.filter(item => item.id !== id);
+    localStorage.setItem('addcartitems', JSON.stringify(updatedCartItems));
   };
 
-  const saveForLater = (data) => {
-    dispatch(addToSaveForLater(data));
-    dispatch(remove(data.id));
+  const saveForLater = (id) => {
+    // Remove item from Redux store
+    dispatch(remove(id));
+    dispatch(addToSaveForLater(id));
+    // Remove item from local storage
+    const updatedCartItems = cartItemsFromStorage.filter(item => item.id !== id);
+    localStorage.setItem('addcartitems', JSON.stringify(updatedCartItems));
     notification.success({
       message: 'Product Saved For Later Successfully!',
     });
   };
 
-  // Render icon and text when cart is empty
-  if (items.length === 0) {
+  if (cartItemsFromStorage.length === 0) {
     return (
       <div className="empty-cart mt-5 mb-5">
-        {/* <ShoppingCartOutlined style={{ fontSize: '500px', color: '#ccc' }} /> */}
         <div className="flex gap-5 mb-2 justify-evenly">
-        <h1 className="text-lg font-bold">Please add items to your cart to continue</h1>
-        <Link href="/">
+          <h1 className="text-lg font-bold">Please add items to your cart to continue</h1>
+          <Link href="/">
             <Button
               style={{ height: '32px' }}
               icon={<HomeOutlined />}
@@ -56,15 +69,13 @@ const Card = () => {
               Home
             </Button>
           </Link>
-          </div>
+        </div>
         <Image src={empty} height={500} width={500} alt="image"></Image>
-        
       </div>
     );
   }
 
-  // Mapping through cart items to render cards
-  const cards = items.map((product) => (
+  const cards = cartItemsFromStorage.map((product) => (
     <div key={product.id} className="card1 mt-4">
       <h3 className="inline font-semibold">{product.category}</h3>
       <div className="w-10 border border-orange-500 bg-orange-500 mt-2"></div>
@@ -75,6 +86,7 @@ const Card = () => {
 
         <div className="flex gap-4 mt-2 mx-10">
           <div className="flex">
+            {/* Your image rendering code */}
             <Image src={product.image} width={200} height={90} className="pt-5" alt="Product image" />
             <div className="flex flex-col justify-center text-lg py-12 pl-14">
               <h2>{product.name}</h2>
@@ -102,15 +114,11 @@ const Card = () => {
               </div>
               <div className="mt-2 text-xs text-center text-stone-500">
                 <button onClick={() => removeToCart(product.id)}>Delete |&nbsp;</button>
-                <button onClick={() => saveForLater(product)}> Save for Later</button>
+                <button onClick={() => saveForLater(product.id)}> Save for Later</button>
               </div>
             </div>
             <div className="flex flex-col pt-[17%] text-[15px]">
-              <h1>
-                <b>₹36</b>
-              </h1>
-              <br />
-              <p className="text-stone-500">Saved: ₹34</p>
+              {/* Your price rendering code */}
             </div>
           </section>
         </div>
@@ -122,5 +130,3 @@ const Card = () => {
 };
 
 export default Card;
-
-
