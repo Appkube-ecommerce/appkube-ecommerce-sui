@@ -37,31 +37,39 @@ const Customer = () => {
     console.log("Saving edited data:", editedData);
 
     try {
-      await putRequest(editedData);
-      // Update the customers state with the new data
-      const updatedCustomers = customers.map((customer) =>
-        customer.id === editedData.id ? editedData : customer
-      );
-      setcustomers(updatedCustomers);
-      setOpenEditModal(false);
+      const response = await putRequest(editedData); // Capture the response
+      // Update the customers state with the new data if response status is 200
+      if (response.status === 200) {
+        const updatedCustomers = customers.map((customer) =>
+          customer.id === editedData.id ? editedData : customer
+        );
+        setcustomers(updatedCustomers);
+        setOpenEditModal(false);
+      } else {
+        // Handle the case when response status is not 200
+        console.log("Update failed");
+      }
     } catch (error) {
       console.error("Error saving edit:", error);
     }
+    
 
   };
 
-
   const putRequest = async (values) => {
     const { id, name, phone } = values;
-    console.log("my id ",id);
+    console.log("my id ", id);
     try {
       console.log("stored data", values);
       const response = await axios.put(`/updateCustomer/${id}`, { name, phone });
       console.log("success", response);
+      return response; // Return the response
     } catch (error) {
       console.log("error", error);
+      throw error; // Re-throw the error
     }
   };
+  
 
 
   const handleCancelForEdit = () => {
